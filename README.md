@@ -16,20 +16,35 @@ tyqx-cms精简版，去除分布式部署（ zookeeper、dubbo），基于spring
 
 #### 系统功能
 
+- 系统登录
+
 ![系统登录](https://images.gitee.com/uploads/images/2018/1207/100305_c682872f_583593.jpeg "微信图片_20181207100212.jpg")
 - 后台首页
+
 ![后台首页](https://images.gitee.com/uploads/images/2018/1207/100331_5c35ccc1_583593.jpeg "微信图片_20181207100220.jpg")
+
 - 用户管理
+
 ![用户管理](https://images.gitee.com/uploads/images/2018/1207/100403_1e5b0a44_583593.jpeg "微信图片_20181207100239.jpg")
+
 - 角色管理
+
 ![角色管理](https://images.gitee.com/uploads/images/2018/1207/100429_2882389e_583593.jpeg "微信图片_20181207100224.jpg")
+
 - 权限管理
+
 ![权限管理](https://images.gitee.com/uploads/images/2018/1207/100522_cdbba516_583593.jpeg "微信图片_20181207100229.jpg")
+
 - 登录日志
+
 ![登录日志](https://images.gitee.com/uploads/images/2018/1207/100541_20c3dfa7_583593.jpeg "微信图片_20181207100158.jpg")
+
 - 系统日志
+
 ![系统日志](https://images.gitee.com/uploads/images/2018/1207/100600_24d16e3f_583593.jpeg "微信图片_20181207100232.jpg")
+
 - 图标管理
+
 ![图标管理](https://images.gitee.com/uploads/images/2018/1207/100613_0f7a0591_583593.jpeg "微信图片_20181207100236.jpg")
 
 #### 使用说明

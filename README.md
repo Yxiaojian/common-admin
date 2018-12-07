@@ -22,9 +22,9 @@ tyqx-cms精简版，去除分布式部署（ zookeeper、dubbo），基于spring
 
 #### 使用说明
 
-1. xxxx
-2. xxxx
-3. xxxx
+1. 创建数据mysql数据库sys_admin，导入init.sql，修改数据库链接配置
+2. 运行redis，再运行CommonAdminApplication
+3. 访问http://127.0.0.1:9999/ （注：管理员账号：admin 密码：123456，测试账号：test 密码：123456）
 
 #### 作者说明
 

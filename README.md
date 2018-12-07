@@ -16,9 +16,24 @@ tyqx-cms精简版，去除分布式部署（ zookeeper、dubbo），基于spring
 
 #### 系统功能
 
-1. xxxx
-2. xxxx
-3. xxxx
+![系统登录](https://images.gitee.com/uploads/images/2018/1207/094644_9780f0b4_583593.jpeg "登录页面.jpg")
+- 后台首页
+![后台首页](https://images.gitee.com/uploads/images/2018/1117/190342_193c79a8_583593.png "后台首页.png")
+- 用户管理
+![用户管理](https://images.gitee.com/uploads/images/2018/1011/085535_f29e112c_583593.png "用户管理.png")
+- 角色管理
+![角色管理](https://images.gitee.com/uploads/images/2018/1011/085601_935470aa_583593.png "角色管理.png")
+![角色添加](https://images.gitee.com/uploads/images/2018/1011/085624_1cfecc20_583593.png "角色添加.png")
+![角色编辑](https://images.gitee.com/uploads/images/2018/1011/085643_1e47e2e8_583593.png "角色编辑.png")
+- 权限管理
+![权限管理](https://images.gitee.com/uploads/images/2018/1011/085704_272939a3_583593.png "权限管理.png")
+![权限编辑](https://images.gitee.com/uploads/images/2018/1011/085750_41109161_583593.png "权限编辑.png")
+- 登录日志
+![登录日志](https://images.gitee.com/uploads/images/2018/1011/085817_40092e73_583593.png "登录日志.png")
+- 系统日志
+![系统日志](https://images.gitee.com/uploads/images/2018/1117/190424_dab9b4dc_583593.png "系统日志.png")
+- 图标管理
+![图标管理](https://images.gitee.com/uploads/images/2018/1011/085838_f1bca5d2_583593.png "图标管理.png")
 
 #### 使用说明
 

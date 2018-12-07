@@ -3,6 +3,8 @@
 #### 项目介绍
 tyqx-cms精简版，去除分布式部署（ zookeeper、dubbo），基于springboot、mybatisplus、shiro、log4j、layuicms2.0、mysql5.6、redis、jdk1.8开发而成，具备完整的权限管理功能，代码简洁，容易入门，方便您进行二次开发，节省开发时间，快速构建企业级的web应用系统。
 
+common-admin分布式版（zookeeper、dubbo）：https://gitee.com/xieke90/tyqx-cms
+
 #### 软件架构
 - 核心框架：SpringBoot
 - 安全框架：Shiro（细粒度控制：目录菜单按钮都按权限加载）

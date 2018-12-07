@@ -4,8 +4,8 @@
 tyqx-cms精简版，去除分布式部署（ zookeeper、dubbo），基于springboot、mybatisplus、shiro、log4j、layuicms2.0、mysql5.6、redis、jdk1.8开发而成，具备完整的权限管理功能，代码简洁，容易入门，方便您进行二次开发，节省开发时间，快速构建企业级的web应用系统。
 
 系统预览地址：http://148.70.12.166:9999/
-注：管理员账号：admin 密码：123456，测试账号：test 密码：123456
-请朋友们不要删除数据，想要测试删除功能可以先添加数据后再行测试，谢谢！
+（注：管理员账号：admin 密码：123456，测试账号：test 密码：123456，
+请朋友们不要删除数据，想要测试删除功能可以先添加数据后再行测试，谢谢！）
 
 common-admin项目配套代码生成器：https://gitee.com/xieke90/code-generator
 

@@ -1,5 +1,6 @@
 package com.xieke.admin.config;
 
+import com.alibaba.fastjson.JSONObject;
 import com.xieke.admin.annotation.SysLog;
 import com.xieke.admin.dto.UserInfo;
 import com.xieke.admin.entity.Log;
@@ -19,7 +20,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
-import java.util.Arrays;
 
 @Aspect
 @Component
@@ -43,12 +43,23 @@ public class WebLogAspect {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
 
+        // 请求参数
+        Object[] args = joinPoint.getArgs();
+        String requestParam = "";
+        if (args != null && args.length > 0){
+            try {
+                requestParam = JSONObject.toJSONString(args[0]);
+            }catch (Exception e){
+
+            }
+        }
+
         // 记录下请求内容
         logger.info("URL : " + request.getRequestURL().toString());
         logger.info("HTTP_METHOD : " + request.getMethod());
         logger.info("IP : " + request.getRemoteAddr());
         logger.info("CLASS_METHOD : " + joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
-        logger.info("ARGS : " + Arrays.toString(joinPoint.getArgs()));
+        logger.info("ARGS : " + requestParam);
 
         // 添加系统操作日志
         MethodSignature methodSignature = (MethodSignature)joinPoint.getSignature();
@@ -60,7 +71,7 @@ public class WebLogAspect {
             log.setUserId(userInfo.getId());
             log.setUserName(userInfo.getUserName());
             log.setOperMethod(joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
-            log.setRequestParam(Arrays.toString(joinPoint.getArgs()));
+            log.setRequestParam(requestParam);
             log.setOperDesc(sysLog.value());
             ilogService.insert(log);
         }

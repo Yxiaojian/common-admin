@@ -7,7 +7,7 @@ tyqx-cms精简版，去除分布式部署（ zookeeper、dubbo），基于spring
 （注：管理员账号：admin 密码：123456，测试账号：test 密码：123456，
 请朋友们不要恶意删除数据，想要测试删除功能可以先添加数据后再行测试，谢谢！）
 
-common-admin项目配套代码生成器：https://gitee.com/xieke90/code-generator
+common-admin项目配套代码生成器(分离版，只能生成后台代码)：https://gitee.com/xieke90/code-generator
 
 common-admin分布式版（zookeeper、dubbo）：https://gitee.com/xieke90/tyqx-cms
 

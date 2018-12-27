@@ -17,7 +17,9 @@ layui.use(['form','layer','table'],function(){
         cols : [[
             {type: "checkbox", fixed:"left", width:50},
 			#foreach($column in $columns)
-			{field: '${column.attrname}', title: '${column.comments}', minWidth:100, align:"center"}#if($velocityCount != $columns.size()), #end
+            #if($column.columnName != $pk.columnName)
+            {field: '${column.attrname}', title: '${column.comments}', minWidth:100, align:"center"}#if($velocityCount != $columns.size()), #end
+            #end
 			#end
         ]]
     });

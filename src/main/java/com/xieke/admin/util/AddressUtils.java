@@ -82,7 +82,7 @@ public class AddressUtils {
 	}
 
 	public static String getAddressByIp(String ipAddress){
-		String json_result = AddressUtils.getAddresses("ip=" + ipAddress, "utf-8");
+		String json_result = getAddresses("ip=" + ipAddress, "utf-8");
 		JSONObject dataJson = JSONObject.parseObject(json_result).getJSONObject("data");
 		System.out.println("dataJson： " + dataJson);
 		String country = dataJson.getString("country");

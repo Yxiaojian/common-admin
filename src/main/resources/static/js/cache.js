@@ -7,7 +7,7 @@ layui.use(['form','jquery',"layer"],function() {
 
 
     if(window.sessionStorage.getItem("lockcms") != "true" && window.sessionStorage.getItem("showNotice") != "true"){
-        showNotice();
+
     }
 
     //公告层
@@ -18,9 +18,9 @@ layui.use(['form','jquery',"layer"],function() {
             area: '300px',
             shade: 0.8,
             id: 'LAY_layuipro',
-            btn: ['火速围观'],
+            btn: ['知道了'],
             moveType: 1,
-            content: '<div style="padding:15px 20px; text-align:justify; line-height: 22px; text-indent:2em;border-bottom:1px solid #e2e2e2;"><p class="layui-red">本系统完全免费，仅供参考学习，可作为后台管理系统使用！</p></pclass></p><p>系统采用springboot、mybatisplus、shiro、log4j、layuicms2.0、mysql5.6、redis、jdk1.8开发而成，具备完整的权限管理功能，代码简洁，容易入门，可在此基础上进行二次开发，后续更多功能将持续更新！温馨提示：<span class="layui-red">所有资源均来源于互联网，如果对此有任何异议，请联系作者，QQ:949118693。</span></p></div>',
+            content: '<div style="padding:15px 20px; text-align:justify; line-height: 22px; text-indent:2em;border-bottom:1px solid #e2e2e2;">这是公告</div>',
             success: function(layero){
                 var btn = layero.find('.layui-layer-btn');
                 btn.css('text-align', 'center');

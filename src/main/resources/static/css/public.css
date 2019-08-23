@@ -29,7 +29,8 @@
 .panel_box a{display:block; border-radius:5px; overflow:hidden; height:80px; background-color:#f2f2f2 !important; }
 .panel_icon{ width:40%; display: inline-block; line-height:80px; float:left; position:relative; height:100%;}
 .panel_icon i{ font-size:40px !important; color:#fff; display: inline-block;}
-.panel_word{ width:60%; display: inline-block; float:right; margin:13px 0 14px; }
+.panel_word{ width:60%; display: inline-block; float:right; margin:22px 0 14px; }
+.mainhome .panel_word{margin:10px 0 14px; }
 .panel_word span{ font-size:25px; display:block; height:34px; }
 .panel .loginTime{ font-size:15px; color:#1E9FFF; line-height:17px;}
 .panel em{ font-style:normal;}
@@ -92,7 +93,7 @@ form input.layui-input[disabled]{ background:#f2f2f2; color:#595963!important; }
 h2.method{ font-size:18px; line-height:45px; padding-left:5px;}
 /*登录*/
 .loginHtml,.loginBody{ height:100%;}
-.loginBody{ background:url("../images/login_bg.jpg") no-repeat center center;}
+.loginBody{ background-color: #354052;}
 .loginBody form.layui-form{ padding:0 20px; width:300px; height:290px; position:absolute; left:50%; top:50%; margin:-150px 0 0 -150px; -webkit-box-sizing:border-box;-moz-box-sizing:border-box; -o-box-sizing:border-box; box-sizing:border-box; background:#fff;-webkit-border-radius:5px; -moz-border-radius:5px; border-radius:5px; box-shadow:0 0 50px #009688;}
 .login_face{ margin:-55px auto 20px; width:100px; height:100px; -webkit-border-radius:50%; -moz-border-radius:50%; border-radius:50%; border:5px solid #fff; overflow:hidden;box-shadow:0 0 30px #009688;}
 .login_face img{ width:100%;}
@@ -168,4 +169,23 @@ h2.method{ font-size:18px; line-height:45px; padding-left:5px;}
     .layui-col-xs12 .layui-input-inline{ left:0 !important; width:auto !important;}
     .noFind{ padding-top:0;}
     *[pc]{ display:none;}
+}
+
+.w100p{
+    width:100% !important;
+}
+.edge-bottom{
+    position: relative;
+}
+.error{
+    color:red;
+}
+.reqInfo{
+    position: absolute;
+    top: 10px;
+    color: red;
+    font-size: 26px;
+}
+.posirea{
+    position: relative;
 }

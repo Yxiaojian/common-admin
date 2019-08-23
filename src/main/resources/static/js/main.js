@@ -25,7 +25,7 @@ function getLangDate(){
     if(n===1){
         userName = document.getElementById("nowTime").innerHTML;
     }
-    document.getElementById("nowTime").innerHTML = userName+"，"+timeValue+"好！ 欢迎使用通用后台系统，当前时间为： "+newDate+"　"+week;
+    document.getElementById("nowTime").innerHTML = userName+"，"+timeValue+"好！ 欢迎使用三问数学教务系统，当前时间为： "+newDate+"　"+week;
     setTimeout("getLangDate()",1000);
 }
 

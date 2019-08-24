@@ -1,7 +1,7 @@
 package com.xieke.admin.service;
 
 
-import com.baomidou.mybatisplus.service.IService;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.xieke.admin.entity.Log;
 
 /**

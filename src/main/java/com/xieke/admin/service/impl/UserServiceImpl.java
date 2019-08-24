@@ -1,6 +1,6 @@
 package com.xieke.admin.service.impl;
 
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xieke.admin.dto.UserInfo;
 import com.xieke.admin.entity.User;
 import com.xieke.admin.mapper.UserMapper;

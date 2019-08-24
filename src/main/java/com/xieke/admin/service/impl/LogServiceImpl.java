@@ -1,6 +1,6 @@
 package com.xieke.admin.service.impl;
 
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xieke.admin.entity.Log;
 import com.xieke.admin.mapper.LogMapper;
 import com.xieke.admin.service.ILogService;

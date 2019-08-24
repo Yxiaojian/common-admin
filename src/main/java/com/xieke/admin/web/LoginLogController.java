@@ -1,7 +1,8 @@
 package com.xieke.admin.web;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xieke.admin.dto.ResultInfo;
 import com.xieke.admin.entity.LoginLog;
 import com.xieke.admin.service.ILoginLogService;
@@ -41,14 +42,14 @@ public class LoginLogController extends BaseController {
         ResultInfo<List<LoginLog>> listData(String userName, String loginTime, Integer page, Integer limit){
         LoginLog loginLog = new LoginLog();
         loginLog.setUserName(userName);
-        EntityWrapper<LoginLog> wrapper = new EntityWrapper<>(loginLog);
+        QueryWrapper<LoginLog> wrapper = new QueryWrapper<>(loginLog);
         if(!StringUtils.isEmpty(loginTime)){
             wrapper.ge("create_time",FormatUtil.parseDate(loginTime.split(" - ")[0]+" 00:00:00", null));
             wrapper.le("create_time",FormatUtil.parseDate(loginTime.split(" - ")[1]+" 23:59:59", null));
         }
-        wrapper.orderBy("create_time",false);
-        Page<LoginLog> pageObj = iloginLogService.selectPage(new Page<>(page,limit), wrapper);
-        return new ResultInfo<>(pageObj.getRecords(), pageObj.getTotal());
+        wrapper.orderBy(true,false,"create_time");
+        IPage<LoginLog> pageObj = iloginLogService.page(new Page<>(page,limit), wrapper);
+        return new ResultInfo<>(pageObj.getRecords(), (int)pageObj.getTotal());
     }
 
 }

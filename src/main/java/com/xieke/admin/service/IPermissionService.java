@@ -1,6 +1,6 @@
 package com.xieke.admin.service;
 
-import com.baomidou.mybatisplus.service.IService;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.xieke.admin.dto.MenuInfo;
 import com.xieke.admin.dto.PermissionInfo;
 import com.xieke.admin.entity.Permission;

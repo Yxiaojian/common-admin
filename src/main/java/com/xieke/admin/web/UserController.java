@@ -1,7 +1,8 @@
 package com.xieke.admin.web;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xieke.admin.annotation.SysLog;
 import com.xieke.admin.dto.ResultInfo;
 import com.xieke.admin.dto.UserInfo;
@@ -57,7 +58,7 @@ public class UserController extends BaseController{
     @RequiresPermissions("user:view")
     public @ResponseBody
     ResultInfo<List<User>> listData(User user, Integer page, Integer limit){
-        EntityWrapper<User> wrapper = new EntityWrapper<>(user);
+        QueryWrapper<User> wrapper = new QueryWrapper<>(user);
         if(user!=null&&user.getUserName()!=null){
             wrapper.like("user_name", user.getUserName());
             user.setUserName(null);
@@ -66,8 +67,8 @@ public class UserController extends BaseController{
             wrapper.like("name",user.getName());
             user.setName(null);
         }
-        Page<User> pageObj = iUserService.selectPage(new Page<>(page,limit), wrapper);
-        return new ResultInfo<>(pageObj.getRecords(), pageObj.getTotal());
+        IPage<User> pageObj = iUserService.page(new Page<>(page,limit), wrapper);
+        return new ResultInfo<>(pageObj.getRecords(), (int)pageObj.getTotal());
     }
 
     @SysLog("添加用户操作")
@@ -78,7 +79,7 @@ public class UserController extends BaseController{
         Map<String, String> map = PasswordEncoder.enCodePassWord(user.getUserName(), user.getPassWord());
         user.setSalt(map.get(PasswordEncoder.SALT));
         user.setPassWord(map.get(PasswordEncoder.PASSWORD));
-        boolean b = iUserService.insert(user);
+        boolean b = iUserService.save(user);
         return new ResultInfo<>(b);
     }
 
@@ -87,7 +88,7 @@ public class UserController extends BaseController{
     @RequiresPermissions("user:del")
     public @ResponseBody
     ResultInfo<Boolean> delBatch(Integer[] idArr){
-        boolean b = iUserService.deleteBatchIds(Arrays.asList(idArr));
+        boolean b = iUserService.removeByIds(Arrays.asList(idArr));
         return new ResultInfo<>(b);
     }
 
@@ -96,7 +97,7 @@ public class UserController extends BaseController{
     @RequiresPermissions("user:edit")
     public @ResponseBody
     ResultInfo<Boolean> edit(User user){
-        User us = iUserService.selectById(user.getId());
+        User us = iUserService.getById(user.getId());
         us.setName(user.getName());
         us.setRoleId(user.getRoleId());
         us.setState(user.getState());
@@ -109,7 +110,7 @@ public class UserController extends BaseController{
     public @ResponseBody
     ResultInfo<Boolean> userEdit(User user){
         UserInfo userInfo = this.getUserInfo();
-        User us = iUserService.selectById(userInfo.getId());
+        User us = iUserService.getById(userInfo.getId());
         if(!StringUtils.isEmpty(user.getName())){
             us.setName(user.getName());
         }
@@ -126,14 +127,14 @@ public class UserController extends BaseController{
     public @ResponseBody
     ResultInfo<UserInfo> centerDate(){
         UserInfo userInfo = this.getUserInfo();
-        BeanUtils.copyProperties(iUserService.selectById(userInfo.getId()),userInfo);
+        BeanUtils.copyProperties(iUserService.getById(userInfo.getId()),userInfo);
         return new ResultInfo<>(userInfo);
     }
 
     @RequestMapping("/count")
     public @ResponseBody
     ResultInfo<Integer> count(){
-        return new ResultInfo<>(iUserService.selectCount(new EntityWrapper<>()));
+        return new ResultInfo<>(iUserService.count(new QueryWrapper<>()));
     }
 
 }

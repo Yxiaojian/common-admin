@@ -86,7 +86,7 @@ public class HomeController extends BaseController{
                 int loginErrorCount = Integer.parseInt(session.getAttribute(Constant.LOGIN_ERROR_COUNT) + "");
                 if(++loginErrorCount == Constant.MAX_LOGIN_ERROR_NUM){
                     //锁定账号
-                    User user = iUserService.selectById(Integer.parseInt(session.getAttribute(Constant.LOGIN_USER_ID) + ""));
+                    User user = iUserService.getById(Integer.parseInt(session.getAttribute(Constant.LOGIN_USER_ID) + ""));
                     user.setState(2);
                     iUserService.updateById(user);
                 }

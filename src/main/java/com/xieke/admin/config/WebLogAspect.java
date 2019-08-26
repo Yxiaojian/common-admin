@@ -73,7 +73,7 @@ public class WebLogAspect {
             log.setOperMethod(joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
             log.setRequestParam(requestParam);
             log.setOperDesc(sysLog.value());
-            ilogService.insert(log);
+            ilogService.save(log);
         }
 
     }

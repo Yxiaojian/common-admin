@@ -1,6 +1,6 @@
 package com.xieke.admin.mapper;
 
-import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.xieke.admin.dto.PermissionInfo;
 import com.xieke.admin.entity.Permission;
 

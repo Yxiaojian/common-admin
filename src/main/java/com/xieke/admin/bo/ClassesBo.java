@@ -1,0 +1,80 @@
+package com.xieke.admin.bo;
+
+import java.io.Serializable;
+import java.util.Date;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+
+/**
+ * 
+ * @author zhangyang
+ * @date 2019/09/07
+ */
+@Data
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
+public class ClassesBo implements Serializable {
+
+    /**
+     * 主键ID
+     */
+    private Integer ID;
+
+    /**
+     * 课程ID
+     */
+    private Integer curriculumID;
+
+    /**
+     * 班级名称
+     */
+    private String className;
+
+    /**
+     * 主讲老师ID
+     */
+    private Integer teacherID;
+
+    /**
+     * 主讲老师姓名
+     */
+    private String teacherName;
+
+    /**
+     * 助教老师ID
+     */
+    private Integer assistantTeacherID;
+
+    /**
+     * 助教老师姓名
+     */
+    private String assistantTeacherName;
+
+    /**
+     * 班型
+     */
+    private Integer classType;
+
+    /**
+     * 时间档
+     */
+    private Integer classLevel;
+
+    /**
+     * 是否已删除
+     */
+    private Integer deleteStatus;
+
+    /**
+     * 创建时间
+     */
+    private Date createTime;
+
+    /**
+     * 备注
+     */
+    private String remark;
+
+    private static final long serialVersionUID = 1L;
+}

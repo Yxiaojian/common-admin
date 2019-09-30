@@ -1,11 +1,11 @@
 package com.xieke.admin.domain;
 
 import com.xieke.admin.bo.ClassesBo;
+import com.xieke.admin.page.HtPage;
 
 import java.util.List;
 
 /**
- *
  * @author zhangyang
  * @date 2019/09/07
  */
@@ -43,4 +43,9 @@ public interface ClassesDomain {
     List<ClassesBo> findAll();
 
 
+    Boolean softDelete(Integer classesId);
+
+    HtPage<ClassesBo> findPage(Integer pageIndex, Integer pageSize);
+
+    Boolean update(Integer classesId, Integer curriculumID, String className, Integer teacherID, String teacherName, Integer assistantTeacherID, String assistantTeacherName, Integer classType, Integer classLevel);
 }

@@ -1,19 +1,22 @@
 package com.xieke.admin.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xieke.admin.model.Classes;
 import com.xieke.admin.mapper.ClassesMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
 
 /**
- *
  * @author zhangyang
  * @date 2019/09/07
  */
- @Service
+@Service
 public class ClassesService {
 
     @Resource
@@ -55,8 +58,61 @@ public class ClassesService {
      * @return
      */
     public List<Classes> findAll() {
-    QueryWrapper<Classes> wrapper = new QueryWrapper<>();
-      return classesMapper.selectList(wrapper);
+        QueryWrapper<Classes> wrapper = new QueryWrapper<>();
+        return classesMapper.selectList(wrapper);
+    }
+
+    public Boolean softDelete(Integer id) {
+        Classes classes = this.get(id);
+        QueryWrapper<Classes> queryWrapper = new QueryWrapper<>();
+        LambdaQueryWrapper<Classes> wrapper = queryWrapper.lambda();
+        if (classes != null) {
+            wrapper.eq(Classes::getID, id);
+            classes.setDeleteStatus(1);
+        } else {
+            return false;
+        }
+        return classesMapper.update(classes, wrapper) > 0;
+    }
+
+    public Boolean update(Integer classesId, Integer curriculumID, String className, Integer teacherID, String teacherName, Integer assistantTeacherID, String assistantTeacherName, Integer classType, Integer classLevel) {
+        if (classesId == null) {
+            return false;
+        }
+        Classes classes = this.get(classesId);
+        if (curriculumID != null) {
+            classes.setCurriculumID(curriculumID);
+        }
+        if (!StringUtils.isEmpty(className)) {
+            classes.setClassName(className);
+        }
+        if (teacherID != null) {
+            classes.setTeacherID(teacherID);
+        }
+        if (!StringUtils.isEmpty(teacherName)) {
+            classes.setTeacherName(teacherName);
+        }
+        if (assistantTeacherID != null) {
+            classes.setAssistantTeacherID(assistantTeacherID);
+        }
+        if (!StringUtils.isEmpty(assistantTeacherName)) {
+            classes.setAssistantTeacherName(assistantTeacherName);
+        }
+        if (classType != null) {
+            classes.setClassType(classType);
+        }
+        if (classLevel != null) {
+            classes.setClassLevel(classLevel);
+        }
+
+        return classesMapper.updateById(classes) > 0;
+    }
+
+    public IPage<Classes> findPage(Integer pageIndex, Integer pageSize) {
+        Page<Classes> objectPage = new Page<>(pageIndex, pageSize);
+        QueryWrapper<Classes> wrapper = new QueryWrapper<>();
+        LambdaQueryWrapper<Classes> wrapperLamdba = wrapper.lambda();
+        return classesMapper.selectPage(objectPage, wrapperLamdba);
     }
 
 

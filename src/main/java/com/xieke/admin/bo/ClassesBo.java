@@ -77,4 +77,18 @@ public class ClassesBo implements Serializable {
     private String remark;
 
     private static final long serialVersionUID = 1L;
+
+    public ClassesBo(Integer curriculumID, String className, Integer teacherID, String teacherName, Integer assistantTeacherID, String assistantTeacherName, Integer classType, Integer classLevel, Integer deleteStatus, Date createTime, String remark) {
+        this.curriculumID = curriculumID;
+        this.className = className;
+        this.teacherID = teacherID;
+        this.teacherName = teacherName;
+        this.assistantTeacherID = assistantTeacherID;
+        this.assistantTeacherName = assistantTeacherName;
+        this.classType = classType;
+        this.classLevel = classLevel;
+        this.deleteStatus = deleteStatus;
+        this.createTime = createTime;
+        this.remark = remark;
+    }
 }

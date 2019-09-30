@@ -8,6 +8,7 @@ import com.xieke.admin.bo.StudentBo;
 import com.xieke.admin.mapper.StudentMapper;
 import com.xieke.admin.model.Student;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -89,12 +90,39 @@ public class StudentService {
     /**
      * 根据ID将不为null的字段更新
      *
-     * @param student
      * @return
      */
-    public Boolean updateById(Student student) {
-        if (student.getID() == null) {
+    public Boolean updateById(Integer studentId, String studentName, Integer sex, String phoneOne, String phoneOneRemark, String phoneTwo, String phoneTwoRemark, String school, Integer grade, Integer entranceYear) {
+        if (studentId == null) {
             return false;
+        }
+        Student student = this.get(studentId);
+        if (!StringUtils.isEmpty(studentName)) {
+            student.setStudentName(studentName);
+        }
+        if (sex != null) {
+            student.setSex(sex);
+        }
+        if (!StringUtils.isEmpty(phoneOne)) {
+            student.setPhoneOne(phoneOne);
+        }
+        if (!StringUtils.isEmpty(phoneOneRemark)) {
+            student.setPhoneOneRemark(phoneOneRemark);
+        }
+        if (!StringUtils.isEmpty(phoneTwo)) {
+            student.setPhoneTwo(phoneTwo);
+        }
+        if (!StringUtils.isEmpty(phoneTwoRemark)) {
+            student.setPhoneTwoRemark(phoneTwoRemark);
+        }
+        if (!StringUtils.isEmpty(school)) {
+            student.setSchool(school);
+        }
+        if (grade != null) {
+            student.setGrade(grade);
+        }
+        if (entranceYear != null) {
+            student.setEntranceYear(entranceYear);
         }
         return studentMapper.updateById(student) > 0;
     }

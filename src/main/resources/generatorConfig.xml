@@ -62,8 +62,8 @@
         </javaClientGenerator>
         <!-- 指定数据库表 -->
 
-        <table tableName="t_student" domainObjectName="Student">
-            <!--<property name="useActualColumnNames" value="true"/>-->
+        <table tableName="t_classes" domainObjectName="Classes">
+            <property name="useActualColumnNames" value="true"/>
             <generatedKey column="Id" sqlStatement="MySql" identity="true"/>
             <columnRenamingRule searchString="^F" replaceString=""/>
             <columnOverride jdbcType="VARCHAR" javaType="java.lang.String" column="FRequestContent"/>

@@ -1,34 +1,34 @@
 package com.xieke.admin.domain;
 
 import com.xieke.admin.bo.StudentBo;
+import com.xieke.admin.page.HtPage;
 
 import java.util.List;
 
 /**
- *
  * @author zhangyang
- * @date 2019/08/24
+ * @date 2019/09/07
  */
 public interface StudentDomain {
 
     /**
-     * 添加
+     * 娣诲姞
      *
      * @param studentBo
      * @return
      */
-    Boolean insert(StudentBo studentBo);
+    boolean insert(StudentBo studentBo);
 
     /**
-     * 删除
+     * 鍒犻櫎
      *
      * @param id
      * @return
      */
-    Boolean delete(Integer id);
+    boolean delete(Integer id);
 
     /**
-     * 根据主键查询
+     * 鏍规嵁涓婚敭鏌ヨ
      *
      * @param id
      * @return
@@ -36,11 +36,17 @@ public interface StudentDomain {
     StudentBo get(Integer id);
 
     /**
-     * 查询全部数据
+     * 鏌ヨ鍏ㄩ儴鏁版嵁
      *
      * @return
      */
     List<StudentBo> findAll();
+
+    Boolean softDelete(Integer id);
+
+    HtPage<StudentBo> findPage(Integer pageIndex, Integer pageSize, Integer grade);
+
+    Boolean update(Integer studentId, String studentName, Integer sex, String phoneOne, String phoneOneRemark, String phoneTwo, String phoneTwoRemark, String school, Integer grade, Integer entranceYear);
 
 
 }

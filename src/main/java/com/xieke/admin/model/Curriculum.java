@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,8 +19,8 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("t_student")
-public class Student implements Serializable {
+@TableName("t_curriculum")
+public class Curriculum implements Serializable {
 
     /**
      * 主键ID
@@ -28,46 +29,28 @@ public class Student implements Serializable {
     private Integer ID;
 
     /**
-     * 学生姓名
+     * 课程名称
      */
-    @TableField("FStudentName")
-    private String studentName;
+    @TableField("FCurriculumName")
+    private String curriculumName;
 
     /**
-     * 性别
+     * 学期
      */
-    @TableField("FSex")
-    private Integer sex;
+    @TableField("FSemester")
+    private Integer semester;
 
     /**
-     * 电话一
+     * 日期
      */
-    @TableField("FPhoneOne")
-    private String phoneOne;
+    @TableField("FDate")
+    private Integer date;
 
     /**
-     * 电话一备注
+     * 年份
      */
-    @TableField("FPhoneOneRemark")
-    private String phoneOneRemark;
-
-    /**
-     * 电话二
-     */
-    @TableField("FPhoneTwo")
-    private String phoneTwo;
-
-    /**
-     * 电话二备注
-     */
-    @TableField("FPhoneTwoRemark")
-    private String phoneTwoRemark;
-
-    /**
-     * 学校
-     */
-    @TableField("FSchool")
-    private String school;
+    @TableField("FYear")
+    private Integer year;
 
     /**
      * 年级
@@ -76,10 +59,16 @@ public class Student implements Serializable {
     private Integer grade;
 
     /**
-     * 入学年份
+     * 课次
      */
-    @TableField("FEntranceYear")
-    private Integer entranceYear;
+    @TableField("FClassTime")
+    private Integer classTime;
+
+    /**
+     * 标价
+     */
+    @TableField("FPrice")
+    private BigDecimal price;
 
     /**
      * 是否已删除

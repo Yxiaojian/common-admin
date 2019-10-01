@@ -12,6 +12,17 @@ layui.use(['form','layer','table','element'],function(){
             return false;
         }
     });
+    $(".js_nextToJf").on("click",function(){
+        if (validFeeForm()) {
+            element.tabChange('enrollForm', 'feeInfo');
+        }else{
+            return false;
+        }
+    });
+    function validFeeForm(){
+        var $validator = $("#studentForm").validate();
+        return true;
+    }
     function validBasicForm(){
         var $validator = $("#studentForm").validate();
         if(!$validator.element($("#userName"))){

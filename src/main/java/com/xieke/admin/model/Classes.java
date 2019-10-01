@@ -18,8 +18,8 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("t_student")
-public class Student implements Serializable {
+@TableName("t_classes")
+public class Classes implements Serializable {
 
     /**
      * 主键ID
@@ -28,58 +28,52 @@ public class Student implements Serializable {
     private Integer ID;
 
     /**
-     * 学生姓名
+     * 课程ID
      */
-    @TableField("FStudentName")
-    private String studentName;
+    @TableField("FCurriculumID")
+    private Integer curriculumID;
 
     /**
-     * 性别
+     * 班级名称
      */
-    @TableField("FSex")
-    private Integer sex;
+    @TableField("FClassName")
+    private String className;
 
     /**
-     * 电话一
+     * 主讲老师ID
      */
-    @TableField("FPhoneOne")
-    private String phoneOne;
+    @TableField("FTeacherID")
+    private Integer teacherID;
 
     /**
-     * 电话一备注
+     * 主讲老师姓名
      */
-    @TableField("FPhoneOneRemark")
-    private String phoneOneRemark;
+    @TableField("FTeacherName")
+    private String teacherName;
 
     /**
-     * 电话二
+     * 助教老师ID
      */
-    @TableField("FPhoneTwo")
-    private String phoneTwo;
+    @TableField("FAssistantTeacherID")
+    private Integer assistantTeacherID;
 
     /**
-     * 电话二备注
+     * 助教老师姓名
      */
-    @TableField("FPhoneTwoRemark")
-    private String phoneTwoRemark;
+    @TableField("FAssistantTeacherName")
+    private String assistantTeacherName;
 
     /**
-     * 学校
+     * 班型
      */
-    @TableField("FSchool")
-    private String school;
+    @TableField("FClassType")
+    private Integer classType;
 
     /**
-     * 年级
+     * 时间档
      */
-    @TableField("FGrade")
-    private Integer grade;
-
-    /**
-     * 入学年份
-     */
-    @TableField("FEntranceYear")
-    private Integer entranceYear;
+    @TableField("FClassLevel")
+    private Integer classLevel;
 
     /**
      * 是否已删除

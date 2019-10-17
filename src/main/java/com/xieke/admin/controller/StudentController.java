@@ -58,7 +58,7 @@ public class StudentController {
     @ResponseBody
     public ResultInfo findPage(@RequestParam(value = "pageIndex", defaultValue = "1") Integer pageIndex, @RequestParam(value = "pageSize", defaultValue = "20") Integer pageSize, Integer grade) {
         HtPage<StudentBo> htPage = studentDomain.findPage(pageIndex, pageSize, grade);
-        return new ResultInfo(htPage);
+        return new ResultInfo(htPage.getRecords());
     }
 
     @RequestMapping("/home")

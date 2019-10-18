@@ -62,6 +62,14 @@ public class CurriculumController  extends BaseController {
         return new ResultInfo<>(list);
     }
 
+
+    @RequestMapping("/findById")
+    @ResponseBody
+    public ResultInfo<CurriculumBo> findById(Integer id){
+        CurriculumBo curriculumBo = curriculumDomain.get(id);
+        return new ResultInfo<>(curriculumBo);
+    }
+
     @RequestMapping("/findPage")
     @ResponseBody
     public ResultInfo findPage(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "limit", defaultValue = "20") Integer limit, Integer semester, Integer date, Integer year, Integer grade, String curriculumName) {

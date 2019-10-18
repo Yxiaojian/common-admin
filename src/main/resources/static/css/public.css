@@ -222,11 +222,19 @@ icons
 }
 .studentform .sticons{
     float: left;
-    margin-left: 20px;
+    margin-left: 40px;
 }
 .studentform .layui-tab-title li{
     float: left;
     font-size: 18px;
     padding: 0 5px;
     margin-left: 20px;
+}
+.enrtitle {
+    width: 119px;
+    float: left;
+    text-align: right;
+    margin-top: 10px;
+    font-size: 18px;
+    margin-right: 76px;
 }

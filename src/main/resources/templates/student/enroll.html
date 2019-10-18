@@ -15,13 +15,14 @@
 <body class="childrenBody">
     <form class="layui-form studentform" id="studentForm" >
 	<div class="layui-tab layui-tab-brief" lay-filter="enrollForm">
+        <div class="enrtitle">新生报名</div>
 		<ul class="layui-tab-title">
             <i class="sticons icons-jcxx"></i>
-			<li class="layui-this"  lay-id="basicInfo">基本信息</li>
+			<li class="layui-this"  lay-id="basicInfo"  style="pointer-events: none;">基本信息</li>
             <i class="sticons icons-bj"></i>
-			<li lay-id="classInfo">班级信息</li>
+			<li lay-id="classInfo" style="pointer-events: none;">班级信息</li>
             <i class="sticons icons-jf"></i>
-			<li lay-id="feeInfo">客户缴费</li>
+			<li lay-id="feeInfo"  style="pointer-events: none;">客户缴费</li>
 		</ul>
 		<div class="layui-tab-content" style="height: 100px;">
 			<div class="layui-tab-item layui-show">
@@ -57,7 +58,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">电话2</label>
                         <div class="layui-input-inline">
-                            <input type="text" class="layui-input" required id="mobilePhone2"  maxlength="32" name="mobilePhone2"  placeholder="电话号码">
+                            <input type="text" class="layui-input"  id="mobilePhone2"  maxlength="32" name="mobilePhone2"  placeholder="电话号码">
                         </div>
                         <div class="layui-input-inline">
                             <input type="text" class="layui-input" id="phone2Info"  maxlength="256" name="phone2Info"  placeholder="备注">
@@ -130,53 +131,58 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">选择班级</label>
                         <div class="layui-input-block">
-                            <select class="classes" name="stuClass">
-                                <option value="1">班级一</option>
-                                <option value="2">班级二</option>
-                                <option value="3">班级三</option>
+                            <select class="classes" id="classesSselectId" lay-filter="classesSselectId" name="stuClass">
                             </select>
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <div class="layui-inline">
-                            <label class="layui-form-label" style="padding-left: 0;width: 95px;">类型</label>
+                            <label class="layui-form-label" style="padding-left: 0;width: 95px;">类型：</label>
                             <div class="layui-input-inline"  style="width: 80px;margin-right: 0;">
-                                <input type="text" class="layui-input" readonly id="classType" name="classType" placeholder="">
+                                <label class="layui-form-label" id="classType" style="text-align: left;"></label>
                             </div>
                         </div>
+                    </div>
 
+                    <div class="layui-form-item">
                         <div class="layui-inline">
-                            <label class="layui-form-label" style="padding-left: 0;width: 35px;">年级</label>
+                            <label class="layui-form-label" style="padding-left: 0;width: 95px;">年级：</label>
                             <div class="layui-input-inline"  style="width: 80px;margin-right: 0;">
-                                <input type="text" class="layui-input" readonly id="grade" name="grade" placeholder="">
+                                <label class="layui-form-label" id="grade" style="text-align: left;"></label>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="layui-form-item">
                         <div class="layui-inline">
-                            <label class="layui-form-label" style="padding-left: 0;width: 35px;">班型</label>
+                            <label class="layui-form-label" style="padding-left: 0;width: 95px;">班型：</label>
                             <div class="layui-input-inline"  style="width: 80px;margin-right: 0;">
-                                <input type="text" class="layui-input" readonly id="gradeType" name="gradeType" placeholder="">
+                                <label class="layui-form-label" id="gradeType" style="text-align: left;"></label>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="layui-form-item">
                         <div class="layui-inline">
-                            <label class="layui-form-label" style="padding-left: 0;width: 35px;">人数</label>
+                            <label class="layui-form-label" style="padding-left: 0;width: 95px;">人数：</label>
                             <div class="layui-input-inline"  style="width: 80px;margin-right: 0;">
-                                <input type="text" class="layui-input " readonly id="stuCount" name="stuCount" placeholder="">
+                                <label class="layui-form-label" id="stuCount" style="text-align: left;"></label>
                             </div>
                         </div>
 
                     </div>
                     <div class="layui-form-item">
                         <div class="layui-inline">
-                            <label class="layui-form-label" style="padding-left: 0;width: 95px;">金额</label>
+                            <label class="layui-form-label" style="padding-left: 0;width: 95px;">金额：</label>
                             <div class="layui-input-inline"  style="width: 110px;">
-                                <input type="text" class="layui-input" readonly id="kcfee" name="classType" placeholder="">
+                                <label class="layui-form-label" id="kcfee" style="text-align: left;"></label>
                             </div>
                         </div>
 
                         <div class="layui-inline">
                             <label class="layui-form-label" style="padding-left: 0;width: 35px;">优惠</label>
                             <div class="layui-input-inline">
-                                <input type="text" class="layui-input number" id="preferential" name="preferential" value="0" placeholder="">
+                                <input type="text" class="layui-input money" id="preferential" name="preferential" value="0" placeholder="">
                             </div>
                         </div>
 
@@ -192,7 +198,8 @@
 
                     <div class="layui-form-item">
                         <div class="layui-input-block">
-                            <a  href="javascript:;" class="layui-btn  layui-layout-right js_nextToJf" style="width:100%;">确认缴费</a>
+                            <a  href="javascript:;" class="layui-btn layui-bg-gray layui-layout-left js_preToClass" style="width:48%;left:0;">上一步</a>
+                            <a  href="javascript:;" class="layui-btn  layui-layout-right js_nextToJf" style="width:48%;">确认缴费</a>
                         </div>
                     </div>
                 </div>
@@ -203,7 +210,125 @@
 </form>
 <script type="text/javascript" src="/static/layui/layui.js"></script>
 <script type="text/javascript" src="/static/js/jquery.js"></script>
-<script type="text/javascript" src="/static/js/jquery.validate.js"></script>
-<script type="text/javascript" src="/static/js/student/enroll.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.validate.js"></script>
+    <script type="text/javascript" src="/static/js/site.js"></script>
+<script>
+    layui.use(['form','layer','table','element'],function(){
+        var form = layui.form,
+            layer = parent.layer === undefined ? layui.layer : top.layer,
+            $ = layui.jquery,
+            element = layui.element,
+            table = layui.table;
+
+        form.verify({
+            money: function(val, item) {
+                if(!/^\d+(\.\d{0,2})?$/.test(val)){
+                    return '请输入正确的格式'
+                }
+            }
+        });
+        var classList;
+        $.post("/classes/selectListData",function(data){
+            var t = 0;
+            classList = data.data;
+
+            classList.forEach(function(e){
+                if (t == 0){
+                    initClassInfo(e);
+                }
+                t++;
+                $("#classesSselectId").append("<option value='"+e.id+"'>"+e.className+"</option>");
+            });
+            form.render('select');//重新渲染
+        });
+        form.on('select(classesSselectId)', function(data){
+            classList.forEach(function(e){
+                if (data.value == e.id){
+                    initClassInfo(e);
+                    $("#preferential").val("0");
+                }
+            });
+
+        });
+        function initClassInfo(data) {
+            //班型
+            $("#gradeType").html(getClassesType(data.classType));
+            $.post("/curriculum/findById?id="+data.curriculumID,function(curi){
+                $("#grade").html(getGradeType(curi.data.grade));
+                //类型
+                $("#classType").html(getSeType(curi.data.semester));
+                $("#kcfee").html(curi.data.price+"元");
+
+            });
+        }
+
+        $(".js_preToClass").on("click",function(){
+            element.tabChange('enrollForm', 'basicInfo');
+        });
+        $(".js_nextToClass").on("click",function(){
+            if (validBasicForm()) {
+                element.tabChange('enrollForm', 'classInfo');
+            }else{
+                return false;
+            }
+        });
+        $(".js_nextToJf").on("click",function(){
+            if (validFeeForm()) {
+                element.tabChange('enrollForm', 'feeInfo');
+            }else{
+                return false;
+            }
+        });
+
+        function validFeeForm(){
+            var $validator = $("#studentForm").validate();
+            if(!$validator.element($("#classCusInfo"))){
+                return false;
+            }
+            return true;
+        }
+        function validBasicForm(){
+            var $validator = $("#studentForm").validate();
+            if(!$validator.element($("#userName"))){
+                return false;
+            }
+            if(!$validator.element($("#mobilePhone1"))){
+                return false;
+            }
+            if(!$validator.element($("#phone1Info"))){
+                return false;
+            }
+            if(!$validator.element($("#mobilePhone2"))){
+                return false;
+            }
+            if(!$validator.element($("#phone2Info"))){
+                return false;
+            }
+            if(!$validator.element($("#school"))){
+                return false;
+            }
+            return true;
+        }
+        $(".js_preToBasic").on("click",function(){
+            element.tabChange('enrollForm', 'basicInfo');
+        });
+    })
+
+    // $.fn.extend($.validator.defaults, {
+    //     //重写showErrors
+    //     showErrors: function (errorMap, errorList) {
+    //         $.each(errorList, function (i, v) {
+    //             //在此处用了layer的方法,显示效果更美观
+    //             if($(v.element)[0].tagName.indexOf("SELECT")>-1){ // 针对于select2  控件做了调整
+    //                 layer.tips(v.message, $(v.element).next(), {icon: 2 , time: 3000 });
+    //             }else{
+    //                 layer.tips(v.message, v.element, {icon: 2 , time: 3000 });
+    //             }
+    //             return false;
+    //         });
+    //     }
+    // });
+
+</script>
 </body>
 </html>

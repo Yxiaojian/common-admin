@@ -51,4 +51,5 @@ public class CurriculumNativeDomain implements CurriculumDomain {
         return BeanUtil.convertPage(htPage, CurriculumBo.class);
     }
 
+
 }

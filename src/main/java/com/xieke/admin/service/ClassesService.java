@@ -59,6 +59,8 @@ public class ClassesService {
      */
     public List<Classes> findAll() {
         QueryWrapper<Classes> wrapper = new QueryWrapper<>();
+        LambdaQueryWrapper<Classes> curriculumWrapper = wrapper.lambda();
+        curriculumWrapper.eq(Classes::getDeleteStatus, 0);
         return classesMapper.selectList(wrapper);
     }
 

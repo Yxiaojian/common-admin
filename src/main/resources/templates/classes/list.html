@@ -44,7 +44,12 @@
 				$ = layui.jquery,
 				table = layui.table;
 
-
+		var curList;
+		$.post("/curriculum/selectListData",{
+			available : 1
+		},function(data){
+			curList = data.data;
+		});
 		//班级列表
 		var tableIns = table.render({
 			elem: '#classesList',
@@ -59,7 +64,13 @@
 				{type: "checkbox", fixed:"left", width:50},
 				{field: 'className', title: '班级名称', minWidth:100, align:'center'},
 				{field: 'curriculumID', title: '课程名称', minWidth:100, align:'center',templet:function(d){
-						return d.curriculumID;
+						var name = "";
+						curList.forEach(function(e){
+							if (e.id === d.curriculumID){
+								name = e.curriculumName;
+							}
+						});
+						return name;
 					}},
 				{field: 'teacherName', title: '主讲老师', minWidth:100, align:'center'},
 				{field: 'assistantTeacherName', title: '助教老师', minWidth:100, align:'center'},

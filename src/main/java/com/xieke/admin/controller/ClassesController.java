@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("/classes")
@@ -51,6 +52,12 @@ public class ClassesController {
         }
 
         return new ResultInfo(true);
+    }
+    @RequestMapping("/selectListData")
+    @ResponseBody
+    public ResultInfo<List<ClassesBo>> selectListData(){
+        List<ClassesBo> list = classesDomain.findAll();
+        return new ResultInfo<>(list);
     }
 
     @RequestMapping("/update")

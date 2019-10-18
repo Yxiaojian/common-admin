@@ -99,5 +99,4 @@ public class CurriculumService {
         return curriculumMapper.selectPage(objectPage, wrapperLamdba);
     }
 
-
 }

@@ -5,6 +5,7 @@ import com.xieke.admin.domain.CurriculumDomain;
 import com.xieke.admin.dto.ResultInfo;
 import com.xieke.admin.page.HtPage;
 import com.xieke.admin.web.BaseController;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +19,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/curriculum")
+@RequiresPermissions("curriculum:list")
 public class CurriculumController  extends BaseController {
     @Resource
     private CurriculumDomain curriculumDomain;
@@ -39,6 +41,7 @@ public class CurriculumController  extends BaseController {
     }
 
     @RequestMapping("/delete")
+    @ResponseBody
     public ResultInfo delete(Integer[] idArr) {
         if (idArr == null) {
             return new ResultInfo<>("课程ID不能为空");
@@ -63,7 +66,7 @@ public class CurriculumController  extends BaseController {
     @ResponseBody
     public ResultInfo findPage(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "limit", defaultValue = "20") Integer limit, Integer semester, Integer date, Integer year, Integer grade, String curriculumName) {
         HtPage<CurriculumBo> htPage = curriculumDomain.findPage(page, limit, semester, date, year, grade, curriculumName);
-        return new ResultInfo(htPage.getRecords());
+        return new ResultInfo("","0",htPage.getRecords(),new Long (htPage.getTotal()).intValue());
 
     }
 

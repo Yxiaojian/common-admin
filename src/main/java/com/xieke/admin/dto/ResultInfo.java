@@ -20,6 +20,13 @@ public class ResultInfo<T> implements Serializable {
         this.count = count;
     }
 
+    public ResultInfo(String msg, String code, T data, int count) {
+        this.msg = msg;
+        this.code = code;
+        this.data = data;
+        this.count = count;
+    }
+
     public ResultInfo(String code, String msg) {
         this.code = code;
         this.msg = msg;

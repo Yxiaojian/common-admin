@@ -61,3 +61,29 @@ function getGradeType(d) {
             return "未定义";
     }
 }
+function getClassesType(d) {
+    switch (d) {
+        case 0:
+            return "A";
+        case 1:
+            return "B";
+        default:
+            return "未定义";
+    }
+}
+function getClassesLevel(d) {
+    switch (d) {
+        case 0:
+            return "一档";
+        case 1:
+            return "二档";
+        case 2:
+            return "三档";
+        case 3:
+            return "四档";
+        case 4:
+            return "五档";
+        default:
+            return "未定义";
+    }
+}

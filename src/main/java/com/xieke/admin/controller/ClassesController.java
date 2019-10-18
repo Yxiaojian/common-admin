@@ -4,6 +4,7 @@ import com.xieke.admin.bo.ClassesBo;
 import com.xieke.admin.domain.ClassesDomain;
 import com.xieke.admin.dto.ResultInfo;
 import com.xieke.admin.page.HtPage;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,6 +16,7 @@ import java.util.Date;
 
 @Controller
 @RequestMapping("/classes")
+@RequiresPermissions("classes:list")
 public class ClassesController {
     @Resource
     private ClassesDomain classesDomain;
@@ -36,13 +38,18 @@ public class ClassesController {
     }
 
     @RequestMapping("/delete")
-    public ResultInfo delete(Integer classesId) {
-        if (classesId == null) {
+    @ResponseBody
+    public ResultInfo delete(Integer[] idArr) {
+        if (idArr == null) {
             return new ResultInfo<>("班级ID不能为空");
         }
-        if (!classesDomain.softDelete(classesId)) {
-            return new ResultInfo<>("删除失败");
+
+        for (Integer classesId:idArr) {
+            if (!classesDomain.softDelete(classesId)) {
+                return new ResultInfo<>("删除失败");
+            }
         }
+
         return new ResultInfo(true);
     }
 
@@ -62,7 +69,7 @@ public class ClassesController {
     @ResponseBody
     public ResultInfo findPage(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "limit", defaultValue = "20") Integer limit) {
         HtPage<ClassesBo> htPage = classesDomain.findPage(page, limit);
-        return new ResultInfo(htPage.getRecords());
+        return new ResultInfo("","0",htPage.getRecords(),new Long (htPage.getTotal()).intValue());
     }
 
 

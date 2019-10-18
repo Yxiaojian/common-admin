@@ -25,6 +25,9 @@
 			<div class="layui-inline">
 				<a class="layui-btn layui-btn-normal add_btn">添加</a>
 			</div>
+			<div class="layui-inline">
+				<a class="layui-btn layui-btn-warm layui-btn-normal edit_btn">编辑</a>
+			</div>
             <div class="layui-inline">
                 <a class="layui-btn layui-btn-danger layui-btn-normal delAll_btn">删除</a>
             </div>
@@ -54,11 +57,10 @@
 			id : "classesList",
 			cols : [[
 				{type: "checkbox", fixed:"left", width:50},
+				{field: 'className', title: '班级名称', minWidth:100, align:'center'},
 				{field: 'curriculumID', title: '课程名称', minWidth:100, align:'center',templet:function(d){
 						return d.curriculumID;
 					}},
-
-				{field: 'className', title: '班级名称', minWidth:100, align:'center'},
 				{field: 'teacherName', title: '主讲老师', minWidth:100, align:'center'},
 				{field: 'assistantTeacherName', title: '助教老师', minWidth:100, align:'center'},
 				{field: 'classType', title: '班型', minWidth:100, align:'center',templet:function(d){
@@ -82,13 +84,21 @@
 				}
 			})
 		});
-
+		$(".edit_btn").click(function(){
+			var checkStatus = table.checkStatus('classesList'),
+					data = checkStatus.data;
+			if(data.length > 0){
+				addCurri(data[0]);
+			}else{
+				layer.msg("请选择需要修改的班级");
+			}
+		});
 		//添加班级
 		function addCurri(edit){
 			var h = "440px";
 			var title = "添加班级";
 			if (edit){
-				h = "280px";
+				h = "440px";
 				title = "编辑班级";
 			}
 			layui.layer.open({
@@ -99,13 +109,15 @@
 				success : function(layero, index){
 					var body = layui.layer.getChildFrame('body', index);
 					if(edit){
-						body.find("#une").remove();
-						body.find("#pwd1").remove();
-						body.find("#pwd2").remove();
-						body.find("#id").val(edit.id);
-						body.find("#name").val(edit.name);
-						body.find("#roleId").val(edit.roleId);
-						body.find("#stateSelect").val(edit.state);
+						body.find("#editId").val(edit.id);
+						body.find(".className").val(edit.className);
+						body.find("#editTeacherNameHidden").val(edit.teacherName);
+						body.find("#editAssistantTeacherIDHidden").val(edit.assistantTeacherName);
+						body.find("#assistantTeacherIDSelectHid").val(edit.assistantTeacherID);
+						body.find("#curriculumIDSelectHid").val(edit.curriculumID);
+						body.find("#teacherIDSelectHid").val(edit.teacherID);
+						body.find("#classTypeSelectHid").val(edit.classType);
+						body.find("#classLevelSelectHid").val(edit.classLevel);
 						form.render();
 					}
 					setTimeout(function(){

@@ -54,6 +54,7 @@ public class ClassesController {
     }
 
     @RequestMapping("/update")
+    @ResponseBody
     public ResultInfo update(Integer classesId, Integer curriculumID, String className, Integer teacherID, String teacherName, Integer assistantTeacherID, String assistantTeacherName, Integer classType, Integer classLevel) {
         if (classesId == null) {
             return new ResultInfo<>("班级ID不能为空");

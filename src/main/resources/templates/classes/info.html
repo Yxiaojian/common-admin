@@ -14,7 +14,16 @@
 </head>
 <body class="childrenBody">
 <form class="layui-form linksAdd">
-	<input type="hidden" value="" id="id" name="ids">
+	<input type="hidden" value="" id="editId" name="classesId">
+	<input type="hidden" value="" id="assistantTeacherIDSelectHid" name="assistantTeacherIDSelectHid">
+	<input type="hidden" value="" id="curriculumIDSelectHid" name="curriculumIDSelectHid">
+	<input type="hidden" value="" id="teacherIDSelectHid" name="teacherIDSelectHid">
+	<input type="hidden" value="" id="classTypeSelectHid" name="classTypeSelectHid">
+	<input type="hidden" value="" id="classLevelSelectHid" name="classLevelSelectHid">
+	<input type="hidden" value="" id="editTeacherNameHidden" name="teacherNameHid">
+	<input type="hidden" value="" id="editAssistantTeacherIDHidden" name="assistantTeacherNameHid">
+	<input type="hidden" id="teacherNameHidden" name="teacherName">
+	<input type="hidden" id="assistantTeacherIDHidden" name="assistantTeacherName">
 	<div class="layui-form-item">
 		<label class="layui-form-label">班级名称</label>
 		<div class="layui-input-block">
@@ -38,7 +47,6 @@
 			</select>
 		</div>
 	</div>
-	<input type="hidden" id="teacherNameHidden" name="teacherName">
 
 	<div class="layui-form-item">
 		<label class="layui-form-label">助教老师</label>
@@ -48,7 +56,6 @@
 			</select>
 		</div>
 	</div>
-	<input type="hidden" id="assistantTeacherIDHidden" name="assistantTeacherName">
 	<div class="layui-form-item">
 		<label class="layui-form-label">班型</label>
 		<div class="layui-input-block">
@@ -81,17 +88,20 @@
 		layer = parent.layer === undefined ? layui.layer : top.layer,
 				$ = layui.jquery;
 
+		if ($("#classTypeSelectHid").val() != "") {
+			$("#classTypeSelect").val($("#classTypeSelectHid").val());
+		}
+		if ($("#classLevelSelectHid").val() != "") {
+			$("#classLevelSelect").val($("#classLevelSelectHid").val());
+		}
 		$.post("/curriculum/selectListData",function(data){
 			var resourceTypeList = data.data;
 			resourceTypeList.forEach(function(e){
 				$("#curriculumIDSelect").append("<option value='"+e.id+"'>"+e.curriculumName+"</option>");
 			});
-			//编辑
-			// if($("#resourceType").val()!==""){
-			// 	$("#resourceTypeSelect").val($("#resourceType").val());//默认选中
-			// 	$("#resourceTypeSelect").attr("disabled","disabled");
-			// 	getParentSelectData($("#resourceType").val());
-			// }
+			if ($("#curriculumIDSelectHid").val() != "") {
+				$("#curriculumIDSelect").val($("#curriculumIDSelectHid").val());
+			}
 			form.render('select');//重新渲染
 		});
 		$.post("/user/selectListData?roleId=2",function(data){
@@ -104,12 +114,21 @@
 				t++;
 				$("#teacherIDSelect").append("<option value='"+e.id+"'>"+e.name+"</option>");
 			});
+			if ($("#editTeacherNameHidden").val() != "") {
+				$("#teacherNameHidden").val($("#editTeacherNameHidden").val());
+			}
+			if ($("#teacherIDSelectHid").val() != "") {
+				$("#teacherIDSelect").val($("#teacherIDSelectHid").val());
+			}
 			form.render('select');//重新渲染
 		});
-		form.on('select(teacherIDSelect)', function(data){
-			$("#teacherNameHidden").val($("#assistantTeacherIDSelect").find("option:selected").text());
+		form.on('select(assistantTeacherIDSelect)', function(data){
+			$("#assistantTeacherIDHidden").val($("#assistantTeacherIDSelect").find("option:selected").text());
 		});
 
+		form.on('select(teacherIDSelect)', function(data){
+			$("#teacherNameHidden").val($("#teacherIDSelect").find("option:selected").text());
+		});
 		//助教老师
 		$.post("/user/selectListData?roleId=3",function(data){
 			var t = 0;
@@ -121,10 +140,14 @@
 				t++;
 				$("#assistantTeacherIDSelect").append("<option value='"+e.id+"'>"+e.name+"</option>");
 			});
+			if ($("#editAssistantTeacherIDHidden").val() != "") {
+				$("#assistantTeacherIDHidden").val($("#editAssistantTeacherIDHidden").val());
+			}
+
+			if ($("#assistantTeacherIDSelectHid").val() != "") {
+				$("#assistantTeacherIDSelect").val($("#assistantTeacherIDSelectHid").val());
+			}
 			form.render('select');//重新渲染
-		});
-		form.on('select(teacherIDSelect)', function(data){
-			$("#assistantTeacherIDHidden").val($("#teacherIDSelect").find("option:selected").text());
 		});
 		form.verify({
 			money: function(val, item) {
@@ -135,8 +158,12 @@
 		});
 		form.on("submit(addClasses)",function(data){
 			//弹出loading
+			var action = "add";
+			if ($("#editId").val() != "") {
+				action = "update";
+			}
 			var index = top.layer.msg('数据保存中，请稍候...',{icon: 16,time:false,shade:0.8});
-			$.post("/classes/add",data.field,function(res){
+			$.post("/classes/"+action,data.field,function(res){
 				layer.close(index);
 				if (res.data){
 					layer.msg("保存成功！");

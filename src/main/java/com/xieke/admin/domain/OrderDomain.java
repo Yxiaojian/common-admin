@@ -2,6 +2,7 @@ package com.xieke.admin.domain;
 
 import com.xieke.admin.bo.OrderBo;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -41,6 +42,8 @@ public interface OrderDomain {
      * @return
      */
     List<OrderBo> findAll();
+
+    Boolean updatePaidAmountAfterPay(Integer orderId, BigDecimal payAmount);
 
 
 }

@@ -6,14 +6,14 @@ import com.xieke.admin.mapper.OrderMapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
- *
  * @author zhangyang
  * @date 2019/09/07
  */
- @Service
+@Service
 public class OrderService {
 
     @Resource
@@ -55,8 +55,20 @@ public class OrderService {
      * @return
      */
     public List<Order> findAll() {
-    QueryWrapper<Order> wrapper = new QueryWrapper<>();
-      return orderMapper.selectList(wrapper);
+        QueryWrapper<Order> wrapper = new QueryWrapper<>();
+        return orderMapper.selectList(wrapper);
+    }
+
+    public Boolean updatePaidAmount(Integer orderId, BigDecimal paidAmount) {
+        if (orderId == null) {
+            return false;
+        }
+        if (paidAmount == null) {
+            return false;
+        }
+        Order order = this.get(orderId);
+        order.setPaidAmount(paidAmount);
+        return orderMapper.updateById(order) > 0;
     }
 
 

@@ -58,4 +58,13 @@ public class PayRecordBo implements Serializable {
     private String remark;
 
     private static final long serialVersionUID = 1L;
+
+    public PayRecordBo(Integer orderID, Integer payType, BigDecimal payAmount, String toller, Date createTime, String remark) {
+        this.orderID = orderID;
+        this.payType = payType;
+        this.payAmount = payAmount;
+        this.toller = toller;
+        this.createTime = createTime;
+        this.remark = remark;
+    }
 }

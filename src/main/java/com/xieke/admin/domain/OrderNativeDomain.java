@@ -7,6 +7,7 @@ import com.xieke.admin.util.BeanUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -39,6 +40,24 @@ public class OrderNativeDomain implements OrderDomain {
     @Override
     public List<OrderBo> findAll() {
         return BeanUtil.convertList(orderService.findAll(), OrderBo.class);
+    }
+
+    @Override
+    public Boolean updatePaidAmountAfterPay(Integer orderId, BigDecimal payAmount) {
+        if (orderId == null) {
+            return false;
+        }
+        OrderBo orderBo = this.get(orderId);
+        if (orderBo == null) {
+            return false;
+        }
+        BigDecimal paidAmount = orderBo.getPaidAmount();
+        BigDecimal resultPaidAmount = paidAmount.subtract(paidAmount);
+        if (resultPaidAmount.compareTo(BigDecimal.ZERO) < 0) {
+            return false;
+        }
+
+        return orderService.updatePaidAmount(orderId, resultPaidAmount);
     }
 
 }

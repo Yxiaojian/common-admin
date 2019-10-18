@@ -46,5 +46,5 @@ public interface CurriculumDomain {
 
     Boolean softDelete(Integer curriculumId);
 
-    HtPage<CurriculumBo> findPage(Integer pageIndex, Integer pageSize, Integer semester, Integer date, Integer year, Integer grade);
+    HtPage<CurriculumBo> findPage(Integer pageIndex, Integer pageSize, Integer semester, Integer date, Integer year, Integer grade, String curriculumName);
 }

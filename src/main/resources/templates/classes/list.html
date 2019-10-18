@@ -2,7 +2,7 @@
 <html xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
 	<meta charset="utf-8">
-	<title>课程列表</title>
+	<title>班级列表</title>
 	<meta name="renderer" content="webkit">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -18,7 +18,7 @@
 		<form class="layui-form">
 			<div class="layui-inline">
 				<div class="layui-input-inline">
-					<input type="text" class="layui-input curriculumName" placeholder="请输入课程名称" />
+					<input type="text" class="layui-input className" placeholder="请输入班级名称" />
 				</div>
 				<a class="layui-btn search_btn" data-type="reload">搜索</a>
 			</div>
@@ -30,7 +30,7 @@
             </div>
 		</form>
 	</blockquote>
-	<table id="curCulumList" lay-filter="curCulumList"></table>
+	<table id="classesList" lay-filter="classesList"></table>
 </form>
 <script type="text/javascript" src="/static/layui/layui.js"></script>
 <script type="text/javascript" src="/static/js/site.js"></script>
@@ -42,16 +42,16 @@
 				table = layui.table;
 
 
-		//课程列表
+		//班级列表
 		var tableIns = table.render({
-			elem: '#curCulumList',
-			url : '/curriculum/findPage',
+			elem: '#classesList',
+			url : '/classes/findPage',
 			cellMinWidth : 115,
 			page : true,
 			height : "full-125",
 			limits : [10,20,30],
 			limit : 10,
-			id : "curCulumList",
+			id : "classesList",
 			cols : [[
 				{type: "checkbox", fixed:"left", width:50},
 				{field: 'curriculumName', title: '课程名称', minWidth:100, align:'center'},
@@ -77,23 +77,23 @@
 
 		//搜索
 		$(".search_btn").on("click",function(){
-			table.reload("curCulumList",{
+			table.reload("classesList",{
 				page: {
 					curr: 1 //重新从第 1 页开始
 				},
 				where: {
-					curriculumName: $(".curriculumName").val()
+					className: $(".className").val()
 				}
 			})
 		});
 
-		//添加课程
+		//添加班级
 		function addCurri(edit){
 			var h = "440px";
-			var title = "添加课程";
+			var title = "添加班级";
 			if (edit){
 				h = "280px";
-				title = "编辑课程";
+				title = "编辑班级";
 			}
 			layui.layer.open({
 				title : title,
@@ -113,7 +113,7 @@
 						form.render();
 					}
 					setTimeout(function(){
-						layui.layer.tips('点击此处返回课程列表', '.layui-layer-setwin .layui-layer-close', {
+						layui.layer.tips('点击此处返回班级列表', '.layui-layer-setwin .layui-layer-close', {
 							tips: 3
 						});
 					},500)
@@ -125,15 +125,15 @@
 			addCurri();
 		});
 		$(".delAll_btn").click(function(){
-			var checkStatus = table.checkStatus('curCulumList'),
+			var checkStatus = table.checkStatus('classesList'),
 					data = checkStatus.data,
 					idArr = [];
 			if(data.length > 0) {
 				for (var i in data) {
 					idArr.push(data[i].id);
 				}
-				layer.confirm('确定删除选中的课程？', {icon: 3, title: '提示信息'}, function (index) {
-					$.get("/curriculum/delete",{
+				layer.confirm('确定删除选中的班级？', {icon: 3, title: '提示信息'}, function (index) {
+					$.get("/classes/delete",{
 						idArr : idArr.toString()
 					},function(data){
 						layer.close(index);
@@ -146,7 +146,7 @@
 					})
 				})
 			}else{
-				layer.msg("请选择需要删除的课程");
+				layer.msg("请选择需要删除的班级");
 			}
 		})
 

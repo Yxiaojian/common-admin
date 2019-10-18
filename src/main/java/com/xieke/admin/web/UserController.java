@@ -137,4 +137,13 @@ public class UserController extends BaseController{
         return new ResultInfo<>(iUserService.count(new QueryWrapper<>()));
     }
 
+
+    @RequestMapping("/selectListData")
+    @ResponseBody
+    public ResultInfo<List<User>> selectListData(User user){
+        QueryWrapper<User> wrapper = new QueryWrapper<>(user);
+        List<User> list = iUserService.list(wrapper);
+        return new ResultInfo<>(list);
+    }
+
 }

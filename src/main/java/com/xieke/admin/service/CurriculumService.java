@@ -58,7 +58,9 @@ public class CurriculumService {
      */
     public List<Curriculum> findAll() {
         QueryWrapper<Curriculum> wrapper = new QueryWrapper<>();
-        return curriculumMapper.selectList(wrapper);
+        LambdaQueryWrapper<Curriculum> curriculumWrapper = wrapper.lambda();
+        curriculumWrapper.eq(Curriculum::getDeleteStatus, 0);
+        return curriculumMapper.selectList(curriculumWrapper);
     }
 
     public Boolean softDelete(Integer id) {
@@ -74,7 +76,7 @@ public class CurriculumService {
         return curriculumMapper.update(curriculum, wrapper) > 0;
     }
 
-    public IPage<Curriculum> findPage(Integer pageIndex, Integer pageSize, Integer semester, Integer date, Integer year, Integer grade) {
+    public IPage<Curriculum> findPage(Integer pageIndex, Integer pageSize, Integer semester, Integer date, Integer year, Integer grade,String curriculumName) {
         Page<Curriculum> objectPage = new Page<>(pageIndex, pageSize);
         QueryWrapper<Curriculum> wrapper = new QueryWrapper<>();
         LambdaQueryWrapper<Curriculum> wrapperLamdba = wrapper.lambda();
@@ -90,6 +92,10 @@ public class CurriculumService {
         if (grade != null) {
             wrapperLamdba.eq(Curriculum::getGrade, grade);
         }
+        if (curriculumName != null) {
+            wrapperLamdba.like(Curriculum::getCurriculumName,curriculumName);
+        }
+        wrapperLamdba.eq(Curriculum::getDeleteStatus, 0);
         return curriculumMapper.selectPage(objectPage, wrapperLamdba);
     }
 

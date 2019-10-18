@@ -46,8 +46,8 @@ public class CurriculumNativeDomain implements CurriculumDomain {
     }
 
     @Override
-    public HtPage<CurriculumBo> findPage(Integer pageIndex, Integer pageSize, Integer semester, Integer date, Integer year, Integer grade) {
-        HtPage<Curriculum> htPage = new HtPage<>(curriculumService.findPage(pageIndex, pageSize, semester, date, year, grade));
+    public HtPage<CurriculumBo> findPage(Integer pageIndex, Integer pageSize, Integer semester, Integer date, Integer year, Integer grade, String curriculumName) {
+        HtPage<Curriculum> htPage = new HtPage<>(curriculumService.findPage(pageIndex, pageSize, semester, date, year, grade,curriculumName));
         return BeanUtil.convertPage(htPage, CurriculumBo.class);
     }
 

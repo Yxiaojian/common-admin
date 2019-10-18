@@ -112,6 +112,7 @@ public class ClassesService {
         Page<Classes> objectPage = new Page<>(pageIndex, pageSize);
         QueryWrapper<Classes> wrapper = new QueryWrapper<>();
         LambdaQueryWrapper<Classes> wrapperLamdba = wrapper.lambda();
+        wrapperLamdba.eq(Classes::getDeleteStatus, 0);
         return classesMapper.selectPage(objectPage, wrapperLamdba);
     }
 

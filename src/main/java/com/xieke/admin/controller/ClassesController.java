@@ -4,26 +4,34 @@ import com.xieke.admin.bo.ClassesBo;
 import com.xieke.admin.domain.ClassesDomain;
 import com.xieke.admin.dto.ResultInfo;
 import com.xieke.admin.page.HtPage;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.Date;
 
-@RestController
+@Controller
 @RequestMapping("/classes")
 public class ClassesController {
     @Resource
     private ClassesDomain classesDomain;
 
+    @RequestMapping("/*")
+    public void toHtml(){
+
+    }
 
     @RequestMapping("/add")
+    @ResponseBody
     public ResultInfo add(Integer curriculumID, String className, Integer teacherID, String teacherName, Integer assistantTeacherID, String assistantTeacherName, Integer classType, Integer classLevel) {
         ClassesBo classesBo = new ClassesBo(curriculumID, className, teacherID, teacherName, assistantTeacherID, assistantTeacherName, classType, classLevel, 0, new Date(), "");
         if (!classesDomain.insert(classesBo)) {
             return new ResultInfo<>("新增失败");
         }
+
         return new ResultInfo(true);
     }
 
@@ -51,9 +59,10 @@ public class ClassesController {
 
 
     @RequestMapping("/findPage")
-    public ResultInfo findPage(@RequestParam(value = "pageIndex", defaultValue = "1") Integer pageIndex, @RequestParam(value = "pageSize", defaultValue = "20") Integer pageSize) {
-        HtPage<ClassesBo> htPage = classesDomain.findPage(pageIndex, pageSize);
-        return new ResultInfo(htPage);
+    @ResponseBody
+    public ResultInfo findPage(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "limit", defaultValue = "20") Integer limit) {
+        HtPage<ClassesBo> htPage = classesDomain.findPage(page, limit);
+        return new ResultInfo(htPage.getRecords());
     }
 
 

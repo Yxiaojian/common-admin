@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("/curriculum")
@@ -38,21 +39,30 @@ public class CurriculumController  extends BaseController {
     }
 
     @RequestMapping("/delete")
-    public ResultInfo delete(Integer curriculumId) {
-        if (curriculumId == null) {
+    public ResultInfo delete(Integer[] idArr) {
+        if (idArr == null) {
             return new ResultInfo<>("课程ID不能为空");
         }
-        if (!curriculumDomain.softDelete(curriculumId)) {
-            return new ResultInfo<>("删除失败");
+        for (Integer curriculumId:idArr) {
+            if (!curriculumDomain.softDelete(curriculumId)) {
+
+            }
         }
+
         return new ResultInfo(true);
     }
 
+    @RequestMapping("/selectListData")
+    @ResponseBody
+    public ResultInfo<List<CurriculumBo>> selectListData(){
+        List<CurriculumBo> list = curriculumDomain.findAll();
+        return new ResultInfo<>(list);
+    }
 
     @RequestMapping("/findPage")
     @ResponseBody
-    public ResultInfo findPage(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "limit", defaultValue = "20") Integer limit, Integer semester, Integer date, Integer year, Integer grade) {
-        HtPage<CurriculumBo> htPage = curriculumDomain.findPage(page, limit, semester, date, year, grade);
+    public ResultInfo findPage(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "limit", defaultValue = "20") Integer limit, Integer semester, Integer date, Integer year, Integer grade, String curriculumName) {
+        HtPage<CurriculumBo> htPage = curriculumDomain.findPage(page, limit, semester, date, year, grade, curriculumName);
         return new ResultInfo(htPage.getRecords());
 
     }

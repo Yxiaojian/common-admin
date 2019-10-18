@@ -10,7 +10,6 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- *
  * @author zhangyang
  * @date 2019/09/07
  */
@@ -21,8 +20,10 @@ public class OrderNativeDomain implements OrderDomain {
     private OrderService orderService;
 
     @Override
-    public boolean insert(OrderBo orderBo) {
-        return orderService.insert(BeanUtil.convert(orderBo, Order.class));
+    public Integer insert(OrderBo orderBo) {
+        Order order = BeanUtil.convert(orderBo, Order.class);
+        orderService.insert(order);
+        return order.getID();
     }
 
     @Override

@@ -17,7 +17,7 @@ public interface OrderDomain {
      * @param orderBo
      * @return
      */
-    boolean insert(OrderBo orderBo);
+    Integer insert(OrderBo orderBo);
 
     /**
      * 删除

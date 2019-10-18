@@ -95,6 +95,7 @@ public class User extends Model<User> {
 		this.name = name;
 	}
 
+
 	public String getUserName() {
 		return userName;
 	}

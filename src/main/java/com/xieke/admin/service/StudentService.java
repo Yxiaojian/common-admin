@@ -127,4 +127,20 @@ public class StudentService {
         return studentMapper.updateById(student) > 0;
     }
 
+    public int insertReturnId(Student student) {
+         studentMapper.insert(student);
+         return  student.getID();
+    }
+
+    public Student getByNameAndPhone1(String studentName, String phone1) {
+        QueryWrapper<Student> queryWrapper = new QueryWrapper<>();
+        LambdaQueryWrapper<Student> wrapper = queryWrapper.lambda();
+        if (studentName != null) {
+            wrapper.eq(Student::getStudentName,studentName);
+        }
+        if (phone1 != null) {
+            wrapper.eq(Student::getPhoneOne,phone1);
+        }
+        return studentMapper.selectOne(wrapper);
+    }
 }

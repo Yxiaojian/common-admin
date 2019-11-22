@@ -1,16 +1,12 @@
 package com.xieke.admin.controller;
 
-import com.xieke.admin.bo.ClassesBo;
-import com.xieke.admin.bo.CurriculumBo;
-import com.xieke.admin.bo.OrderBo;
-import com.xieke.admin.bo.StudentBo;
-import com.xieke.admin.domain.ClassesDomain;
-import com.xieke.admin.domain.CurriculumDomain;
-import com.xieke.admin.domain.OrderDomain;
-import com.xieke.admin.domain.StudentDomain;
+import com.xieke.admin.bo.*;
+import com.xieke.admin.domain.*;
 import com.xieke.admin.dto.ResultInfo;
 import com.xieke.admin.dto.UserInfo;
 import com.xieke.admin.enums.OrderStatus;
+import com.xieke.admin.model.PayRecord;
+import com.xieke.admin.model.StudentClassRelation;
 import com.xieke.admin.web.BaseController;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -37,20 +33,37 @@ public class OrderController extends BaseController {
     @Resource
     private OrderDomain orderDomain;
 
+    @Resource
+    private StudentClassRelationDomain studentClassRelationDomain;
+
+    @Resource
+    private PayRecordDomain payRecordDomain;
+
+
+
     @ResponseBody
     @RequestMapping("/create")
-    public ResultInfo create(Integer studentId, Integer classesId, Integer curriculumId, String discountAmount, String discountRemark) {
-        if (studentId == null) {
-            return new ResultInfo("学生ID为空");
+    public ResultInfo create(String userName,  String mobilePhone1, String phone1Info, String mobilePhone2, String phone2Info, String school, Integer grade, Integer startYear,String homeAddress,String birthday,String remarks, Integer stuClass, Integer curriculumId, String discountAmount, String discountRemark,Integer payType,String prePay,String operateUser,String opdesc) {
+        StudentBo studentInsertBo = new StudentBo(userName, 0, mobilePhone1, phone1Info, mobilePhone2, phone2Info, school, grade, startYear, 0, new Date(), remarks,homeAddress,birthday);
+        StudentBo byNameAndPhone1 = studentDomain.getByNameAndPhone1(userName,mobilePhone1);
+        int studentId = 0;
+        if (byNameAndPhone1 != null) {
+            studentId = byNameAndPhone1.getID();
+        }else {
+            studentId = studentDomain.insertReturnId(studentInsertBo);
+
         }
-        if (classesId == null) {
+        if (studentId <= 0) {
+            return new ResultInfo("创建学生出错");
+        }
+        if (stuClass == null) {
             return new ResultInfo("班级ID为空");
         }
         if (curriculumId == null) {
             return new ResultInfo("课程ID为空");
         }
         StudentBo studentBo = studentDomain.get(studentId);
-        ClassesBo classesBo = classesDomain.get(classesId);
+        ClassesBo classesBo = classesDomain.get(stuClass);
         CurriculumBo curriculumBo = curriculumDomain.get(curriculumId);
         if (studentBo == null) {
             return new ResultInfo("学生不存在");
@@ -72,6 +85,20 @@ public class OrderController extends BaseController {
         if (orderId==null){
             return new ResultInfo("创建订单失败");
         }
+        StudentClassRelationBo studentClassRelationBo = new StudentClassRelationBo();
+        studentClassRelationBo.setClassID(stuClass);
+        studentClassRelationBo.setStudentID(studentId);
+        studentClassRelationDomain.insert(studentClassRelationBo);
+
+        BigDecimal prePayBig = BigDecimal.ZERO;
+        if (!StringUtils.isEmpty(prePay)) {
+            prePayBig = new BigDecimal(prePay);
+        }
+        Date now = new Date();
+        PayRecordBo payRecordBo = new PayRecordBo(orderId, payType,prePayBig,operateUser,now,opdesc);
+        payRecordDomain.insert(payRecordBo);
+
+
         return new ResultInfo(orderId);
     }
 

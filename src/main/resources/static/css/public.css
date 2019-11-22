@@ -199,8 +199,24 @@ icons
     height: 45px;
     background-repeat: no-repeat;
 }
+.icons-ordercuri{
+    background-image: url("../images/cui.png");
+}
+.icons-orderclass{
+    background-image: url("../images/payclass.png");
+}
+.icons-needpay{
+    background-image: url("../images/payall.png");
+}
+.icons-youhui{
+    background-image: url("../images/youhui.png");
+}
+
 .icons-jcxx{
     background-image: url("../images/jcxx.png");
+}
+.icons-hedui{
+    background-image: url("../images/hedui.png");
 }
 .icons-bj{
     background-image: url("../images/bj.png");
@@ -222,7 +238,6 @@ icons
 }
 .studentform .sticons{
     float: left;
-    margin-left: 40px;
 }
 .studentform .layui-tab-title li{
     float: left;
@@ -236,5 +251,154 @@ icons
     text-align: right;
     margin-top: 10px;
     font-size: 18px;
-    margin-right: 76px;
+    margin-right: 25px;
+}
+.order-content{
+
+    display: inline-block;
+
+    width: 500px;
+
+    margin-left: 39px;
+}
+.order-title{
+
+    display: inline-block;
+}
+.order-classname{
+    width: 200px;
+    float: left;
+    margin: 15px 30px;
+    position: relative;
+}
+.order-classname .otitle{
+    position: absolute;
+    top: 2px;
+    left: 40px;
+    font-size: 16px;
+}
+.payLine{
+    width: 100%;
+    border-top: 1px dotted #ddd;
+    margin: 15px 14px;
+}
+.order-classname .oinfo{
+    position: absolute;
+    top: 39px;
+    left: 16px;
+    font-size: 16px;
+}
+.order-classinfo{
+
+}
+.paytype{
+    float: left;
+    margin: 0 20px;
+}
+.paytype a{
+    display: inline-block;
+    padding: 5px;
+    border: 4px solid #ffffff00;
+}
+.paytype a:hover{
+    cursor: pointer;
+}
+.order-paytype{
+    padding: 17px 10px;
+    position: relative;
+}
+
+.order-basicinfo{
+
+    padding: 0 15px;
+}
+.basicinfo-name{
+
+}
+.basicinfo-tel{
+
+    margin: 0px 5px;
+}
+.basicinfo-address{
+
+    margin: 0 5px;
+}
+.btn-backedit{
+
+    padding: 0 15px;
+}
+.ztitle{
+    font-size: 20px;
+    margin-right: 10px;
+}
+.zinfo{
+}
+.real-pay{
+    border: 1px solid #ff0036;
+    margin-bottom: 200px;
+    float: right;
+    width: 220px;
+    min-width: 230px;
+    padding: 20px 5px 20px 20px;
+    text-align: right;
+}
+.realpay--title{
+    font-weight: 700;
+    color: #333;
+    text-align: right;
+}
+.realpay--price-symbol{
+    font-size: 26px;
+    margin-right: 4px;
+    color: #999;
+    text-align: right;
+}
+.realpay--price{
+    color: rgb(255, 0, 54);
+    font: 700 26px tahoma;
+}
+.go-btn{
+    background-color: rgb(255, 0, 54);
+    display: inline-block;
+    width: 182px;
+    height: 39px;
+    position: relative;
+    vertical-align: middle;
+    line-height: 39px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 700;
+    background: #dd2727;
+}
+.go-btn:hover{
+    text-decoration: none;
+    color: #fff;
+}
+.paytype.active a{
+    border: 4px solid #85a1d4;
+}
+.operateUser{
+    float: left;
+    margin: 12px 15px 0 35px;
+}
+.opInput{
+    background-color: #ffffff00;
+    width: 200px;
+    border: 1px dotted #797e80;
+    float: left;
+}
+.operateDesc{
+    float: left;
+    margin: 12px 15px 0 35px;
+
+}
+.qrcode{
+    display: none;
+    position: absolute;
+    left: 350px;
+    top: 87px;
+}
+.paytype.active .qrcode{
+    display: block;
 }

@@ -99,5 +99,12 @@ public class Student implements Serializable {
     @TableField("FRemark")
     private String remark;
 
+    @TableField("FAddress")
+    private String address;
+
+    @TableField("FBirthday")
+    private String birthday;
+
+
     private static final long serialVersionUID = 1L;
 }

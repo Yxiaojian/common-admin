@@ -49,4 +49,8 @@ public interface StudentDomain {
     Boolean update(Integer studentId, String studentName, Integer sex, String phoneOne, String phoneOneRemark, String phoneTwo, String phoneTwoRemark, String school, Integer grade, Integer entranceYear);
 
 
+    int insertReturnId(StudentBo studentInsertBo);
+
+    StudentBo getByNameAndPhone1(String studentName, String phone1);
+
 }

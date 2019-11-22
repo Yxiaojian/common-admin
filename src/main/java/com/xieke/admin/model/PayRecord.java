@@ -36,6 +36,7 @@ public class PayRecord implements Serializable {
 
     /**
      * 支付方式
+     * 0支付宝 1微信支付 2POS机刷卡 3中国银联 5现金
      */
     @TableField("FPayType")
     private Integer payType;

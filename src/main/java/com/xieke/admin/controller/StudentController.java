@@ -22,7 +22,7 @@ public class StudentController {
     @RequestMapping("/add")
     @ResponseBody
     public ResultInfo addStudent(String studentName, Integer sex, String phoneOne, String phoneOneRemark, String phoneTwo, String phoneTwoRemark, String school, Integer grade, Integer entranceYear) {
-        StudentBo studentBo = new StudentBo(studentName, sex, phoneOne, phoneOneRemark, phoneTwo, phoneTwoRemark, school, grade, entranceYear, 0, new Date(), "");
+        StudentBo studentBo = new StudentBo(studentName, sex, phoneOne, phoneOneRemark, phoneTwo, phoneTwoRemark, school, grade, entranceYear, 0, new Date(), "","","");
         if (!studentDomain.insert(studentBo)) {
             return new ResultInfo<>("新增失败");
         }

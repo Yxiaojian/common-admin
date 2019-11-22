@@ -57,4 +57,15 @@ public class StudentNativeDomain implements StudentDomain {
         return studentService.updateById(studentId, studentName, sex, phoneOne, phoneOneRemark, phoneTwo, phoneTwoRemark, school, grade, entranceYear);
     }
 
+    @Override
+    public int insertReturnId(StudentBo studentInsertBo) {
+        return studentService.insertReturnId(BeanUtil.convert(studentInsertBo, Student.class));
+
+    }
+
+    @Override
+    public StudentBo getByNameAndPhone1(String studentName, String phone1) {
+        return BeanUtil.convert(studentService.getByNameAndPhone1(studentName,phone1), StudentBo.class);
+    }
+
 }

@@ -86,9 +86,13 @@ public class StudentBo implements Serializable {
      */
     private String remark;
 
+    private String address;
+
+    private String birthday;
+
     private static final long serialVersionUID = 1L;
 
-    public StudentBo(String studentName, Integer sex, String phoneOne, String phoneOneRemark, String phoneTwo, String phoneTwoRemark, String school, Integer grade, Integer entranceYear, Integer deleteStatus, Date createTime, String remark) {
+    public StudentBo(String studentName, Integer sex, String phoneOne, String phoneOneRemark, String phoneTwo, String phoneTwoRemark, String school, Integer grade, Integer entranceYear, Integer deleteStatus, Date createTime, String remark,String address,String birthday) {
         this.studentName = studentName;
         this.sex = sex;
         this.phoneOne = phoneOne;
@@ -101,5 +105,7 @@ public class StudentBo implements Serializable {
         this.deleteStatus = deleteStatus;
         this.createTime = createTime;
         this.remark = remark;
+        this.address = address;
+        this.birthday = birthday;
     }
 }

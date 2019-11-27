@@ -27,7 +27,6 @@ public class PayController extends BaseController {
 
     @ResponseBody
     @RequestMapping("add")
-    @Transactional(rollbackFor = Exception.class)
     public ResultInfo addPayRecord(Integer orderId, Integer payType, String payAmount, String toller) throws Exception {
         if (orderId == null) {
             return new ResultInfo("订单ID为空");
@@ -37,17 +36,11 @@ public class PayController extends BaseController {
             return new ResultInfo("订单不存在");
         }
         PayRecordBo payRecordBo = new PayRecordBo(orderId, payType, new BigDecimal(payAmount), toller, new Date(), "");
-        boolean a = payRecordDomain.insert(payRecordBo);
-        boolean b = false;
+        boolean a = payRecordDomain.create(payRecordBo);
         if (a){
-            b = orderDomain.updatePaidAmountAfterPay(orderId);
-        }else {
-            throw new Exception("支付出错");
-        }
-        if (b){
             return new ResultInfo(true);
         }else {
-            throw new Exception("支付出错");
+            return new ResultInfo("支付失败");
         }
     }
 

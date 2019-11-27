@@ -5,6 +5,7 @@ import com.xieke.admin.model.PayRecord;
 import com.xieke.admin.service.PayRecordService;
 import com.xieke.admin.util.BeanUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -19,6 +20,9 @@ public class PayRecordNativeDomain implements PayRecordDomain {
 
     @Resource
     private PayRecordService payRecordService;
+
+    @Resource
+    private OrderDomain orderDomain;
 
     @Override
     public boolean insert(PayRecordBo payRecordBo) {
@@ -43,6 +47,22 @@ public class PayRecordNativeDomain implements PayRecordDomain {
     @Override
     public List<PayRecordBo> findByOrderId(Integer orderId) {
         return BeanUtil.convertList(payRecordService.findByOrderId(orderId), PayRecordBo.class);
+    }
+
+    @Override
+    public Boolean create(PayRecordBo payRecordBo) throws Exception {
+        boolean a = this.insert(payRecordBo);
+        boolean b = false;
+        if (a){
+            b = orderDomain.updatePaidAmountAfterPay(payRecordBo.getOrderID());
+        }else {
+            throw new Exception("支付出错");
+        }
+        if (b){
+            return true;
+        }else {
+            throw new Exception("支付出错");
+        }
     }
 
 }

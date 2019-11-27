@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+	<meta charset="utf-8">
+	<title>续报</title>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="/static/layui/css/layui.css" media="all" />
+	<link rel="stylesheet" href="/static/css/public.css" media="all" />
+</head>
+<body class="childrenBody">
+<form class="layui-form">
+	<blockquote class="layui-elem-quote quoteBox">
+		<form class="layui-form">
+			<div class="layui-inline">
+				<div class="layui-input-inline">
+					<input type="text" class="layui-input stdName" placeholder="请输入学生姓名" />
+				</div>
+				<a class="layui-btn search_btn" data-type="reload">搜索</a>
+			</div>
+		</form>
+	</blockquote>
+	<table id="studentList" lay-filter="studentList"></table>
+</form>
+<script type="text/html" id="opbar">
+	<a class="layui-btn layui-btn-xs" lay-event="continue">续报</a>
+</script>
+<script type="text/javascript" src="/static/layui/layui.js"></script>
+<script>
+	layui.use(['form','layer','table'],function(){
+		var form = layui.form,
+				layer = parent.layer === undefined ? layui.layer : top.layer,
+				$ = layui.jquery,
+				table = layui.table;
+
+
+		//课程列表
+		var tableIns = table.render({
+			elem: '#studentList',
+			url : '/student/findPage',
+			page : true,
+			height : "full-125",
+			limits : [10,20,30],
+			limit : 10,
+			id : "studentList",
+			cols : [[
+				{type: "checkbox", fixed:"left", width:50},
+				{field: 'studentName', title: '姓名', minWidth:100, align:'center',templet:function(d){
+						return d.studentName
+					}},
+				{field: 'phoneOne', title: '手机号码', minWidth:100, align:'center',templet:function(d){
+						return d.phoneOne
+					}},
+				{field: 'grade', title: '年级', minWidth:100, align:'center',templet:function(d){
+						return d.grade
+					}},
+				{field: 'grade', title: '已缴费', minWidth:100, align:'center',templet:function(d){
+						return "未实现"
+					}},
+				{field: 'grade', title: '欠费', minWidth:100, align:'center',templet:function(d){
+						return "未实现"
+					}}
+				,{fixed: 'right', title:'操作', toolbar: '#opbar', width:250}
+			]]
+		});
+
+		//搜索
+		$(".search_btn").on("click",function(){
+			table.reload("studentList",{
+				page: {
+					curr: 1 //重新从第 1 页开始
+				},
+				where: {
+					name: $(".stdName").val()
+				}
+			})
+		});
+		$(".stdName").keypress(function (e) {
+			if (e.which == 13) {
+				$(".search_btn").click();
+				return false;
+			}
+		});
+
+		//续报
+		function continueBm(edit){
+			var h = "440px";
+			var title = "添加课程";
+			if (edit){
+				h = "280px";
+				title = "编辑课程";
+			}
+			layui.layer.open({
+				title : title,
+				type : 2,
+				area : ["420px",h],
+				content : "info.html",
+				success : function(layero, index){
+					var body = layui.layer.getChildFrame('body', index);
+					if(edit){
+						body.find("#une").remove();
+						body.find("#pwd1").remove();
+						body.find("#pwd2").remove();
+						body.find("#id").val(edit.id);
+						body.find("#name").val(edit.name);
+						body.find("#roleId").val(edit.roleId);
+						body.find("#stateSelect").val(edit.state);
+						form.render();
+					}
+					setTimeout(function(){
+						layui.layer.tips('点击此处返回课程列表', '.layui-layer-setwin .layui-layer-close', {
+							tips: 3
+						});
+					},500)
+				}
+			})
+		}
+
+		$(".continue_btn").click(function(){
+			continueBm();
+		});
+		$(".delAll_btn").click(function(){
+			var checkStatus = table.checkStatus('studentList'),
+					data = checkStatus.data,
+					idArr = [];
+			if(data.length > 0) {
+				for (var i in data) {
+					idArr.push(data[i].id);
+				}
+				layer.confirm('确定删除选中的课程？', {icon: 3, title: '提示信息'}, function (index) {
+					$.get("/curriculum/delete",{
+						idArr : idArr.toString()
+					},function(data){
+						layer.close(index);
+						tableIns.reload();
+						if (data.data){
+							layer.msg("删除成功！");
+						} else {
+							layer.msg(data.msg);
+						}
+					})
+				})
+			}else{
+				layer.msg("请选择需要删除的课程");
+			}
+		})
+
+
+
+	})
+</script>
+</body>
+</html>

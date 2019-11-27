@@ -8,7 +8,6 @@ import com.xieke.admin.util.BeanUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -47,8 +46,8 @@ public class StudentNativeDomain implements StudentDomain {
     }
 
     @Override
-    public HtPage<StudentBo> findPage(Integer pageIndex, Integer pageSize, Integer grade) {
-        HtPage<Student> htPage = new HtPage<>(studentService.findPage(pageIndex, pageSize, grade));
+    public HtPage<StudentBo> findPage(Integer pageIndex, Integer pageSize, Integer grade, String name) {
+        HtPage<Student> htPage = new HtPage<>(studentService.findPage(pageIndex, pageSize, grade, name));
         return BeanUtil.convertPage(htPage, StudentBo.class);
     }
 

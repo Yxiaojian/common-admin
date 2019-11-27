@@ -8,6 +8,7 @@ import com.xieke.admin.enums.OrderStatus;
 import com.xieke.admin.model.PayRecord;
 import com.xieke.admin.model.StudentClassRelation;
 import com.xieke.admin.web.BaseController;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,7 @@ import java.util.Date;
 
 @Controller
 @RequestMapping("/order")
+@RequiresPermissions("order:list")
 public class OrderController extends BaseController {
 
     @Resource

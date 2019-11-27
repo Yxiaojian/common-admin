@@ -77,12 +77,15 @@ public class StudentService {
         return studentMapper.update(student, wrapper) > 0;
     }
 
-    public IPage<Student> findPage(Integer pageIndex, Integer pageSize, Integer grade) {
+    public IPage<Student> findPage(Integer pageIndex, Integer pageSize, Integer grade, String name) {
         Page<Student> objectPage = new Page<>(pageIndex, pageSize);
         QueryWrapper<Student> wrapper = new QueryWrapper<>();
         LambdaQueryWrapper<Student> wrapperLamdba = wrapper.lambda();
         if (grade != null) {
             wrapperLamdba.eq(Student::getGrade, grade);
+        }
+        if (name != null) {
+            wrapperLamdba.like(Student::getStudentName, name);
         }
         return studentMapper.selectPage(objectPage, wrapperLamdba);
     }

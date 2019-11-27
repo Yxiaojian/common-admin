@@ -1,10 +1,13 @@
 package com.xieke.admin.domain;
 
 import com.xieke.admin.bo.OrderBo;
+import com.xieke.admin.bo.PayRecordBo;
 import com.xieke.admin.model.Order;
+import com.xieke.admin.page.HtPage;
 import com.xieke.admin.service.OrderService;
 import com.xieke.admin.util.BeanUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
@@ -19,6 +22,9 @@ public class OrderNativeDomain implements OrderDomain {
 
     @Resource
     private OrderService orderService;
+
+    @Resource
+    private PayRecordDomain payRecordDomain;
 
     @Override
     public Integer insert(OrderBo orderBo) {
@@ -43,7 +49,7 @@ public class OrderNativeDomain implements OrderDomain {
     }
 
     @Override
-    public Boolean updatePaidAmountAfterPay(Integer orderId, BigDecimal payAmount) {
+    public Boolean updatePaidAmountAfterPay(Integer orderId) {
         if (orderId == null) {
             return false;
         }
@@ -51,13 +57,21 @@ public class OrderNativeDomain implements OrderDomain {
         if (orderBo == null) {
             return false;
         }
-        BigDecimal paidAmount = orderBo.getPaidAmount();
-        BigDecimal resultPaidAmount = paidAmount.subtract(paidAmount);
-        if (resultPaidAmount.compareTo(BigDecimal.ZERO) < 0) {
-            return false;
+        BigDecimal resultPaidAmount = BigDecimal.ZERO;
+        List<PayRecordBo> payRecordBoList = payRecordDomain.findByOrderId(orderId);
+        if (!CollectionUtils.isEmpty(payRecordBoList)){
+            for (PayRecordBo payRecordBo : payRecordBoList) {
+                resultPaidAmount.add(payRecordBo.getPayAmount());
+            }
         }
 
         return orderService.updatePaidAmount(orderId, resultPaidAmount);
+    }
+
+    @Override
+    public HtPage<OrderBo> findPage(Integer pageIndex, Integer pageSize, String studentName, String phoneOne) {
+        HtPage<Order> htPage = new HtPage<>(orderService.findPage(pageIndex, pageSize, studentName,phoneOne));
+        return BeanUtil.convertPage(htPage, OrderBo.class);
     }
 
 }

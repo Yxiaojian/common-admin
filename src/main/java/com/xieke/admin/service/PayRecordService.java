@@ -1,5 +1,6 @@
 package com.xieke.admin.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.xieke.admin.model.PayRecord;
 import com.xieke.admin.mapper.PayRecordMapper;
@@ -9,11 +10,10 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- *
  * @author zhangyang
  * @date 2019/09/07
  */
- @Service
+@Service
 public class PayRecordService {
 
     @Resource
@@ -55,8 +55,19 @@ public class PayRecordService {
      * @return
      */
     public List<PayRecord> findAll() {
-    QueryWrapper<PayRecord> wrapper = new QueryWrapper<>();
-      return payRecordMapper.selectList(wrapper);
+        QueryWrapper<PayRecord> wrapper = new QueryWrapper<>();
+        return payRecordMapper.selectList(wrapper);
+    }
+
+    public List<PayRecord> findByOrderId(Integer orderId) {
+        QueryWrapper<PayRecord> wrapper = new QueryWrapper<>();
+        LambdaQueryWrapper<PayRecord> lambdaQueryWrapper = wrapper.lambda();
+        if (orderId != null) {
+            lambdaQueryWrapper.eq(PayRecord::getOrderID, orderId);
+        }else {
+            return null;
+        }
+        return payRecordMapper.selectList(lambdaQueryWrapper);
     }
 
 

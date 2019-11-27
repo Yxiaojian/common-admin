@@ -163,6 +163,11 @@ public class OrderBo implements Serializable {
     private BigDecimal paidAmount;
 
     /**
+     * 未付金额
+     */
+    private BigDecimal unpaidAmount;
+
+    /**
      * 订单状态
      */
     private Integer orderStatus;
@@ -217,6 +222,7 @@ public class OrderBo implements Serializable {
         this.discountRemark = discountRemark;
         this.payableAmount = payableAmount;
         this.paidAmount = paidAmount;
+        this.unpaidAmount = payableAmount;
         this.orderStatus = orderStatus;
         this.creatorID = creatorID;
         this.creatorName = creatorName;
@@ -253,6 +259,7 @@ public class OrderBo implements Serializable {
         this.discountRemark = discountRemark;
         this.payableAmount = payableAmount;
         this.paidAmount = paidAmount;
+        this.unpaidAmount = payableAmount;
         this.orderStatus = orderStatus;
         this.creatorID = creatorID;
         this.creatorName = creatorName;

@@ -1,6 +1,7 @@
 package com.xieke.admin.domain;
 
 import com.xieke.admin.bo.OrderBo;
+import com.xieke.admin.page.HtPage;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -44,6 +45,8 @@ public interface OrderDomain {
     List<OrderBo> findAll();
 
     Boolean updatePaidAmountAfterPay(Integer orderId, BigDecimal payAmount);
+
+    HtPage<OrderBo> findPage(Integer pageIndex, Integer pageSize, String studentName, String phoneOne);
 
 
 }

@@ -5,18 +5,19 @@ import com.xieke.admin.domain.*;
 import com.xieke.admin.dto.ResultInfo;
 import com.xieke.admin.dto.UserInfo;
 import com.xieke.admin.enums.OrderStatus;
-import com.xieke.admin.model.PayRecord;
-import com.xieke.admin.model.StudentClassRelation;
+import com.xieke.admin.page.HtPage;
 import com.xieke.admin.web.BaseController;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("/order")
@@ -109,6 +110,18 @@ public class OrderController extends BaseController {
     @RequestMapping("/get")
     public ResultInfo getById(Integer orderId){
         return new ResultInfo(orderDomain.get(orderId));
+    }
+
+    @RequestMapping("/findPage")
+    @ResponseBody
+    public ResultInfo findPage(@RequestParam(value = "pageIndex", defaultValue = "1") Integer pageIndex, @RequestParam(value = "pageSize", defaultValue = "20") Integer pageSize, String studentName, String phoneOne) {
+        HtPage<OrderBo> htPage = orderDomain.findPage(pageIndex, pageSize, studentName, phoneOne);
+        List<OrderBo> orderBoList = htPage.getRecords();
+        for (OrderBo orderBo : orderBoList) {
+            orderBo.setUnpaidAmount(orderBo.getPayableAmount().subtract(orderBo.getPaidAmount()));
+        }
+        htPage.setRecords(orderBoList);
+        return new ResultInfo("","0",htPage.getRecords(),new Long (htPage.getTotal()).intValue());
     }
 
 }

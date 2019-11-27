@@ -2,6 +2,7 @@ package com.xieke.admin.domain;
 
 import com.xieke.admin.bo.OrderBo;
 import com.xieke.admin.model.Order;
+import com.xieke.admin.page.HtPage;
 import com.xieke.admin.service.OrderService;
 import com.xieke.admin.util.BeanUtil;
 import org.springframework.stereotype.Service;
@@ -58,6 +59,12 @@ public class OrderNativeDomain implements OrderDomain {
         }
 
         return orderService.updatePaidAmount(orderId, resultPaidAmount);
+    }
+
+    @Override
+    public HtPage<OrderBo> findPage(Integer pageIndex, Integer pageSize, String studentName, String phoneOne) {
+        HtPage<Order> htPage = new HtPage<>(orderService.findPage(pageIndex, pageSize, studentName,phoneOne));
+        return BeanUtil.convertPage(htPage, OrderBo.class);
     }
 
 }

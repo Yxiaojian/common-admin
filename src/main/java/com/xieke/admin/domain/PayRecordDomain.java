@@ -43,4 +43,9 @@ public interface PayRecordDomain {
     List<PayRecordBo> findAll();
 
 
+    List<PayRecordBo> findByOrderId(Integer orderId);
+
+
+
+
 }

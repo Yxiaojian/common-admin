@@ -44,7 +44,7 @@ public interface OrderDomain {
      */
     List<OrderBo> findAll();
 
-    Boolean updatePaidAmountAfterPay(Integer orderId, BigDecimal payAmount);
+    Boolean updatePaidAmountAfterPay(Integer orderId);
 
     HtPage<OrderBo> findPage(Integer pageIndex, Integer pageSize, String studentName, String phoneOne);
 

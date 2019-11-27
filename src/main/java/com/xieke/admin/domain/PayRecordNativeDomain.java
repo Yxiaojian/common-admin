@@ -40,4 +40,9 @@ public class PayRecordNativeDomain implements PayRecordDomain {
         return BeanUtil.convertList(payRecordService.findAll(), PayRecordBo.class);
     }
 
+    @Override
+    public List<PayRecordBo> findByOrderId(Integer orderId) {
+        return BeanUtil.convertList(payRecordService.findByOrderId(orderId), PayRecordBo.class);
+    }
+
 }

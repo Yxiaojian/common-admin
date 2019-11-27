@@ -38,11 +38,13 @@ public class PayController extends BaseController {
         }
         PayRecordBo payRecordBo = new PayRecordBo(orderId, payType, new BigDecimal(payAmount), toller, new Date(), "");
         boolean a = payRecordDomain.insert(payRecordBo);
-
-        //修改订单的已交金额
-        boolean b = orderDomain.updatePaidAmountAfterPay(orderId,new BigDecimal(payAmount));
-
-        if (a&&b){
+        boolean b = false;
+        if (a){
+            b = orderDomain.updatePaidAmountAfterPay(orderId);
+        }else {
+            throw new Exception("支付出错");
+        }
+        if (b){
             return new ResultInfo(true);
         }else {
             throw new Exception("支付出错");

@@ -1,6 +1,7 @@
 package com.xieke.admin.domain;
 
 import com.xieke.admin.bo.PayRecordBo;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -44,6 +45,9 @@ public interface PayRecordDomain {
 
 
     List<PayRecordBo> findByOrderId(Integer orderId);
+
+    @Transactional(rollbackFor = Exception.class)
+    Boolean create(PayRecordBo payRecordBo) throws Exception;
 
 
 

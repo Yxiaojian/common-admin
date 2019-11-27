@@ -9,6 +9,7 @@ import com.xieke.admin.page.HtPage;
 import com.xieke.admin.web.BaseController;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -46,7 +47,8 @@ public class OrderController extends BaseController {
 
     @ResponseBody
     @RequestMapping("/create")
-    public ResultInfo create(String userName,  String mobilePhone1, String phone1Info, String mobilePhone2, String phone2Info, String school, Integer grade, Integer startYear,String homeAddress,String birthday,String remarks, Integer stuClass, Integer curriculumId, String discountAmount, String discountRemark,Integer payType,String prePay,String operateUser,String opdesc) {
+    @Transactional(rollbackFor = Exception.class)
+    public ResultInfo create(String userName,  String mobilePhone1, String phone1Info, String mobilePhone2, String phone2Info, String school, Integer grade, Integer startYear,String homeAddress,String birthday,String remarks, Integer stuClass, Integer curriculumId, String discountAmount, String discountRemark,Integer payType,String prePay,String operateUser,String opdesc) throws Exception {
         StudentBo studentInsertBo = new StudentBo(userName, 0, mobilePhone1, phone1Info, mobilePhone2, phone2Info, school, grade, startYear, 0, new Date(), remarks,homeAddress,birthday);
         StudentBo byNameAndPhone1 = studentDomain.getByNameAndPhone1(userName,mobilePhone1);
         int studentId = 0;
@@ -96,13 +98,17 @@ public class OrderController extends BaseController {
         BigDecimal prePayBig = BigDecimal.ZERO;
         if (!StringUtils.isEmpty(prePay)) {
             prePayBig = new BigDecimal(prePay);
+        }else {
+            return new ResultInfo(orderId);
         }
         Date now = new Date();
         PayRecordBo payRecordBo = new PayRecordBo(orderId, payType,prePayBig,operateUser,now,opdesc);
-        payRecordDomain.insert(payRecordBo);
-
-
-        return new ResultInfo(orderId);
+        boolean a = payRecordDomain.create(payRecordBo);
+        if (a){
+            return new ResultInfo(orderId);
+        }else {
+            return new ResultInfo("支付失败");
+        }
     }
 
 

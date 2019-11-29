@@ -17,7 +17,7 @@ public interface StudentDomain {
      * @param studentBo
      * @return
      */
-    boolean insert(StudentBo studentBo);
+    Integer insert(StudentBo studentBo);
 
     /**
      * 删除

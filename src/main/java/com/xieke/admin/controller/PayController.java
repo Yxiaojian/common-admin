@@ -35,7 +35,7 @@ public class PayController extends BaseController {
         if (orderBo == null) {
             return new ResultInfo("订单不存在");
         }
-        PayRecordBo payRecordBo = new PayRecordBo(orderId, payType, new BigDecimal(payAmount), toller, new Date(), "");
+        PayRecordBo payRecordBo = new PayRecordBo(orderId, payType, new BigDecimal(payAmount), toller, new Date(), "",0);
         boolean a = payRecordDomain.create(payRecordBo);
         if (a){
             return new ResultInfo(true);

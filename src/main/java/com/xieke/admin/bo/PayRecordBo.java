@@ -57,14 +57,20 @@ public class PayRecordBo implements Serializable {
      */
     private String remark;
 
+    /**
+     * 类型：0支付 1退款
+     */
+    private Integer recordType;
+
     private static final long serialVersionUID = 1L;
 
-    public PayRecordBo(Integer orderID, Integer payType, BigDecimal payAmount, String toller, Date createTime, String remark) {
+    public PayRecordBo(Integer orderID, Integer payType, BigDecimal payAmount, String toller, Date createTime, String remark,Integer recordType) {
         this.orderID = orderID;
         this.payType = payType;
         this.payAmount = payAmount;
         this.toller = toller;
         this.createTime = createTime;
         this.remark = remark;
+        this.recordType = recordType;
     }
 }

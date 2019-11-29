@@ -59,9 +59,9 @@ public class OrderNativeDomain implements OrderDomain {
         }
         BigDecimal resultPaidAmount = BigDecimal.ZERO;
         List<PayRecordBo> payRecordBoList = payRecordDomain.findByOrderId(orderId);
-        if (!CollectionUtils.isEmpty(payRecordBoList)){
+        if (!CollectionUtils.isEmpty(payRecordBoList)) {
             for (PayRecordBo payRecordBo : payRecordBoList) {
-                resultPaidAmount.add(payRecordBo.getPayAmount());
+                resultPaidAmount = resultPaidAmount.add(payRecordBo.getPayAmount());
             }
         }
 
@@ -70,7 +70,7 @@ public class OrderNativeDomain implements OrderDomain {
 
     @Override
     public HtPage<OrderBo> findPage(Integer pageIndex, Integer pageSize, String studentName, String phoneOne) {
-        HtPage<Order> htPage = new HtPage<>(orderService.findPage(pageIndex, pageSize, studentName,phoneOne));
+        HtPage<Order> htPage = new HtPage<>(orderService.findPage(pageIndex, pageSize, studentName, phoneOne));
         return BeanUtil.convertPage(htPage, OrderBo.class);
     }
 

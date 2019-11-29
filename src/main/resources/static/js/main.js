@@ -2,7 +2,7 @@
 var newDate = '';
 var userName = '';
 var n = 0;
-getLangDate();
+//getLangDate();
 //值小于10时，在前面补0
 function dateFilter(date){
     if(date < 10){return "0"+date;}

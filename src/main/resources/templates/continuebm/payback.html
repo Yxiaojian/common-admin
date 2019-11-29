@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="utf-8">
+    <title>补缴费</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="/static/layui/css/layui.css" media="all"/>
+    <link rel="stylesheet" href="/static/css/public.css" media="all"/>
+    <style>
+        .needspan label.error{
+            float: left;
+            margin-left: 108px;
+        }
+    </style>
+</head>
+<body class="childrenBody">
+<form class="layui-form backPayForm" id="backPayForm">
+    <div class="layui-tab layui-tab-brief" lay-filter="enrollForm">
+
+        <div style="margin: 0px 40px;padding: 20px;border: 1px dotted #9090b9;background-color: #DBF8FE;width: 1061px;padding-bottom: 137px;position: absolute;left: 50%;margin-left: -545px;height: 400px;">
+            <div class="order-title layui-hide">
+                <i class="sticons icons-hedui"></i>
+                <span style="margin-top: 5px;display: inline-block;font-weight: bold;margin-left: -10px;">补缴信息</span>
+            </div>
+            <div class="order-basicinfo">
+                <span class="basicinfo-name"></span>
+                <span class="basicinfo-tel"></span>
+                <span class="basicinfo-address"></span>
+            </div>
+            <div class="payLine"></div>
+            <div class="order-classinfo layui-clear">
+                <div class="order-classname">
+                    <i class="sticons icons-ordercuri"></i>
+                    <div class="otitle">课程</div>
+                    <div class="oinfo js_orderClassName"></div>
+                </div>
+
+                <div class="order-classname">
+                    <i class="sticons icons-orderclass"></i>
+                    <div  class="otitle">班级</div>
+                    <div class="oinfo js_orderGrade"></div>
+                </div>
+
+                <div class="order-classname">
+                    <i class="sticons icons-needpay"></i>
+                    <div class="otitle">合计金额</div>
+                    <div class="oinfo js_orderAllNeedPay"></div>
+                </div>
+
+                <div class="order-classname">
+                    <i class="sticons icons-youhui"></i>
+                    <div class="otitle">优惠</div>
+                    <div class="oinfo js_orderYouhui">0</div>
+                </div>
+            </div>
+
+            <div class="order-classinfo layui-clear layui-hide" style="margin: 10px;">
+                <div class="order-classname">
+                    <span class="ztitle">已缴</span>
+                    <span class="zinfo js_orderPrePay " id="js_orderHavePay">0</span>
+                </div>
+                <div class="order-classname">
+                    <span class="ztitle">欠费</span>
+
+                </div>
+            </div>
+            <div class="payLine"></div>
+
+            <div class="order-paytype layui-clear">
+                <div class="paytype active" data-paytype="0">
+                    <a>
+                        <img src="/static/images/zhifubao.png">
+                    </a>
+                    <div class="qrcode"  style="left: 300px;top: 130px;"><img src="/static/images/zfb.png"></div>
+                </div>
+                <div class="paytype" data-paytype="1">
+                    <a>
+                        <img src="/static/images/weixin.png">
+                    </a>
+                    <div class="qrcode" style="left: 300px;top: 130px;"><img src="/static/images/zfb.png"></div>
+                </div>
+                <div class="paytype" data-paytype="2">
+                    <a>
+                        <img src="/static/images/pos.png">
+                    </a>
+                </div>
+                <div class="paytype" data-paytype="3">
+                    <a>
+                        <img src="/static/images/yinhangka.png">
+                    </a>
+                </div>
+                <div class="paytype" data-paytype="4">
+                    <a>
+                        <img src="/static/images/xianjin.png">
+                    </a>
+                </div>
+            </div>
+            <input type="hidden" name="orderId" id="orderId"/>
+            <input type="hidden" name="payType" value="0" id="payType"/>
+            <div class="opbox">
+                <div class=" layui-clear needspan" style="margin-top: 50px;">
+
+                    <span class="operateUser">补缴费：</span>
+                    <input type="text" class="layui-input opInput number"  id="payBackMoney" value="" name="payAmount" required placeholder="">
+                </div>
+                <div class=" layui-clear" style="margin-top: 10px;">
+
+                    <span class="operateUser">经办人：</span>
+                    <input type="text" class="layui-input opInput"  id="operateUserInupt" value="" name="toller" required placeholder="">
+                </div>
+                <div class=" layui-clear" style="margin-top: 10px;">
+
+                    <span class="operateDesc" style="margin-right: 29px;">备注：</span>
+                    <input type="text" class="layui-input opInput" id="desc" name="opdesc"  placeholder="">
+                </div>
+            </div>
+
+            <div style="width: 1061px;margin: 0 0 0 82px;position: absolute;right: -1px;top: 557px;">
+                <div class="real-pay" >
+                    <div class="realpay--title">总欠费:<span class="realpay--price js_orderNeedPay" style="color: rgb(255, 0, 54);"></span></div>
+                    <span class="realpay--title">补缴费：</span>
+                    <span class="realpay--price-symbol">¥</span>
+                    <span class="realpay--price js_payNow" style="color: rgb(255, 0, 54);"></span>
+                </div>
+                <div style="position: absolute; right: 0;top: 105px;">
+                    <a href="javascript:;" class="layui-btn go-btn" >确认并缴费</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</form>
+<script type="text/javascript" src="/static/layui/layui.js"></script>
+<script type="text/javascript" src="/static/js/jquery.js"></script>
+<script type="text/javascript" src="/static/js/jquery.validate.js"></script>
+<script type="text/javascript" src="/static/js/site.js"></script>
+<script>
+    layui.use(['form', 'layer', 'table', 'element'], function () {
+        var form = layui.form,
+            layer = parent.layer === undefined ? layui.layer : top.layer,
+            $ = layui.jquery,
+            element = layui.element,
+            table = layui.table;
+
+        form.verify({
+            money: function (val, item) {
+                if (!/^\d+(\.\d{0,2})?$/.test(val)) {
+                    return '请输入正确的格式'
+                }
+            }
+        });
+        $('#payBackMoney').on('input propertychange', function(){
+            var backPayMoney = $(this).val();
+            $(".js_payNow").html(backPayMoney);
+        });
+
+        $(".go-btn").on("click", function () {
+            var frm = $("#backPayForm");
+            if (validOrderForm()) {
+                layer.confirm('确定补缴？', {icon: 3, title: '提示信息'}, function (index) {
+                    layer.close(index);
+                    $.post("/pay/add",frm.serialize(),function(res){
+                        if (res.data){
+                            layer.close(index);
+                            layer.msg("缴费成功！");
+
+                            parent.location.reload();
+                            //location.reload();
+                        } else {
+                            layer.msg(data.msg);
+                        }
+                    })
+                })
+            } else {
+                return false;
+            }
+        });
+        $(".paytype").on("click", function () {
+            $(this).addClass("active").siblings().removeClass("active");
+            $("#payType").val($(this).data("payType"));
+        });
+
+        function validOrderForm(){
+            var $validator = $("#backPayForm").validate();
+            if (!$validator.element($("#payBackMoney"))) {
+                return false;
+            }
+            if (!$validator.element($("#operateUserInupt"))) {
+                return false;
+            }
+            return true;
+        }
+
+
+
+
+
+
+
+    })
+
+
+
+</script>
+</body>
+</html>

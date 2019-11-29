@@ -402,3 +402,9 @@ icons
 .paytype.active .qrcode{
     display: block;
 }
+.opbox{
+    position: absolute;
+    width: 400px;
+    right: -80px;
+    top: 360px;
+}

@@ -11,6 +11,12 @@
     <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" href="/static/layui/css/layui.css" media="all"/>
     <link rel="stylesheet" href="/static/css/public.css" media="all"/>
+    <style>
+        .needspan label.error{
+            float: left;
+            margin-left: 108px;
+        }
+    </style>
 </head>
 <body class="childrenBody">
 <form class="layui-form studentform" id="studentForm">
@@ -236,7 +242,7 @@
                     <i class="sticons icons-hedui" style="height: 35px;"></i>
                     <span style="display: inline-block;margin-left: -10px;margin-top: 10px;">核对订单信息</span>
                 </div>
-                <div style="margin: 0px 40px;padding: 20px;border: 1px dotted #9090b9;background-color: #DBF8FE;width: 1061px;padding-bottom: 137px;">
+                <div style="margin: 0px 40px;padding: 20px;border: 1px dotted #9090b9;background-color: #DBF8FE;width: 1061px;padding-bottom: 137px;position: relative;">
                     <div class="order-title">
                         <i class="sticons icons-hedui"></i>
                         <span style="margin-top: 5px;display: inline-block;font-weight: bold;margin-left: -10px;">支付信息</span>
@@ -318,28 +324,30 @@
                     <input type="hidden" name="curriculumId" id="curriculumId"/>
                     <input type="hidden" name="discountAmount" id="discountAmount"/>
                     <input type="hidden" name="payType" id="payType" value="0"/>
-                    <div class=" layui-clear" style="margin-top: 50px;">
+                    <div class="opbox">
+                        <div class=" layui-clear" style="margin-top: 50px;">
 
-                        <span class="operateUser">经办人：</span>
-                        <input type="text" class="layui-input opInput"  id="operateUserInupt" value="" name="operateUser" required placeholder="">
+                            <span class="operateUser">经办人：</span>
+                            <input type="text" class="layui-input opInput"  id="operateUserInupt" value="" name="operateUser" required placeholder="">
+                        </div>
+                        <div class=" layui-clear" style="margin-top: 10px;">
+
+                            <span class="operateDesc" style="margin-right: 29px;">备注：</span>
+                            <input type="text" class="layui-input opInput" id="desc" name="opdesc"  placeholder="">
+                        </div>
                     </div>
-                    <div class=" layui-clear" style="margin-top: 10px;">
-
-                        <span class="operateDesc" style="margin-right: 29px;">备注：</span>
-                        <input type="text" class="layui-input opInput" id="desc" name="opdesc"  placeholder="">
+                    <div style="width: 1061px;margin: 0 0 0 82px;position: absolute;right: -1px;top: 532px;">
+                        <div class="real-pay" >
+                            <span class="realpay--title">付款：</span>
+                            <span class="realpay--price-symbol">¥</span>
+                            <span class="realpay--price js_orderPrePay" style="color: rgb(255, 0, 54);"></span>
+                        </div>
+                        <div style="position: absolute; right: 0;top: 73px;">
+                            <a href="javascript:;" class="layui-btn go-btn" >确认并支付</a>
+                        </div>
                     </div>
                 </div>
 
-                <div style="width: 1061px; margin: 0 0 0 82px;position: relative;">
-                    <div class="real-pay" >
-                        <span class="realpay--title">付款：</span>
-                        <span class="realpay--price-symbol">¥</span>
-                        <span class="realpay--price js_orderPrePay" style="color: rgb(255, 0, 54);"></span>
-                    </div>
-                    <div style="position: absolute; right: 0;top: 73px;">
-                        <a href="javascript:;" class="layui-btn go-btn" >确认并支付</a>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

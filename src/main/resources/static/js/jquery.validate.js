@@ -7,6 +7,10 @@ jQuery.validator.addMethod("negative", function(value, element) {return this.opt
 jQuery.validator.addMethod("decimal", function(value, element, param) {return this.optional(element) || new RegExp("^-?\\d{1," + (param.integer != null ? param.integer : "") + "}" + (param.fraction != null ? (param.fraction > 0 ? "(\\.\\d{1," + param.fraction + "})?$" : "$") : "(\\.\\d+)?$")).test(value);}, "numeric value out of bounds");
 jQuery.validator.addMethod("pattern", function(value, element, param) {return this.optional(element) || param.test(value);}, "Invalid format");
 jQuery.validator.addMethod("extension", function(value, element, param) {return this.optional(element) || ($.trim(param) != "" && new RegExp("^\\S.*\\.(" + param.replace(/,/g, "|") + ")$", "i").test(value));}, "Invalid extension");
+jQuery.validator.addMethod("decimalsValue",function(value, element) {
+	var decimalsValue =/^(?!0+(?:\.0+)?$)(?:[1-9]\d*|0)(?:\.\d{1,2})?$/ ;
+	return this.optional(element) || (decimalsValue.test(value));
+}, "金额必须大于0并且只能精确到分");
 jQuery.extend(jQuery.validator.messages, {
 	  required: "*必填",
 	  remote: "*已存在",

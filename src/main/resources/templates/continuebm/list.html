@@ -28,6 +28,9 @@
 </form>
 <script type="text/html" id="opbar">
 	<a class="layui-btn layui-btn-xs" lay-event="continue">续报</a>
+	<a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="changeClass">转班</a>
+	<a class="layui-btn layui-btn-xs layui-btn-warm " lay-event="addPayRecoed">补缴费</a>
+	<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="payRedord">收费流水</a>
 </script>
 <script type="text/javascript" src="/static/layui/layui.js"></script>
 <script>
@@ -41,7 +44,7 @@
 		//课程列表
 		var tableIns = table.render({
 			elem: '#studentList',
-			url : '/student/findPage',
+			url : '/order/findPage',
 			page : true,
 			height : "full-125",
 			limits : [10,20,30],
@@ -55,16 +58,29 @@
 				{field: 'phoneOne', title: '手机号码', minWidth:100, align:'center',templet:function(d){
 						return d.phoneOne
 					}},
-				{field: 'grade', title: '年级', minWidth:100, align:'center',templet:function(d){
-						return d.grade
+                {field: 'className', title: '班级', minWidth:80, align:'center',templet:function(d){
+                        return d.className
+                    }},
+                {field: 'curriculumName', title: '课程', minWidth:80, align:'center',templet:function(d){
+                        return d.curriculumName
+                    }},
+				{field: 'price', title: '金额', minWidth:100, align:'center',templet:function(d){
+						return d.price
+					}},
+				{field: 'price', title: '优惠', minWidth:100, align:'center',templet:function(d){
+						return d.discountAmount
 					}},
 				{field: 'grade', title: '已缴费', minWidth:100, align:'center',templet:function(d){
-						return "未实现"
+						return d.paidAmount
 					}},
-				{field: 'grade', title: '欠费', minWidth:100, align:'center',templet:function(d){
-						return "未实现"
+				{field: 'unpaidAmount', title: '欠费', minWidth:100, align:'center',templet:function(d){
+						if (d.unpaidAmount == 0) {
+							return  d.unpaidAmount;
+						}else {
+							return "<span class='layui-red'>" + d.unpaidAmount + "</span>";
+						}
 					}}
-				,{fixed: 'right', title:'操作', toolbar: '#opbar', width:250}
+				,{fixed: 'right', title:'操作', toolbar: '#opbar', width:350}
 			]]
 		});
 
@@ -75,7 +91,7 @@
 					curr: 1 //重新从第 1 页开始
 				},
 				where: {
-					name: $(".stdName").val()
+                    studentName: $(".stdName").val()
 				}
 			})
 		});
@@ -118,6 +134,44 @@
 					},500)
 				}
 			})
+		}
+		table.on('tool(studentList)', function(obj){
+			var data = obj.data;
+			if(obj.event === 'addPayRecoed'){
+				payBackTab(data);
+			} else if(obj.event === 'edit'){
+				layer.prompt({
+					formType: 2
+					,value: data.email
+				}, function(value, index){
+					obj.update({
+						email: value
+					});
+					layer.close(index);
+				});
+			}
+		});
+		function payBackTab(eData) {
+			var h = "440px";
+			var title = "补缴费";
+			var indexNow = layui.layer.open({
+				title : title,
+				type : 2,
+				area: ['400px', '400px'],
+				content : "payback.html",
+				maxmin: true,
+				success : function(layero, index){
+					var body = layui.layer.getChildFrame('body', index);
+					body.find(".js_orderAllNeedPay").html(eData.price);
+					body.find(".js_orderClassName").html(eData.curriculumName);
+					body.find(".js_orderGrade").html(eData.className);
+					body.find(".js_orderYouhui").html(eData.discountAmount);
+					body.find(".js_orderPrePay").html(eData.payableAmount);
+					body.find(".js_orderNeedPay").html(eData.unpaidAmount);
+					body.find("#orderId").val(eData.id);
+				}
+			});
+			layui.layer.full(indexNow);
 		}
 
 		$(".continue_btn").click(function(){

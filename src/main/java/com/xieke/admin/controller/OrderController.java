@@ -102,7 +102,67 @@ public class OrderController extends BaseController {
             return new ResultInfo(orderId);
         }
         Date now = new Date();
-        PayRecordBo payRecordBo = new PayRecordBo(orderId, payType,prePayBig,operateUser,now,opdesc);
+        PayRecordBo payRecordBo = new PayRecordBo(orderId, payType,prePayBig,operateUser,now,opdesc,0);
+        boolean a = payRecordDomain.create(payRecordBo);
+        if (a){
+            return new ResultInfo(orderId);
+        }else {
+            return new ResultInfo("支付失败");
+        }
+    }
+
+
+
+    @ResponseBody
+    @RequestMapping("/createById")
+    @Transactional(rollbackFor = Exception.class)
+    public ResultInfo createById(Integer studentId, Integer classesId, Integer curriculumId, String discountAmount, String discountRemark,String prePay,Integer payType,String operateUser,String opdesc) throws Exception {
+        if (studentId == null) {
+            return new ResultInfo("学生ID为空");
+        }
+        if (classesId == null) {
+            return new ResultInfo("班级ID为空");
+        }
+        if (curriculumId == null) {
+            return new ResultInfo("课程ID为空");
+        }
+        StudentBo studentBo = studentDomain.get(studentId);
+        ClassesBo classesBo = classesDomain.get(classesId);
+        CurriculumBo curriculumBo = curriculumDomain.get(curriculumId);
+        if (studentBo == null) {
+            return new ResultInfo("学生不存在");
+        }
+        if (classesBo == null) {
+            return new ResultInfo("班级不存在");
+        }
+        if (curriculumBo == null) {
+            return new ResultInfo("课程不存在");
+        }
+        BigDecimal discountAmountBig = BigDecimal.ZERO;
+        if (!StringUtils.isEmpty(discountAmount)) {
+            discountAmountBig = new BigDecimal(discountAmount);
+        }
+
+        UserInfo userInfo = this.getUserInfo();
+        OrderBo orderBo = new OrderBo(studentBo, classesBo, curriculumBo, discountAmountBig, discountRemark, curriculumBo.getPrice().subtract(discountAmountBig), BigDecimal.ZERO, OrderStatus.DEFAULT.getValue(), userInfo.getId(), userInfo.getName(), new Date(), "");
+        Integer orderId = orderDomain.insert(orderBo);
+        if (orderId==null){
+            return new ResultInfo("创建订单失败");
+        }
+        StudentClassRelationBo studentClassRelationBo = new StudentClassRelationBo();
+        studentClassRelationBo.setClassID(classesId);
+        studentClassRelationBo.setStudentID(studentId);
+        studentClassRelationDomain.insert(studentClassRelationBo);
+
+        //预付款
+        BigDecimal prePayBig = BigDecimal.ZERO;
+        if (!StringUtils.isEmpty(prePay)) {
+            prePayBig = new BigDecimal(prePay);
+        }else {
+            return new ResultInfo(orderId);
+        }
+        Date now = new Date();
+        PayRecordBo payRecordBo = new PayRecordBo(orderId, payType,prePayBig,operateUser,now,opdesc,0);
         boolean a = payRecordDomain.create(payRecordBo);
         if (a){
             return new ResultInfo(orderId);

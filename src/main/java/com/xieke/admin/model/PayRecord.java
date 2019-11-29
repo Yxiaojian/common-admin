@@ -65,5 +65,11 @@ public class PayRecord implements Serializable {
     @TableField("FRemark")
     private String remark;
 
+    /**
+     * 类型：0支付 1退款
+     */
+    @TableField("FRecordType")
+    private Integer recordType;
+
     private static final long serialVersionUID = 1L;
 }

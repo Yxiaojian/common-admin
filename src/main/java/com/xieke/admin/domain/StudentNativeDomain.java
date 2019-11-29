@@ -21,8 +21,14 @@ public class StudentNativeDomain implements StudentDomain {
     private StudentService studentService;
 
     @Override
-    public boolean insert(StudentBo studentBo) {
-        return studentService.insert(BeanUtil.convert(studentBo, Student.class));
+    public Integer insert(StudentBo studentBo) {
+        Student student = BeanUtil.convert(studentBo, Student.class);
+        boolean a = studentService.insert(student);
+        if (a) {
+            return student.getID();
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -64,7 +70,7 @@ public class StudentNativeDomain implements StudentDomain {
 
     @Override
     public StudentBo getByNameAndPhone1(String studentName, String phone1) {
-        return BeanUtil.convert(studentService.getByNameAndPhone1(studentName,phone1), StudentBo.class);
+        return BeanUtil.convert(studentService.getByNameAndPhone1(studentName, phone1), StudentBo.class);
     }
 
 }

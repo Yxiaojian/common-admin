@@ -5,7 +5,8 @@ public enum OrderStatus {
     WAIT_PAY(1,"待付款"),
     PART_PAYED(2,"部分付款"),
     PAYED(3,"已付款"),
-    OVER(4,"已完成");
+    OVER(4,"已完成"),
+    CANCEL(5,"已取消");
 
     private Integer value;
     private String content;

@@ -42,16 +42,6 @@
                         </div>
                         <span class="reqInfo" style="left: 50px;">*</span>
                     </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">性别</label>
-                        <div class="layui-input-block">
-                            <select class="state" name="sex">
-                                <option value="1">男</option>
-                                <option value="0">女</option>
-                            </select>
-                        </div>
-                    </div>
-
                     <div class="layui-form-item posirea">
                         <label class="layui-form-label">电话1</label>
                         <div class="layui-input-inline">
@@ -64,6 +54,17 @@
                         </div>
                         <span class="reqInfo" style="left: 45px;">*</span>
                     </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">性别</label>
+                        <div class="layui-input-block">
+                            <select class="state" name="sex">
+                                <option value="1">男</option>
+                                <option value="0">女</option>
+                            </select>
+                        </div>
+                    </div>
+
+
                     <div class="layui-form-item">
                         <label class="layui-form-label">电话2</label>
                         <div class="layui-input-inline">
@@ -146,7 +147,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">选择班级</label>
                         <div class="layui-input-block">
-                            <select class="classes" id="classesSselectId" lay-filter="classesSselectId" name="stuClass">
+                            <select class="classes" id="classesSselectId" lay-filter="classesSselectId" name="stuClass" lay-verify="required" lay-search="">
                             </select>
                         </div>
                     </div>
@@ -242,7 +243,7 @@
                     <i class="sticons icons-hedui" style="height: 35px;"></i>
                     <span style="display: inline-block;margin-left: -10px;margin-top: 10px;">核对订单信息</span>
                 </div>
-                <div style="margin: 0px 40px;padding: 20px;border: 1px dotted #9090b9;background-color: #DBF8FE;width: 1061px;padding-bottom: 137px;position: relative;">
+                <div style="margin: 0px 40px;padding: 20px;border: 1px dotted #9090b9;background-color: #DBF8FE;width: 1061px;padding-bottom: 137px;position: relative;height: 450px;">
                     <div class="order-title">
                         <i class="sticons icons-hedui"></i>
                         <span style="margin-top: 5px;display: inline-block;font-weight: bold;margin-left: -10px;">支付信息</span>
@@ -258,13 +259,13 @@
                         <div class="order-classname">
                             <i class="sticons icons-ordercuri"></i>
                             <div class="otitle">课程</div>
-                            <div class="oinfo js_orderClassName">小虎课</div>
+                            <div class="oinfo js_orderClassName"></div>
                         </div>
 
                         <div class="order-classname">
                             <i class="sticons icons-orderclass"></i>
                             <div  class="otitle">班级</div>
-                            <div class="oinfo js_orderGrade">三年二班</div>
+                            <div class="oinfo js_orderGrade"></div>
                         </div>
 
                         <div class="order-classname">
@@ -322,8 +323,10 @@
                         </div>
                     </div>
                     <input type="hidden" name="curriculumId" id="curriculumId"/>
+                    <input type="hidden" name="classesId" id="classesId"/>
                     <input type="hidden" name="discountAmount" id="discountAmount"/>
                     <input type="hidden" name="payType" id="payType" value="0"/>
+                    <input type="hidden" name="studentId" id="studentIdHid"/>
                     <div class="opbox">
                         <div class=" layui-clear" style="margin-top: 50px;">
 
@@ -336,7 +339,7 @@
                             <input type="text" class="layui-input opInput" id="desc" name="opdesc"  placeholder="">
                         </div>
                     </div>
-                    <div style="width: 1061px;margin: 0 0 0 82px;position: absolute;right: -1px;top: 532px;">
+                    <div style="width: 1061px;margin: 0 0 0 82px;position: absolute;right: -1px;top: 606px;">
                         <div class="real-pay" >
                             <span class="realpay--title">付款：</span>
                             <span class="realpay--price-symbol">¥</span>
@@ -406,6 +409,8 @@
 
             //班型
             $("#gradeType").html(getClassesType(data.classType));
+            $(".js_orderClassName").html(data.className);
+            $("#classesId").val(data.id);
             $.post("/curriculum/findById?id=" + data.curriculumID, function (curi) {
                 $("#grade").html(getGradeType(curi.data.grade));
                 $("#curriculumId").val(data.curriculumID);
@@ -414,6 +419,7 @@
                 $("#kcfee").html(curi.data.price);
                 $(".js_orderAllNeedPay").html(curi.data.price);
                 $("#noPay").html(curi.data.price);
+                $(".js_orderGrade").html(curi.data.curriculumName);
 
             });
         }
@@ -453,19 +459,29 @@
 
         $(".go-btn").on("click", function () {
             var frm = $("#studentForm");
+
             if (validOrderForm()) {
                 layer.confirm('确定已付款,添加报名信息？', {icon: 3, title: '提示信息'}, function (index) {
                     layer.close(index);
-                    $.post("/order/create",frm.serialize(),function(res){
+                    var indexLoading = top.layer.msg('正在创建订单，请稍候...',{icon: 16,time:false,shade:0.8});
+                    $.post("/student/add",frm.serialize(),function(res){
                         if (res.data){
-                            layer.close(index);
-                            layer.msg("报名成功！");
-                            //location.reload();
-                            setTimeout('location.reload()',2000);
+                            $("#studentIdHid").val(res.data);
+                            $.post("/order/createById",frm.serialize(),function(res){
+                                if (res.data){
+                                    layer.close(index);
+                                    layer.msg("报名成功！");
+                                    //location.reload();
+                                    setTimeout('location.reload()',1000);
+                                } else {
+                                    layer.msg(data.msg);
+                                }
+                            })
                         } else {
-                            layer.msg(data.msg);
+                            layer.msg("创建学生失败");
                         }
                     })
+
                 })
             } else {
                 return false;

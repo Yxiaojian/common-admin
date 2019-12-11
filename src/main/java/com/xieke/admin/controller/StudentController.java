@@ -23,7 +23,13 @@ public class StudentController {
     @ResponseBody
     public ResultInfo addStudent(String userName,  String mobilePhone1, String phone1Info, String mobilePhone2, String phone2Info, String school, Integer grade, Integer startYear,String homeAddress,String birthday,String remarks) {
         StudentBo studentBo = new StudentBo(userName, 0, mobilePhone1, phone1Info, mobilePhone2, phone2Info, school, grade, startYear, 0, new Date(), remarks, homeAddress, birthday);
-        Integer studentId = studentDomain.insert(studentBo);
+        Integer  studentId = 0;
+        StudentBo byNameAndPhone1 = studentDomain.getByNameAndPhone1(userName,mobilePhone1);
+        if (studentId != null) {
+            studentId = byNameAndPhone1.getID();
+        }else {
+            studentId = studentDomain.insert(studentBo);
+        }
         if (studentId == null) {
             return new ResultInfo<>("新增失败");
         }

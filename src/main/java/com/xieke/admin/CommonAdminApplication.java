@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+//测试提交 -
 @SpringBootApplication
 @EnableTransactionManagement(proxyTargetClass = true)
 public class CommonAdminApplication {

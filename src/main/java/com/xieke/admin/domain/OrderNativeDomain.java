@@ -2,6 +2,8 @@ package com.xieke.admin.domain;
 
 import com.xieke.admin.bo.OrderBo;
 import com.xieke.admin.bo.PayRecordBo;
+import com.xieke.admin.enums.OrderStatus;
+import com.xieke.admin.enums.PayType;
 import com.xieke.admin.model.Order;
 import com.xieke.admin.page.HtPage;
 import com.xieke.admin.service.OrderService;
@@ -11,6 +13,7 @@ import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -72,6 +75,29 @@ public class OrderNativeDomain implements OrderDomain {
     public HtPage<OrderBo> findPage(Integer pageIndex, Integer pageSize, String studentName, String phoneOne) {
         HtPage<Order> htPage = new HtPage<>(orderService.findPage(pageIndex, pageSize, studentName, phoneOne));
         return BeanUtil.convertPage(htPage, OrderBo.class);
+    }
+
+    @Override
+    public Boolean updateStatus(Integer orderId, Integer orderStatus) {
+        return orderService.updateStatus(orderId, orderStatus);
+    }
+
+    @Override
+    public Boolean cancel(Integer orderId) {
+        OrderBo orderBo = this.get(orderId);
+        Boolean a = this.updateStatus(orderId, OrderStatus.CANCEL.getValue());
+        if (a){
+            PayRecordBo payRecordBo = new PayRecordBo();
+            payRecordBo.setCreateTime(new Date());
+            payRecordBo.setOrderID(orderId);
+            payRecordBo.setPayType(PayType.CASH.getValue());
+            payRecordBo.setPayAmount(orderBo.getPaidAmount());
+            payRecordBo.setToller("取消订单退款");
+            payRecordBo.setRecordType(1);
+            return payRecordDomain.insert(payRecordBo);
+        }else{
+            return false;
+        }
     }
 
 }

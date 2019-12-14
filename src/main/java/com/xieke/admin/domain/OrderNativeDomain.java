@@ -73,7 +73,7 @@ public class OrderNativeDomain implements OrderDomain {
 
     @Override
     public HtPage<OrderBo> findPage(Integer pageIndex, Integer pageSize, String studentName, String phoneOne) {
-        HtPage<Order> htPage = new HtPage<>(orderService.findPage(pageIndex, pageSize, studentName, phoneOne));
+        HtPage<Order> htPage = new HtPage<>(orderService.findPage(pageIndex, pageSize, studentName, phoneOne, null));
         return BeanUtil.convertPage(htPage, OrderBo.class);
     }
 
@@ -85,8 +85,11 @@ public class OrderNativeDomain implements OrderDomain {
     @Override
     public Boolean cancel(Integer orderId) {
         OrderBo orderBo = this.get(orderId);
+        if (orderBo.getOrderStatus().equals(OrderStatus.CANCEL.getValue())) {
+            return true;
+        }
         Boolean a = this.updateStatus(orderId, OrderStatus.CANCEL.getValue());
-        if (a){
+        if (a) {
             PayRecordBo payRecordBo = new PayRecordBo();
             payRecordBo.setCreateTime(new Date());
             payRecordBo.setOrderID(orderId);
@@ -95,7 +98,7 @@ public class OrderNativeDomain implements OrderDomain {
             payRecordBo.setToller("取消订单退款");
             payRecordBo.setRecordType(1);
             return payRecordDomain.insert(payRecordBo);
-        }else{
+        } else {
             return false;
         }
     }

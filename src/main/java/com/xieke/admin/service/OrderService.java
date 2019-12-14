@@ -76,7 +76,7 @@ public class OrderService {
         return orderMapper.updateById(order) > 0;
     }
 
-    public IPage<Order> findPage(Integer pageIndex, Integer pageSize, String studentName, String phoneOne) {
+    public IPage<Order> findPage(Integer pageIndex, Integer pageSize, String studentName, String phoneOne, Integer orderStatus) {
         Page<Order> objectPage = new Page<>(pageIndex, pageSize);
         QueryWrapper<Order> wrapper = new QueryWrapper<>();
         LambdaQueryWrapper<Order> wrapperLamdba = wrapper.lambda();
@@ -85,6 +85,9 @@ public class OrderService {
         }
         if (!StringUtils.isEmpty(phoneOne)) {
             wrapperLamdba.eq(Order::getPhoneOne, phoneOne);
+        }
+        if (orderStatus != null) {
+            wrapperLamdba.eq(Order::getOrderStatus, orderStatus);
         }
         return orderMapper.selectPage(objectPage, wrapperLamdba);
     }

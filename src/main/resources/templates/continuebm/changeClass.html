@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>课程--三问数学</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="/static/layui/css/layui.css" media="all"/>
+    <link rel="stylesheet" href="/static/css/public.css" media="all"/>
+</head>
+<body class="childrenBody">
+<!-- 转班弹出层开始 -->
+<!--<div style="display: none;" id="changeClassDiv">-->
+<!--<form action="" method="post" class="layui-form layui-form-pane" id="changeClassFrm" lay-filter="changeClassFrm">-->
+<form class="layui-form changeClassForm" id="changeClassForm">
+    <input type="hidden" value="" id="studentID" name="studentID"/>
+    <div class="layui-form-item">
+        <label class="layui-form-label">选择班级</label>
+        <div class="layui-input-block">
+            <select class="classes classesSselectId" id="classesSselectId" lay-filter="classesSselectId" name="stuClass"
+                    lay-verify="required" lay-search="">
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label" style="padding-left: 0;width: 95px;">类型：</label>
+            <div class="layui-input-inline" style="width: 80px;margin-right: 0;">
+                <label class="layui-form-label" id="classType" style="text-align: left;"></label>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label" style="padding-left: 0;width: 95px;">年级：</label>
+            <div class="layui-input-inline" style="width: 80px;margin-right: 0;">
+                <label class="layui-form-label" id="grade" style="text-align: left;"></label>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label" style="padding-left: 0;width: 95px;">班型：</label>
+            <div class="layui-input-inline" style="width: 80px;margin-right: 0;">
+                <label class="layui-form-label" id="gradeType" style="text-align: left;"></label>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label" style="padding-left: 0;width: 95px;">人数：</label>
+            <div class="layui-input-inline" style="width: 80px;margin-right: 0;">
+                <label class="layui-form-label" id="stuCount" style="text-align: left;"></label>
+            </div>
+        </div>
+
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label" style="padding-left: 0;width: 95px;">金额：</label>
+            <div class="layui-input-inline" style="width: 110px;">
+                <label class="layui-form-label" id="kcfee" style="text-align: left;"></label>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label" style="padding-left: 0;">优惠</label>
+            <div class="layui-input-inline" style="width: 110px;">
+                <input type="text" class="layui-input number" required id="preferential" name="preferential"
+                       value="0" style="margin-left: 20px;" placeholder="">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label" style="padding-left: 0;">预缴</label>
+            <div class="layui-input-inline" style="width: 110px;">
+                <input type="text" class="layui-input number" required id="prePay" name="prePay" value="0"
+                       style="margin-left: 20px;" placeholder="">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label" style="padding-left: 0;width: 95px;">欠费：</label>
+            <div class="layui-input-inline" style="width: 80px;margin-right: 0;">
+                <label class="layui-form-label" id="noPay" style="text-align: left;"></label>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="padding-left: 0;">说明</label>
+        <div class="layui-input-block">
+                            <textarea placeholder="请输入说明" id="classCusInfo" name="discountRemark" class="layui-textarea"
+                                      required maxlength="256" placeholder="请输入说明"></textarea>
+            <span class="reqInfo" style="left: -70px;">*</span>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <button class="layui-btn layui-block" lay-filter="payBackTab" lay-submit>补缴费</button>
+    </div>
+
+</form>
+
+<!--</div>-->
+<!-- 转班弹出层结束 -->
+<script type="text/javascript" src="/static/layui/layui.js"></script>
+<script type="text/javascript" src="/static/js/site.js"></script>
+<script>
+    layui.use(['form', 'layer'], function () {
+        var form = layui.form,
+            layer = parent.layer === undefined ? layui.layer : top.layer,
+            $ = layui.jquery;
+
+        $.post("/classes/selectListData", function (data) {
+            var t = 0;
+            classList = data.data;
+
+            classList.forEach(function (e) {
+                if (t == 0) {
+                    initClassInfo(e);
+                }
+                t++;
+                $("#classesSselectId").append("<option value='" + e.id + "'>" + e.className + "</option>");
+            });
+            form.render('select');//重新渲染
+        });
+
+
+        form.on('select(semesterSelect)', function (data) {
+            var options = "";
+            if (data.value == 0 || data.value == 1) {
+                options += "<option value=\"0\">一期</option>\n" +
+                    "\t\t\t\t<option value=\"1\">二期</option>\n" +
+                    "\t\t\t\t<option value=\"2\">三期</option>\n" +
+                    "\t\t\t\t<option value=\"3\">四期</option>\n" +
+                    "\t\t\t\t<option value=\"4\">特殊</option>";
+            } else {
+                options += "<option value=\"5\">周一</option>\n" +
+                    "\t\t\t\t<option value=\"6\">周二</option>\n" +
+                    "\t\t\t\t<option value=\"7\">周三</option>\n" +
+                    "\t\t\t\t<option value=\"8\">周四</option>\n" +
+                    "\t\t\t\t<option value=\"9\">周五</option>\n" +
+                    "\t\t\t\t<option value=\"10\">周六</option>\n" +
+                    "\t\t\t\t<option value=\"11\">周日</option>";
+            }
+            $("#dateSelect").html(options);
+            form.render("select")
+        });
+        form.verify({
+            money: function (val, item) {
+                if (!/^\d+(\.\d{0,2})?$/.test(val)) {
+                    return '请输入正确的格式'
+                }
+            }
+        });
+       /* form.on("submit(addCurri)", function (data) {
+            //弹出loading
+            var index = top.layer.msg('数据保存中，请稍候...', {icon: 16, time: false, shade: 0.8});
+            $.post("/curriculum/add", data.field, function (res) {
+                layer.close(index);
+                if (res.data) {
+                    layer.msg("保存成功！");
+                    layer.closeAll("iframe");
+                    //刷新父页面
+                    parent.location.reload();
+                } else {
+                    layer.msg(res.msg);
+                }
+            });
+            return false;
+        });*/
+
+        /*table.on('tool(studentList)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'addPayRecoed') {
+                payBackTab(data);
+            }
+        });*/
+
+        function payBackTab(eData) {
+            var h = "440px";
+            var title = "补缴费";
+            var indexNow = layui.layer.open({
+                title: title,
+                type: 2,
+                area: ['400px', '400px'],
+                content: "payback.html",
+                maxmin: true,
+                success: function (layero, index) {
+                    var body = layui.layer.getChildFrame('body', index);
+                    body.find(".js_orderAllNeedPay").html(eData.price);
+                    body.find(".js_orderClassName").html(eData.curriculumName);
+                    body.find(".js_orderGrade").html(eData.className);
+                    body.find(".js_orderYouhui").html(eData.discountAmount);
+                    body.find(".js_orderPrePay").html(eData.payableAmount);
+                    body.find(".js_orderNeedPay").html(eData.unpaidAmount);
+                    body.find("#orderId").val(eData.id);
+                }
+            });
+            layui.layer.full(indexNow);
+        }
+
+
+        function initClassInfo(data) {
+
+            //班型
+            $("#gradeType").html(getClassesType(data.classType));
+            $(".js_orderClassName").html(data.className);
+            $("#classesId").val(data.id);
+            $.post("/curriculum/findById?id=" + data.curriculumID, function (curi) {
+                $("#grade").html(getGradeType(curi.data.grade));
+                $("#curriculumId").val(data.curriculumID);
+                //类型
+                $("#classType").html(getSeType(curi.data.semester));
+                $("#kcfee").html(curi.data.price);
+                $(".js_orderAllNeedPay").html(curi.data.price);
+                $("#noPay").html(curi.data.price);
+                $(".js_orderGrade").html(curi.data.curriculumName);
+
+            });
+        }
+
+
+        form.on("submit(payBackTab)",function(data){
+            alert(JSON.stringify(data.field))
+            //弹出loading
+          /*  var action = "add";
+            if ($("#editId").val() != "") {
+                action = "update";
+            }
+            var index = top.layer.msg('数据保存中，请稍候...',{icon: 16,time:false,shade:0.8});
+            $.post("/classes/"+action,data.field,function(res){
+                layer.close(index);
+                if (res.data){
+                    layer.msg("保存成功！");
+                    layer.closeAll("iframe");
+                    //刷新父页面
+                    parent.location.reload();
+                } else {
+                    layer.msg(res.msg);
+                }
+            });
+            return false;*/
+        });
+
+    })
+</script>
+</body>
+</html>

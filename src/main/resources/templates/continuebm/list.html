@@ -34,12 +34,15 @@
 </script>
 <script type="text/javascript" src="/static/layui/layui.js"></script>
 <script>
-	layui.use(['form','layer','table'],function(){
+	layui.use(['form','layer','table',"layedit"],function(){
 		var form = layui.form,
 				layer = parent.layer === undefined ? layui.layer : top.layer,
 				$ = layui.jquery,
 				table = layui.table;
 
+		var layedit = layui.layedit;
+
+		//layedit.build('content')
 
 		//课程列表
 		var tableIns = table.render({
@@ -149,6 +152,8 @@
 					});
 					layer.close(index);
 				});
+			} else if (obj.event === 'changeClass') {
+				changeClass(data);
 			}
 		});
 		function payBackTab(eData) {
@@ -172,6 +177,31 @@
 				}
 			});
 			layui.layer.full(indexNow);
+		}
+
+		function changeClass(eData) {
+			var title = "转班";
+			/*var indexNow = */
+				layui.layer.open({
+				title : title,
+				type : 2,
+				area: ['520px', '760px'],
+				content : "changeClass.html",
+				maxmin: true,
+				success : function(layero, index){
+					var body = layui.layer.getChildFrame('body', index);
+					body.find(".js_orderAllNeedPay").html(eData.price);
+					body.find(".js_orderClassName").html(eData.curriculumName);
+					body.find(".js_orderGrade").html(eData.className);
+					body.find(".js_orderYouhui").html(eData.discountAmount);
+					body.find(".js_orderPrePay").html(eData.payableAmount);
+					body.find(".js_orderNeedPay").html(eData.unpaidAmount);
+					body.find("#orderId").val(eData.id);
+					body.find("#classCusInfo").val("说明"+eData.studentID);
+					body.find("#studentID").val(eData.studentID);
+				}
+			});
+			//layui.layer.full(indexNow);
 		}
 
 		$(".continue_btn").click(function(){

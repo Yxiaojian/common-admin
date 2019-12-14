@@ -21,6 +21,16 @@
 <body class="childrenBody">
 <form class="layui-form backPayForm" id="backPayForm">
     <div class="layui-tab layui-tab-brief" lay-filter="enrollForm">
+        <!--学生Id studentId-->
+        <input type="hidden" Id="studentId" name="studentId">
+        <!--班级Id classesId-->
+        <input type="hidden" Id="classesId" name="classesId">
+        <!--课程Id curriculumId-->
+        <input type="hidden" Id="curriculumId" name="curriculumId">
+        <!--优惠金额 discountAmount-->
+        <input type="hidden" Id="discountAmount" name="discountAmount">
+        <!--优惠说明 discountRemark-->
+        <input type="hidden" Id="discountRemark" name="discountRemark">
 
         <div style="margin: 0px 40px;padding: 20px;border: 1px dotted #9090b9;background-color: #DBF8FE;width: 1061px;padding-bottom: 137px;position: absolute;left: 50%;margin-left: -545px;height: 400px;">
             <div class="order-title layui-hide">
@@ -101,20 +111,23 @@
                 </div>
             </div>
             <input type="hidden" name="orderId" id="orderId"/>
+            <!--支付方式 payType-->
             <input type="hidden" name="payType" value="0" id="payType"/>
             <div class="opbox">
                 <div class=" layui-clear needspan" style="margin-top: 50px;">
-
+                    <!--预付款 prePay-->
+                    <input type="hidden" id="prePay" name="prePay">
                     <span class="operateUser">补缴费：</span>
                     <input type="text" class="layui-input opInput number"  id="payBackMoney" value="" name="payAmount" required placeholder="">
                 </div>
                 <div class=" layui-clear" style="margin-top: 10px;">
-
+                    <!--收费人 operateUser-->
+                    <input type="hidden" id="operateUser" name="operateUser">
                     <span class="operateUser">经办人：</span>
                     <input type="text" class="layui-input opInput"  id="operateUserInupt" value="" name="toller" required placeholder="">
                 </div>
                 <div class=" layui-clear" style="margin-top: 10px;">
-
+                    <!--备注 opdesc-->
                     <span class="operateDesc" style="margin-right: 29px;">备注：</span>
                     <input type="text" class="layui-input opInput" id="desc" name="opdesc"  placeholder="">
                 </div>
@@ -160,22 +173,46 @@
         });
 
         $(".go-btn").on("click", function () {
+            $("#prePay").val(document.getElementById("payBackMoney").value);
+            $("#operateUser").val(document.getElementById("operateUserInupt").value);
             var frm = $("#backPayForm");
             if (validOrderForm()) {
-                layer.confirm('确定补缴？', {icon: 3, title: '提示信息'}, function (index) {
-                    layer.close(index);
-                    $.post("/pay/add",frm.serialize(),function(res){
-                        if (res.data){
-                            layer.close(index);
-                            layer.msg("缴费成功！");
+                //转班
+                var orderId = JSON.stringify(document.getElementById("orderId").value);
+                if (orderId == "\"\"") {
+                    layer.confirm('确定已付款,添加转班信息？', {icon: 3, title: '提示信息'}, function (index) {
+                        layer.close(index);
+                        var indexLoading = top.layer.msg('正在创建订单，请稍候...', {icon: 16, time: false, shade: 0.8});
+                        $.post("/order/createById", frm.serialize(), function (res) {
+                            if (res.data) {
+                                layer.close(index);
+                                layer.msg("转班成功！");
+                                //location.reload();
+                                setTimeout('parent.location.reload();', 1000);
+                            } else {
+                                layer.msg(data.msg);
+                            }
+                        })
 
-                            parent.location.reload();
-                            //location.reload();
-                        } else {
-                            layer.msg(data.msg);
-                        }
                     })
-                })
+                } else {
+                    //补缴费
+                    layer.confirm('确定补缴？', {icon: 3, title: '提示信息'}, function (index) {
+                        layer.close(index);
+                        $.post("/pay/add",frm.serialize(),function(res){
+                            if (res.data){
+                                layer.close(index);
+                                layer.msg("缴费成功！");
+
+                                parent.location.reload();
+                                //location.reload();
+                            } else {
+                                layer.msg(data.msg);
+                            }
+                        })
+                    })
+                }
+
             } else {
                 return false;
             }

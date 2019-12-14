@@ -85,7 +85,7 @@
             </div>
         </div>
     </div>
-    <div class="layui-form-item">
+<!--    <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label" style="padding-left: 0;">预缴</label>
             <div class="layui-input-inline" style="width: 110px;">
@@ -93,7 +93,7 @@
                        style="margin-left: 20px;" placeholder="">
             </div>
         </div>
-    </div>
+    </div>-->
 
     <div class="layui-form-item">
         <div class="layui-inline">
@@ -196,11 +196,12 @@
         }
 
         var className;
+        var curriculumId;
         form.on("submit(payBackTab)",function(data){
             classList.forEach(function (e) {
                 if (e.id + "" === data.field.stuClass) {
                     className = e.className;
-                    //alert(JSON.stringify(e))
+                    curriculumId = e.curriculumID;
                 }
             });
             //alert(JSON.stringify(data.field));
@@ -212,7 +213,7 @@
                     if (res.data){
                         layer.close(index);
                         //补缴费
-                        parent.payback.payback(data.field,className);
+                        parent.payback.payback(data.field,className,curriculumId);
                     } else {
                         //订单取消失败
                         layer.msg(res.msg);
@@ -220,25 +221,6 @@
                 });
             })
 
-
-
-          /*  var action = "add";
-            if ($("#editId").val() != "") {
-                action = "update";
-            }
-            var index = top.layer.msg('数据保存中，请稍候...',{icon: 16,time:false,shade:0.8});
-            $.post("/classes/"+action,data.field,function(res){
-                layer.close(index);
-                if (res.data){
-                    layer.msg("保存成功！");
-                    layer.closeAll("iframe");
-                    //刷新父页面
-                    parent.location.reload();
-                } else {
-                    layer.msg(res.msg);
-                }
-            });
-            return false;*/
         });
 
     })

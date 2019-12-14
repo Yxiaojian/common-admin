@@ -187,7 +187,7 @@
 				layui.layer.open({
 				title : title,
 				type : 2,
-				area: ['520px', '760px'],
+				area: ['500px', '690px'],
 				content : "changeClass.html",
 				maxmin: true,
 				success : function(layero, index){
@@ -235,7 +235,7 @@
 		 * @private
 		 */
 		var _payback = {
-			payback : function(data, className){
+			payback : function(data, className, curriculumId){
 			    var eData = payBackData;
                 var h = "440px";
                 var title = "补缴费";
@@ -259,7 +259,13 @@
                         body.find(".js_orderPrePay").html(eData.prePay);
                         //总欠费
                         body.find(".js_orderNeedPay").html(eData.unpaidAmount);
-                        body.find("#orderId").val(eData.id);
+                        //转班新建订单
+                        //body.find("#orderId").val(eData.id);
+                        body.find("#studentId").val(data.studentID);
+                        body.find("#classesId").val(data.stuClass);
+                        body.find("#curriculumId").val(curriculumId);
+                        body.find("#discountAmount").val(data.preferential);
+                        body.find("#discountRemark").val(data.discountRemark);
                     }
                 });
                 layui.layer.full(indexNow);

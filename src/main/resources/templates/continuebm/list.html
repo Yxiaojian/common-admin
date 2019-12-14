@@ -138,8 +138,10 @@
 				}
 			})
 		}
+		var payBackData;
 		table.on('tool(studentList)', function(obj){
 			var data = obj.data;
+			payBackData = obj.data;
 			if(obj.event === 'addPayRecoed'){
 				payBackTab(data);
 			} else if(obj.event === 'edit'){
@@ -190,18 +192,11 @@
 				maxmin: true,
 				success : function(layero, index){
 					var body = layui.layer.getChildFrame('body', index);
-					body.find(".js_orderAllNeedPay").html(eData.price);
-					body.find(".js_orderClassName").html(eData.curriculumName);
-					body.find(".js_orderGrade").html(eData.className);
-					body.find(".js_orderYouhui").html(eData.discountAmount);
-					body.find(".js_orderPrePay").html(eData.payableAmount);
-					body.find(".js_orderNeedPay").html(eData.unpaidAmount);
 					body.find("#orderId").val(eData.id);
 					body.find("#classCusInfo").val("说明"+eData.studentID);
 					body.find("#studentID").val(eData.studentID);
 				}
 			});
-			//layui.layer.full(indexNow);
 		}
 
 		$(".continue_btn").click(function(){
@@ -231,8 +226,19 @@
 			}else{
 				layer.msg("请选择需要删除的课程");
 			}
-		})
+		});
 
+		/**
+		 * 转班页面跳补转费页面
+		 * @type {{payback: payback}}
+		 * @private
+		 */
+		var _payback = {
+			payback : function(){
+				payBackTab(payBackData)
+			}
+		};
+		window.payback = _payback;
 
 
 	})

@@ -18,6 +18,7 @@
 <!--<form action="" method="post" class="layui-form layui-form-pane" id="changeClassFrm" lay-filter="changeClassFrm">-->
 <form class="layui-form changeClassForm" id="changeClassForm">
     <input type="hidden" value="" id="studentID" name="studentID"/>
+    <input type="hidden" value="" id="orderId" name="orderId"/>
     <div class="layui-form-item">
         <label class="layui-form-label">选择班级</label>
         <div class="layui-input-block">
@@ -106,7 +107,7 @@
         </div>
     </div>
     <div class="layui-form-item">
-        <button class="layui-btn layui-block" lay-filter="payBackTab" lay-submit>补缴费</button>
+        <a class="layui-btn layui-block" lay-filter="payBackTab" lay-submit>补缴费</a>
     </div>
 
 </form>
@@ -163,52 +164,10 @@
                 }
             }
         });
-       /* form.on("submit(addCurri)", function (data) {
-            //弹出loading
-            var index = top.layer.msg('数据保存中，请稍候...', {icon: 16, time: false, shade: 0.8});
-            $.post("/curriculum/add", data.field, function (res) {
-                layer.close(index);
-                if (res.data) {
-                    layer.msg("保存成功！");
-                    layer.closeAll("iframe");
-                    //刷新父页面
-                    parent.location.reload();
-                } else {
-                    layer.msg(res.msg);
-                }
-            });
-            return false;
-        });*/
 
-        /*table.on('tool(studentList)', function (obj) {
-            var data = obj.data;
-            if (obj.event === 'addPayRecoed') {
-                payBackTab(data);
-            }
-        });*/
-
-        function payBackTab(eData) {
-            var h = "440px";
-            var title = "补缴费";
-            var indexNow = layui.layer.open({
-                title: title,
-                type: 2,
-                area: ['400px', '400px'],
-                content: "payback.html",
-                maxmin: true,
-                success: function (layero, index) {
-                    var body = layui.layer.getChildFrame('body', index);
-                    body.find(".js_orderAllNeedPay").html(eData.price);
-                    body.find(".js_orderClassName").html(eData.curriculumName);
-                    body.find(".js_orderGrade").html(eData.className);
-                    body.find(".js_orderYouhui").html(eData.discountAmount);
-                    body.find(".js_orderPrePay").html(eData.payableAmount);
-                    body.find(".js_orderNeedPay").html(eData.unpaidAmount);
-                    body.find("#orderId").val(eData.id);
-                }
-            });
-            layui.layer.full(indexNow);
-        }
+        //当你在iframe页面关闭自身时
+        //var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+        //parent.layer.close(index,1231); //再执行关闭
 
 
         function initClassInfo(data) {
@@ -232,8 +191,21 @@
 
 
         form.on("submit(payBackTab)",function(data){
-            alert(JSON.stringify(data.field))
-            //弹出loading
+            //alert(JSON.stringify(data.field))
+            //取消订单
+            var orderId = data.field.orderId;
+            $.post("/order/cancel",{orderId : orderId}, function(res){
+                //layer.close(index);
+               if (res.data){
+                    //补缴费
+                    parent.payback.payback();
+                } else {
+                    //订单取消失败
+                    layer.msg(res.msg);
+                }
+            });
+
+
           /*  var action = "add";
             if ($("#editId").val() != "") {
                 action = "update";

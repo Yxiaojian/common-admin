@@ -195,6 +195,7 @@
 					body.find("#orderId").val(eData.id);
 					body.find("#classCusInfo").val("说明"+eData.studentID);
 					body.find("#studentID").val(eData.studentID);
+
 				}
 			});
 		}
@@ -234,8 +235,34 @@
 		 * @private
 		 */
 		var _payback = {
-			payback : function(){
-				payBackTab(payBackData)
+			payback : function(data, className){
+			    var eData = payBackData;
+                var h = "440px";
+                var title = "补缴费";
+                var indexNow = layui.layer.open({
+                    title : title,
+                    type : 2,
+                    area: ['400px', '400px'],
+                    content : "payback.html",
+                    maxmin: true,
+                    success : function(layero, index){
+                        var body = layui.layer.getChildFrame('body', index);
+                        //合计金额
+                        body.find(".js_orderAllNeedPay").html(eData.price);
+                        //课程
+                        body.find(".js_orderClassName").html(data.curriculumName);
+                        //班级
+                        body.find(".js_orderGrade").html(className);
+                        //优惠
+                        body.find(".js_orderYouhui").html(data.preferential);
+                        //已缴
+                        body.find(".js_orderPrePay").html(eData.prePay);
+                        //总欠费
+                        body.find(".js_orderNeedPay").html(eData.unpaidAmount);
+                        body.find("#orderId").val(eData.id);
+                    }
+                });
+                layui.layer.full(indexNow);
 			}
 		};
 		window.payback = _payback;

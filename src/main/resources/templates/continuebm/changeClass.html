@@ -19,6 +19,11 @@
 <form class="layui-form changeClassForm" id="changeClassForm">
     <input type="hidden" value="" id="studentID" name="studentID"/>
     <input type="hidden" value="" id="orderId" name="orderId"/>
+    <!--课程-->
+    <input type="hidden" value="" id="curriculumName" name="curriculumName">
+    <!--班级-->
+    <!--合计-->
+    <!--优惠-->
     <div class="layui-form-item">
         <label class="layui-form-label">选择班级</label>
         <div class="layui-input-block">
@@ -107,7 +112,7 @@
         </div>
     </div>
     <div class="layui-form-item">
-        <a class="layui-btn layui-block" lay-filter="payBackTab" lay-submit>补缴费</a>
+        <a class="layui-btn layui-block" lay-filter="payBackTab" lay-submit>确认转班</a>
     </div>
 
 </form>
@@ -185,25 +190,36 @@
                 $(".js_orderAllNeedPay").html(curi.data.price);
                 $("#noPay").html(curi.data.price);
                 $(".js_orderGrade").html(curi.data.curriculumName);
-
+                //课程名
+                $("#curriculumName").val(curi.data.curriculumName);
             });
         }
 
-
+        var className;
         form.on("submit(payBackTab)",function(data){
-            //alert(JSON.stringify(data.field))
-            //取消订单
-            var orderId = data.field.orderId;
-            $.post("/order/cancel",{orderId : orderId}, function(res){
-                //layer.close(index);
-               if (res.data){
-                    //补缴费
-                    parent.payback.payback();
-                } else {
-                    //订单取消失败
-                    layer.msg(res.msg);
+            classList.forEach(function (e) {
+                if (e.id + "" === data.field.stuClass) {
+                    className = e.className;
+                    //alert(JSON.stringify(e))
                 }
             });
+            //alert(JSON.stringify(data.field));
+            //取消订单
+            layer.confirm('确定转班将跳转至缴费页面？', {icon: 3, title: '提示信息'}, function (index) {
+                var orderId = data.field.orderId;
+                $.post("/order/cancel",{orderId : orderId}, function(res){
+                    //layer.close(index);
+                    if (res.data){
+                        layer.close(index);
+                        //补缴费
+                        parent.payback.payback(data.field,className);
+                    } else {
+                        //订单取消失败
+                        layer.msg(res.msg);
+                    }
+                });
+            })
+
 
 
           /*  var action = "add";

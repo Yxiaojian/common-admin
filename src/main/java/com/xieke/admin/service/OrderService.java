@@ -80,14 +80,25 @@ public class OrderService {
         Page<Order> objectPage = new Page<>(pageIndex, pageSize);
         QueryWrapper<Order> wrapper = new QueryWrapper<>();
         LambdaQueryWrapper<Order> wrapperLamdba = wrapper.lambda();
-        if (!StringUtils.isEmpty(studentName)){
-            wrapperLamdba.like(Order::getStudentName,studentName);
+        if (!StringUtils.isEmpty(studentName)) {
+            wrapperLamdba.like(Order::getStudentName, studentName);
         }
-        if (!StringUtils.isEmpty(phoneOne)){
-            wrapperLamdba.eq(Order::getPhoneOne,phoneOne);
+        if (!StringUtils.isEmpty(phoneOne)) {
+            wrapperLamdba.eq(Order::getPhoneOne, phoneOne);
         }
         return orderMapper.selectPage(objectPage, wrapperLamdba);
     }
 
+    public Boolean updateStatus(Integer orderId, Integer orderStatus) {
+        if (orderId == null) {
+            return false;
+        }
+        Order order = this.get(orderId);
+        if (order == null) {
+            return false;
+        }
+        order.setOrderStatus(orderStatus);
+        return orderMapper.updateById(order) > 0;
+    }
 
 }

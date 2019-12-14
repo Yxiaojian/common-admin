@@ -48,5 +48,7 @@ public interface OrderDomain {
 
     HtPage<OrderBo> findPage(Integer pageIndex, Integer pageSize, String studentName, String phoneOne);
 
+    Boolean updateStatus(Integer orderId,Integer orderStatus);
 
+    Boolean cancel(Integer orderId);
 }

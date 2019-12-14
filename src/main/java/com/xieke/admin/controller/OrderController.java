@@ -44,17 +44,16 @@ public class OrderController extends BaseController {
     private PayRecordDomain payRecordDomain;
 
 
-
     @ResponseBody
     @RequestMapping("/create")
     @Transactional(rollbackFor = Exception.class)
-    public ResultInfo create(String userName,  String mobilePhone1, String phone1Info, String mobilePhone2, String phone2Info, String school, Integer grade, Integer startYear,String homeAddress,String birthday,String remarks, Integer stuClass, Integer curriculumId, String discountAmount, String discountRemark,Integer payType,String prePay,String operateUser,String opdesc) throws Exception {
-        StudentBo studentInsertBo = new StudentBo(userName, 0, mobilePhone1, phone1Info, mobilePhone2, phone2Info, school, grade, startYear, 0, new Date(), remarks,homeAddress,birthday);
-        StudentBo byNameAndPhone1 = studentDomain.getByNameAndPhone1(userName,mobilePhone1);
+    public ResultInfo create(String userName, String mobilePhone1, String phone1Info, String mobilePhone2, String phone2Info, String school, Integer grade, Integer startYear, String homeAddress, String birthday, String remarks, Integer stuClass, Integer curriculumId, String discountAmount, String discountRemark, Integer payType, String prePay, String operateUser, String opdesc) throws Exception {
+        StudentBo studentInsertBo = new StudentBo(userName, 0, mobilePhone1, phone1Info, mobilePhone2, phone2Info, school, grade, startYear, 0, new Date(), remarks, homeAddress, birthday);
+        StudentBo byNameAndPhone1 = studentDomain.getByNameAndPhone1(userName, mobilePhone1);
         int studentId = 0;
         if (byNameAndPhone1 != null) {
             studentId = byNameAndPhone1.getID();
-        }else {
+        } else {
             studentId = studentDomain.insertReturnId(studentInsertBo);
 
         }
@@ -87,7 +86,7 @@ public class OrderController extends BaseController {
         UserInfo userInfo = this.getUserInfo();
         OrderBo orderBo = new OrderBo(studentBo, classesBo, curriculumBo, discountAmountBig, discountRemark, curriculumBo.getPrice().subtract(discountAmountBig), BigDecimal.ZERO, OrderStatus.DEFAULT.getValue(), userInfo.getId(), userInfo.getName(), new Date(), "");
         Integer orderId = orderDomain.insert(orderBo);
-        if (orderId==null){
+        if (orderId == null) {
             return new ResultInfo("创建订单失败");
         }
         StudentClassRelationBo studentClassRelationBo = new StudentClassRelationBo();
@@ -98,25 +97,24 @@ public class OrderController extends BaseController {
         BigDecimal prePayBig = BigDecimal.ZERO;
         if (!StringUtils.isEmpty(prePay)) {
             prePayBig = new BigDecimal(prePay);
-        }else {
+        } else {
             return new ResultInfo(orderId);
         }
         Date now = new Date();
-        PayRecordBo payRecordBo = new PayRecordBo(orderId, payType,prePayBig,operateUser,now,opdesc,0);
+        PayRecordBo payRecordBo = new PayRecordBo(orderId, payType, prePayBig, operateUser, now, opdesc, 0);
         boolean a = payRecordDomain.create(payRecordBo);
-        if (a){
+        if (a) {
             return new ResultInfo(orderId);
-        }else {
+        } else {
             return new ResultInfo("支付失败");
         }
     }
 
 
-
     @ResponseBody
     @RequestMapping("/createById")
     @Transactional(rollbackFor = Exception.class)
-    public ResultInfo createById(Integer studentId, Integer classesId, Integer curriculumId, String discountAmount, String discountRemark,String prePay,Integer payType,String operateUser,String opdesc) throws Exception {
+    public ResultInfo createById(Integer studentId, Integer classesId, Integer curriculumId, String discountAmount, String discountRemark, String prePay, Integer payType, String operateUser, String opdesc) throws Exception {
         if (studentId == null) {
             return new ResultInfo("学生ID为空");
         }
@@ -146,7 +144,7 @@ public class OrderController extends BaseController {
         UserInfo userInfo = this.getUserInfo();
         OrderBo orderBo = new OrderBo(studentBo, classesBo, curriculumBo, discountAmountBig, discountRemark, curriculumBo.getPrice().subtract(discountAmountBig), BigDecimal.ZERO, OrderStatus.DEFAULT.getValue(), userInfo.getId(), userInfo.getName(), new Date(), "");
         Integer orderId = orderDomain.insert(orderBo);
-        if (orderId==null){
+        if (orderId == null) {
             return new ResultInfo("创建订单失败");
         }
         StudentClassRelationBo studentClassRelationBo = new StudentClassRelationBo();
@@ -158,15 +156,15 @@ public class OrderController extends BaseController {
         BigDecimal prePayBig = BigDecimal.ZERO;
         if (!StringUtils.isEmpty(prePay)) {
             prePayBig = new BigDecimal(prePay);
-        }else {
+        } else {
             return new ResultInfo(orderId);
         }
         Date now = new Date();
-        PayRecordBo payRecordBo = new PayRecordBo(orderId, payType,prePayBig,operateUser,now,opdesc,0);
+        PayRecordBo payRecordBo = new PayRecordBo(orderId, payType, prePayBig, operateUser, now, opdesc, 0);
         boolean a = payRecordDomain.create(payRecordBo);
-        if (a){
+        if (a) {
             return new ResultInfo(orderId);
-        }else {
+        } else {
             return new ResultInfo("支付失败");
         }
     }
@@ -174,7 +172,7 @@ public class OrderController extends BaseController {
 
     @ResponseBody
     @RequestMapping("/get")
-    public ResultInfo getById(Integer orderId){
+    public ResultInfo getById(Integer orderId) {
         return new ResultInfo(orderDomain.get(orderId));
     }
 
@@ -187,7 +185,18 @@ public class OrderController extends BaseController {
             orderBo.setUnpaidAmount(orderBo.getPayableAmount().subtract(orderBo.getPaidAmount()));
         }
         htPage.setRecords(orderBoList);
-        return new ResultInfo("","0",htPage.getRecords(),new Long (htPage.getTotal()).intValue());
+        return new ResultInfo("", "0", htPage.getRecords(), new Long(htPage.getTotal()).intValue());
+    }
+
+    @RequestMapping("/cancel")
+    @ResponseBody
+    public ResultInfo cancel(Integer orderId) {
+        OrderBo orderBo = orderDomain.get(orderId);
+        if (orderDomain.cancel(orderId)) {
+            return new ResultInfo(orderBo.getPaidAmount());
+        } else {
+            return new ResultInfo("订单取消失败");
+        }
     }
 
 }

@@ -207,18 +207,10 @@
             //alert(JSON.stringify(data.field));
             //取消订单
             layer.confirm('确定转班将跳转至缴费页面？', {icon: 3, title: '提示信息'}, function (index) {
-                var orderId = data.field.orderId;
-                $.post("/order/cancel",{orderId : orderId}, function(res){
-                    //layer.close(index);
-                    if (res.data){
-                        layer.close(index);
-                        //补缴费
-                        parent.payback.payback(data.field,className,curriculumId);
-                    } else {
-                        //订单取消失败
-                        layer.msg(res.msg);
-                    }
-                });
+                layer.close(index);
+                //补缴费
+                parent.payback.payback(data.field,className,curriculumId);
+                //var orderId = data.field.orderId;
             })
 
         });

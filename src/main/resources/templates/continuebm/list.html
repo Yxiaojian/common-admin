@@ -259,8 +259,8 @@
                         body.find(".js_orderPrePay").html(eData.prePay);
                         //总欠费
                         body.find(".js_orderNeedPay").html(eData.unpaidAmount);
-                        //转班新建订单
-                        //body.find("#orderId").val(eData.id);
+                        //转班新建订单 转班取消原来的订单 传orderId
+                        body.find("#orderId").val(data.orderId);
                         body.find("#studentId").val(data.studentID);
                         body.find("#classesId").val(data.stuClass);
                         body.find("#curriculumId").val(curriculumId);

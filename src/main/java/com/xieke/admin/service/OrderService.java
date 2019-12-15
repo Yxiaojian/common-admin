@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.xieke.admin.enums.OrderStatus;
 import com.xieke.admin.model.Order;
 import com.xieke.admin.mapper.OrderMapper;
 import com.xieke.admin.model.Student;
@@ -88,6 +89,8 @@ public class OrderService {
         }
         if (orderStatus != null) {
             wrapperLamdba.eq(Order::getOrderStatus, orderStatus);
+        } else {
+            wrapperLamdba.notIn(Order::getOrderStatus, OrderStatus.CANCEL.getValue());
         }
         return orderMapper.selectPage(objectPage, wrapperLamdba);
     }

@@ -178,21 +178,32 @@
             var frm = $("#backPayForm");
             if (validOrderForm()) {
                 //转班
-                var orderId = JSON.stringify(document.getElementById("orderId").value);
-                if (orderId == "\"\"") {
+                var orderId = document.getElementById("orderId").value;
+                var isChangeClass = document.getElementById("classesId").value;
+                if (isChangeClass != '') {
                     layer.confirm('确定已付款,添加转班信息？', {icon: 3, title: '提示信息'}, function (index) {
                         layer.close(index);
-                        var indexLoading = top.layer.msg('正在创建订单，请稍候...', {icon: 16, time: false, shade: 0.8});
-                        $.post("/order/createById", frm.serialize(), function (res) {
-                            if (res.data) {
-                                layer.close(index);
-                                layer.msg("转班成功！");
-                                //location.reload();
-                                setTimeout('parent.location.reload();', 1000);
+                        //先取消原来的订单
+                        $.post("/order/cancel",{orderId : orderId}, function(res){
+                            //layer.close(index);
+                            //创建新订单
+                            if (res.data){
+                                var indexLoading = top.layer.msg('正在创建订单，请稍候...', {icon: 16, time: false, shade: 0.8});
+                                $.post("/order/createById", frm.serialize(), function (res) {
+                                    if (res.data) {
+                                        layer.close(index);
+                                        layer.msg("转班成功！");
+                                        //location.reload();
+                                        setTimeout('parent.location.reload();', 1000);
+                                    } else {
+                                        layer.msg(data.msg);
+                                    }
+                                })
                             } else {
-                                layer.msg(data.msg);
+                                //订单取消失败
+                                layer.msg(res.msg);
                             }
-                        })
+                        });
 
                     })
                 } else {

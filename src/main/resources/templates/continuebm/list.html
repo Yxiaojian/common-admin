@@ -234,7 +234,7 @@
 		 * @private
 		 */
 		var _payback = {
-			payback : function(data, className, curriculumId){
+			payback : function(data, className, curriculumId, orderAllNeedPay){
 			    var eData = payBackData;
                 var h = "440px";
                 var title = "补缴费";
@@ -247,7 +247,7 @@
                     success : function(layero, index){
                         var body = layui.layer.getChildFrame('body', index);
                         //合计金额
-                        body.find(".js_orderAllNeedPay").html(eData.price);
+                        body.find(".js_orderAllNeedPay").html(orderAllNeedPay);
                         //课程
                         body.find(".js_orderClassName").html(data.curriculumName);
                         //班级

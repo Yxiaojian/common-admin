@@ -316,7 +316,7 @@ INSERT INTO `sys_permission` VALUES ('18', '1', '图标管理', '1', '0/1', 'ico
 INSERT INTO `sys_permission` VALUES ('25', '1', '代码生成', '1', '0/1', 'code:view', 'menu', '/code/list', '2018-12-25 15:53:54', '2018-12-25 15:53:54');
 INSERT INTO `sys_permission` VALUES ('34', '1', '报名', '14', '0/14', 'student:home', 'menu', '/student/home', '2019-08-17 11:16:26', '2019-08-13 22:41:29');
 INSERT INTO `sys_permission` VALUES ('35', '1', '信息', '14', '0/14', 'student:info', 'menu', 'tt', '2019-08-13 22:46:30', '2019-08-13 22:46:30');
-INSERT INTO `sys_permission` VALUES ('36', '1', '统计', '14', '0/14', 'student:statistics', 'menu', 'ff3', '2019-08-13 22:47:38', '2019-08-13 22:47:38');
+INSERT INTO `sys_permission` VALUES ('36', '1', '统计', '14', '0/14', 'student:statistics', 'menu', '/statistics/home', '2019-08-13 22:47:38', '2019-08-13 22:47:38');
 INSERT INTO `sys_permission` VALUES ('37', '1', '管理', '14', '0/14', 'sys:manager', 'menu', '/manage/index', '2019-10-01 13:43:39', '2019-08-13 22:48:47');
 INSERT INTO `sys_permission` VALUES ('42', '1', '新生报名', '34', '0/14/34', 'student:enroll', 'button', '', '2019-10-18 11:02:22', '2019-10-18 11:02:22');
 INSERT INTO `sys_permission` VALUES ('43', '1', '课程管理', '37', '0/14/37', 'curriculum:list', 'button', '', '2019-10-18 11:03:00', '2019-10-18 11:03:00');

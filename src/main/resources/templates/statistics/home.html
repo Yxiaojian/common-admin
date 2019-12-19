@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+	<meta charset="utf-8">
+	<title>报名首页导航</title>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="/static/layui/css/layui.css" media="all" />
+	<link rel="stylesheet" href="/static/css/public.css" media="all" />
+</head>
+<body class="childrenBody">
+
+	<div class="layui-row layui-col-space10 panel_box" style="padding: 50px;">
+		<div class="panel layui-col-xs12 layui-col-sm6 layui-col-md6 layui-col-lg6">
+			<a href="javascript:;" data-url="/student/enroll">
+				<cite class="layui-hide">收费流水</cite>
+				<div class="panel_icon layui-bg-green">
+					<i class="layui-anim seraph icon-vip"></i>
+				</div>
+				<div class="panel_word">
+					<span>收费流水</span>
+				</div>
+			</a>
+		</div>
+		<div class="panel layui-col-xs12 layui-col-sm6 layui-col-md6 layui-col-lg6">
+			<a href="javascript:;" data-url="/continuebm/list">
+				<cite class="layui-hide">长期班收费清单</cite>
+				<div class="panel_icon layui-bg-red">
+					<i class="layui-anim seraph icon-text"></i>
+				</div>
+				<div class="panel_word">
+					<span>长期班收费清单</span>
+				</div>
+			</a>
+		</div>
+		<div class="panel layui-col-xs12 layui-col-sm6 layui-col-md6 layui-col-lg6">
+			<a href="javascript:;" data-url="/user/list.html">
+				<div class="panel_icon layui-bg-orange">
+					<i class="layui-anim seraph icon-xiugai"></i>
+				</div>
+				<div class="panel_word">
+					<span>退费统计</span>
+				</div>
+			</a>
+		</div>
+		<div class="panel layui-col-xs12 layui-col-sm6 layui-col-md6 layui-col-lg6">
+			<a href="javascript:;" data-url="/icon/icons.html">
+				<div class="panel_icon layui-bg-cyan">
+					<i class="layui-anim seraph icon-oschina"></i>
+				</div>
+				<div class="panel_word">
+					<span>课时统计</span>
+				</div>
+			</a>
+		</div>
+		<div class="panel layui-col-xs12 layui-col-sm6 layui-col-md6 layui-col-lg6">
+			<a href="javascript:;" data-url="/icon/icons.html">
+				<div class="panel_icon layui-bg-cyan">
+					<i class="layui-anim seraph icon-prohibit"></i>
+				</div>
+				<div class="panel_word">
+					<span>收入统计</span>
+				</div>
+			</a>
+		</div>
+	</div>
+	<script type="text/javascript" src="/static/layui/layui.js"></script>
+<script>
+	layui.use(['form','element','layer','jquery'],function(){
+		var form = layui.form,
+				layer = parent.layer === undefined ? layui.layer : top.layer,
+				element = layui.element;
+		$ = layui.jquery;
+
+		//icon动画
+		$(".panel a").hover(function(){
+			$(this).find(".layui-anim").addClass("layui-anim-scaleSpring");
+		},function(){
+			$(this).find(".layui-anim").removeClass("layui-anim-scaleSpring");
+		})
+		$(".panel a").click(function(){
+			parent.addTab($(this));
+		})
+
+	})
+</script>
+</body>
+</html>

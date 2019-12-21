@@ -87,3 +87,15 @@ function getClassesLevel(d) {
             return "未定义";
     }
 }
+
+function getSex(d) {
+    switch (d) {
+        case 0:
+            return "女";
+        case 1:
+            return "男";
+        default:
+            return "未定义";
+    }
+
+}

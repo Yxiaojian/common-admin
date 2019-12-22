@@ -180,7 +180,7 @@
                 //转班
                 var orderId = document.getElementById("orderId").value;
                 var isChangeClass = document.getElementById("classesId").value;
-                if (isChangeClass != '') {
+                if (isChangeClass != '' && orderId != '') {
                     layer.confirm('确定已付款,添加转班信息？', {icon: 3, title: '提示信息'}, function (index) {
                         layer.close(index);
                         //先取消原来的订单
@@ -207,21 +207,42 @@
 
                     })
                 } else {
-                    //补缴费
-                    layer.confirm('确定补缴？', {icon: 3, title: '提示信息'}, function (index) {
-                        layer.close(index);
-                        $.post("/pay/add",frm.serialize(),function(res){
-                            if (res.data){
-                                layer.close(index);
-                                layer.msg("缴费成功！");
+                    var msg;
+                    if (orderId != '') {
+                        msg = "确定补缴？";
+                    } else {
+                        msg = "确定缴费？";
+                    }
+                        //补缴费
+                        layer.confirm(msg, {icon: 3, title: '提示信息'}, function (index) {
+                            layer.close(index);
+                            if (orderId != "") {
+                                $.post("/pay/add",frm.serialize(),function(res){
+                                    if (res.data){
+                                        layer.close(index);
+                                        layer.msg("缴费成功！");
 
-                                parent.location.reload();
-                                //location.reload();
+                                        parent.location.reload();
+                                        //location.reload();
+                                    } else {
+                                        layer.msg(data.msg);
+                                    }
+                                })
                             } else {
-                                layer.msg(data.msg);
+                                var indexLoading = top.layer.msg('正在创建订单，请稍候...', {icon: 16, time: false, shade: 0.8});
+                                $.post("/order/createById", frm.serialize(), function (res) {
+                                    if (res.data) {
+                                        layer.close(index);
+                                        layer.msg("续报成功！");
+                                        //location.reload();
+                                        setTimeout('parent.location.reload();', 1000);
+                                    } else {
+                                        layer.msg(data.msg);
+                                    }
+                                })
                             }
+
                         })
-                    })
                 }
 
             } else {

@@ -27,7 +27,7 @@
 	<table id="studentList" lay-filter="studentList"></table>
 </form>
 <script type="text/html" id="opbar">
-	<a class="layui-btn layui-btn-xs" lay-event="continue">续报</a>
+	<a class="layui-btn layui-btn-xs" lay-event="continueBm">续报</a>
 	<a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="changeClass">转班</a>
 	<a class="layui-btn layui-btn-xs layui-btn-warm " lay-event="addPayRecoed">补缴费</a>
 	<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="payRedord">收费流水</a>
@@ -105,41 +105,9 @@
 			}
 		});
 
-		//续报
-		function continueBm(edit){
-			var h = "440px";
-			var title = "添加课程";
-			if (edit){
-				h = "280px";
-				title = "编辑课程";
-			}
-			layui.layer.open({
-				title : title,
-				type : 2,
-				area : ["420px",h],
-				content : "info.html",
-				success : function(layero, index){
-					var body = layui.layer.getChildFrame('body', index);
-					if(edit){
-						body.find("#une").remove();
-						body.find("#pwd1").remove();
-						body.find("#pwd2").remove();
-						body.find("#id").val(edit.id);
-						body.find("#name").val(edit.name);
-						body.find("#roleId").val(edit.roleId);
-						body.find("#stateSelect").val(edit.state);
-						form.render();
-					}
-					setTimeout(function(){
-						layui.layer.tips('点击此处返回课程列表', '.layui-layer-setwin .layui-layer-close', {
-							tips: 3
-						});
-					},500)
-				}
-			})
-		}
 		var payBackData;
 		table.on('tool(studentList)', function(obj){
+			var title;
 			var data = obj.data;
 			payBackData = obj.data;
 			if(obj.event === 'addPayRecoed'){
@@ -155,7 +123,11 @@
 					layer.close(index);
 				});
 			} else if (obj.event === 'changeClass') {
-				changeClass(data);
+				title = "转班";
+				changeClassAndContinue(data, title);
+			} else if (obj.event === 'continueBm') {
+				title = "续报";
+				changeClassAndContinue(data, title);
 			}
 		});
 		function payBackTab(eData) {
@@ -181,8 +153,9 @@
 			layui.layer.full(indexNow);
 		}
 
-		function changeClass(eData) {
-			var title = "转班";
+		//转班 Or 续报
+		function changeClassAndContinue(eData, title) {
+			//var title = "转班";
 			/*var indexNow = */
 				layui.layer.open({
 				title : title,
@@ -192,41 +165,16 @@
 				maxmin: true,
 				success : function(layero, index){
 					var body = layui.layer.getChildFrame('body', index);
-					body.find("#orderId").val(eData.id);
+					//续报不带orderId
+					if (title == '转班') {
+						body.find("#orderId").val(eData.id);
+					}
 					body.find("#studentID").val(eData.studentID);
 
 				}
 			});
 		}
 
-		$(".continue_btn").click(function(){
-			continueBm();
-		});
-		$(".delAll_btn").click(function(){
-			var checkStatus = table.checkStatus('studentList'),
-					data = checkStatus.data,
-					idArr = [];
-			if(data.length > 0) {
-				for (var i in data) {
-					idArr.push(data[i].id);
-				}
-				layer.confirm('确定删除选中的课程？', {icon: 3, title: '提示信息'}, function (index) {
-					$.get("/curriculum/delete",{
-						idArr : idArr.toString()
-					},function(data){
-						layer.close(index);
-						tableIns.reload();
-						if (data.data){
-							layer.msg("删除成功！");
-						} else {
-							layer.msg(data.msg);
-						}
-					})
-				})
-			}else{
-				layer.msg("请选择需要删除的课程");
-			}
-		});
 
 		/**
 		 * 转班页面跳补转费页面

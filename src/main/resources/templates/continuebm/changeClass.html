@@ -118,7 +118,7 @@
         </div>
     </div>
     <div class="layui-form-item">
-        <a class="layui-btn layui-block" lay-filter="payBackTab" lay-submit>确认转班</a>
+        <a class="layui-btn layui-block" lay-filter="payBackTab" lay-submit>确认</a>
     </div>
 
 </form>
@@ -227,7 +227,11 @@
             orderAllNeedPay = document.getElementById("kcfee");
             //alert(JSON.stringify(data.field));
             //取消订单
-            layer.confirm('确定转班将跳转至缴费页面？', {icon: 3, title: '提示信息'}, function (index) {
+            var alertMsg = "确认转班将跳转至缴费页面？";
+            if (data.field.orderId == "") {
+                alertMsg = "确认续报将跳转至缴费页面？";
+            }
+            layer.confirm(alertMsg, {icon: 3, title: '提示信息'}, function (index) {
                 layer.close(index);
                 //补缴费
                 parent.payback.payback(data.field, className, curriculumId, orderAllNeedPay);

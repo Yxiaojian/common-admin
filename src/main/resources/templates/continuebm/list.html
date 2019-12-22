@@ -31,6 +31,7 @@
 	<a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="changeClass">转班</a>
 	<a class="layui-btn layui-btn-xs layui-btn-warm " lay-event="addPayRecoed">补缴费</a>
 	<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="payRedord">收费流水</a>
+	<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="cancelOrder">退费</a>
 </script>
 <script type="text/javascript" src="/static/layui/layui.js"></script>
 <script>
@@ -128,6 +129,8 @@
 			} else if (obj.event === 'continueBm') {
 				title = "续报";
 				changeClassAndContinue(data, title);
+			} else if (obj.event === 'cancelOrder') {
+				cancelOrder(data);
 			}
 		});
 		function payBackTab(eData) {
@@ -220,7 +223,22 @@
 		};
 		window.payback = _payback;
 
+		//退费
+		function cancelOrder(eData) {
+			layer.confirm('确定退费？', {icon: 3, title: '提示信息'}, function (index) {
+				//取消订单
+				$.post("/order/cancel",{orderId : eData.id}, function(res){
+					if (res.data) {
+						layer.close(index);
+						layer.msg("退费成功！");
+						setTimeout('location.reload();', 1000);
+					} else {
+						layer.msg(data.msg);
+					}
+				})
+			})
 
+		}
 	})
 </script>
 </body>

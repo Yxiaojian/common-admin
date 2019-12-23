@@ -111,7 +111,34 @@
 			var title;
 			var data = obj.data;
 			payBackData = obj.data;
-			if(obj.event === 'addPayRecoed'){
+			switch (obj.event) {
+				case 'addPayRecoed' :
+					payBackTab(data);
+					break;
+				case 'edit' :
+					layer.prompt({
+						formType: 2
+						,value: data.email
+					}, function(value, index){
+						obj.update({
+							email: value
+						});
+						layer.close(index);
+					});
+					break;
+				case 'changeClass' :
+					title = "转班";
+					changeClassAndContinue(data, title);
+					break;
+				case 'continueBm' :
+					title = "续报";
+					changeClassAndContinue(data, title);
+					break;
+				case 'cancelOrder' :
+					cancelOrder(data);
+					break;
+			}
+			/*if(obj.event === 'addPayRecoed'){
 				payBackTab(data);
 			} else if(obj.event === 'edit'){
 				layer.prompt({
@@ -131,7 +158,7 @@
 				changeClassAndContinue(data, title);
 			} else if (obj.event === 'cancelOrder') {
 				cancelOrder(data);
-			}
+			}*/
 		});
 		function payBackTab(eData) {
 			var h = "440px";

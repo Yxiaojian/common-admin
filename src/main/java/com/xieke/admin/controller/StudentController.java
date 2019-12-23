@@ -50,11 +50,11 @@ public class StudentController {
 
     @RequestMapping("/update")
     @ResponseBody
-    public ResultInfo updateStudent(Integer studentId, String studentName, Integer sex, String phoneOne, String phoneOneRemark, String phoneTwo, String phoneTwoRemark, String school, Integer grade, Integer entranceYear) {
+    public ResultInfo updateStudent(Integer studentId, String studentName, Integer sex, String phoneOne, String phoneOneRemark, String phoneTwo, String phoneTwoRemark, String school, Integer grade, Integer entranceYear, String remark) {
         if (studentId == null) {
             return new ResultInfo<>("学生ID不能为空");
         }
-        if (!studentDomain.update(studentId, studentName, sex, phoneOne, phoneOneRemark, phoneTwo, phoneTwoRemark, school, grade, entranceYear)) {
+        if (!studentDomain.update(studentId, studentName, sex, phoneOne, phoneOneRemark, phoneTwo, phoneTwoRemark, school, grade, entranceYear, remark)) {
             return new ResultInfo<>("更新失败");
         }
         return new ResultInfo(true);
@@ -80,6 +80,11 @@ public class StudentController {
 
     @RequestMapping("/list")
     public void toList() {
+
+    }
+
+    @RequestMapping("/*")
+    public void toHtml(){
 
     }
 

@@ -46,7 +46,7 @@ public interface StudentDomain {
 
     HtPage<StudentBo> findPage(Integer pageIndex, Integer pageSize, Integer grade, String name);
 
-    Boolean update(Integer studentId, String studentName, Integer sex, String phoneOne, String phoneOneRemark, String phoneTwo, String phoneTwoRemark, String school, Integer grade, Integer entranceYear);
+    Boolean update(Integer studentId, String studentName, Integer sex, String phoneOne, String phoneOneRemark, String phoneTwo, String phoneTwoRemark, String school, Integer grade, Integer entranceYear, String remark);
 
 
     int insertReturnId(StudentBo studentInsertBo);

@@ -95,7 +95,7 @@ public class StudentService {
      *
      * @return
      */
-    public Boolean updateById(Integer studentId, String studentName, Integer sex, String phoneOne, String phoneOneRemark, String phoneTwo, String phoneTwoRemark, String school, Integer grade, Integer entranceYear) {
+    public Boolean updateById(Integer studentId, String studentName, Integer sex, String phoneOne, String phoneOneRemark, String phoneTwo, String phoneTwoRemark, String school, Integer grade, Integer entranceYear, String remark) {
         if (studentId == null) {
             return false;
         }
@@ -126,6 +126,9 @@ public class StudentService {
         }
         if (entranceYear != null) {
             student.setEntranceYear(entranceYear);
+        }
+        if (remark != null) {
+            student.setRemark(remark);
         }
         return studentMapper.updateById(student) > 0;
     }

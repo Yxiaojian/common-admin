@@ -26,6 +26,11 @@
 	</blockquote>
 	<table id="studentList" lay-filter="studentList"></table>
 </form>
+<script type="text/html" id="opbar">
+	<a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="infoEnter">信息补录</a>
+	<a class="layui-btn layui-btn-xs layui-btn-warm " lay-event="scoreEnter">成绩录入</a>
+
+</script>
 <script type="text/javascript" src="/static/layui/layui.js"></script>
 <script type="text/javascript" src="/static/js/site.js"></script>
 <script>
@@ -53,22 +58,25 @@
 			limit : 10,
 			id : "studentList",
 			cols : [[
-				{type: "checkbox", fixed:"left", width:50},
+				//{type: "checkbox", fixed:"left", width:50},
 				{field: 'studentName', title: '学生姓名', minWidth:100, align:'center'},
 				{field: 'sex', title: '性别', minWidth:100, align:'center', templet:function (d) {
 					return getSex(d.sex)
 					}},
-				{field: 'phoneOne', title: '电话一', minWidth:100, align:'center'},
-				{field: 'phoneOneRemark', title: '电话一备注', minWidth:100, align:'center'},
-				{field: 'phoneTwo', title: '电话二', minWidth:100, align:'center'},
-				{field: 'phoneTwoRemark', title: '电话二备注', minWidth:100, align:'center'},
 				{field: 'school', title: '学校', minWidth:100, align:'center'},
 				{field: 'grade', title: '年级', minWidth: 100, align: 'center', templet: function (d) {
 						return getGradeType(d.grade)
 					}},
 				{field: 'entranceYear', title: '入学年份', minWidth:100, align:'center'},
 				{field: 'remark', title: '备注', minWidth:100, align:'center'},
-				{field: 'createTime', title: '创建时间', align:'center',minWidth:100}
+				{field: 'createTime', title: '创建时间', align:'center',minWidth:100},
+				{field: 'address', title: '联系地址', align:'center',minWidth:100},
+				{field: 'phoneOne', title: '电话一', minWidth:100, align:'center'},
+				{field: 'phoneOneRemark', title: '电话一备注', minWidth:100, align:'center'},
+				{field: 'phoneTwo', title: '电话二', minWidth:100, align:'center'},
+				{field: 'phoneTwoRemark', title: '电话二备注', minWidth:100, align:'center'}
+
+				,{fixed: 'right', title:'操作', toolbar: '#opbar', width:350}
 			]]
 		});
 
@@ -83,6 +91,50 @@
 				}
 			})
 		});
+
+		table.on('tool(studentList)', function(obj){
+			var data = obj.data;
+			switch (obj.event) {
+				case "infoEnter" :
+					infoEnter(data);
+					break;
+				case "scoreEnter" :
+					scoreEnter(data);
+					break;
+			}
+
+		});
+
+		function infoEnter(eData) {
+			var title = "信息补录";
+			var infoEnterNow = layui.layer.open({
+				title : title,
+				type : 2,
+				area: ['400px', '400px'],
+				content : "infoEnter.html",
+				maxmin: true,
+				success : function(layero, index){
+					var body = layui.layer.getChildFrame('body', index);
+					//回显学生信息
+					body.find("#studentId").val(eData.id);
+					body.find("#studentName").val(eData.studentName);
+					body.find("#phoneOne").val(eData.phoneOne);
+					body.find("#phoneOneRemark").val(eData.phoneOneRemark);
+					body.find("#sex").val(eData.sex);
+					body.find("#phoneTwo").val(eData.phoneTwo);
+					body.find("#phoneTwoRemark").val(eData.phoneTwoRemark);
+					body.find("#school").val(eData.school);
+					body.find("#grade").val(eData.grade);
+					body.find("#entranceYear").val(eData.entranceYear);
+					body.find("#address").val(eData.address);
+					body.find("#birthday").val(eData.birthday);
+					body.find("#remark").val(eData.remark);
+
+				}
+			});
+			layui.layer.full(infoEnterNow);
+		}
+
 
 	})
 

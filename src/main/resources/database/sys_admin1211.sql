@@ -589,3 +589,35 @@ CREATE TABLE `t_student_class_relation` (
 INSERT INTO `t_student_class_relation` VALUES ('20', '5');
 INSERT INTO `t_student_class_relation` VALUES ('21', '8');
 INSERT INTO `t_student_class_relation` VALUES ('22', '8');
+
+
+
+-- ----------------------------
+-- Table structure for t_test
+-- ----------------------------
+DROP TABLE IF EXISTS `t_test`;
+CREATE TABLE `t_test`  (
+  `FID` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `FTestName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '考试名称',
+  `FClassID` int(11) DEFAULT NULL COMMENT '班级ID',
+  `FCreateTime` datetime(0) DEFAULT NULL COMMENT '创建时间',
+  `FRemark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`FID`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for t_test_result
+-- ----------------------------
+DROP TABLE IF EXISTS `t_test_result`;
+CREATE TABLE `t_test_result`  (
+  `FID` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `FStudentName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '学生姓名',
+  `FTestID` int(11) DEFAULT NULL COMMENT '考试ID',
+  `FTestName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '考试名称',
+  `FClassID` int(11) DEFAULT NULL COMMENT '班级ID',
+  `FClassName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '班级名称',
+  `FScore` int(11) DEFAULT NULL COMMENT '分数',
+  `FCreateTime` datetime(0) DEFAULT NULL COMMENT '创建时间',
+  `FRemark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`FID`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;

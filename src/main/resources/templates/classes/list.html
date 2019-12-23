@@ -18,8 +18,9 @@
 		<form class="layui-form">
 			<div class="layui-inline">
 				<div class="layui-input-inline">
-					<input type="text" class="layui-input className" placeholder="请输入班级名称" />
-				</div>
+					<input type="text" class="layui-input className" id="searchByClassName" placeholder="请输入班级名称" />
+                    <input id="hiddenText" type="text" style="display:none" />
+                </div>
 				<a class="layui-btn search_btn" data-type="reload">搜索</a>
 			</div>
 			<div class="layui-inline">
@@ -35,6 +36,11 @@
 	</blockquote>
 	<table id="classesList" lay-filter="classesList"></table>
 </form>
+<script type="text/html" id="opbar">
+	<a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="seeTest">查看考试</a>
+	<a class="layui-btn layui-btn-xs layui-btn-warm " lay-event="addTest">添加考试</a>
+
+</script>
 <script type="text/javascript" src="/static/layui/layui.js"></script>
 <script type="text/javascript" src="/static/js/site.js"></script>
 <script>
@@ -81,20 +87,34 @@
 						return getClassesLevel(d.classLevel)
 					}},
 				{field: 'createTime', title: '创建时间', align:'center',minWidth:100}
+
+				,{fixed: 'right', title:'操作', toolbar: '#opbar', width:180}
 			]]
 		});
 
 		//搜索
 		$(".search_btn").on("click",function(){
-			table.reload("classesList",{
-				page: {
-					curr: 1 //重新从第 1 页开始
-				},
-				where: {
-					className: $(".className").val()
-				}
-			})
+            searchByClassName();
 		});
+
+		//搜索绑定回车
+        $("#searchByClassName").bind("keypress", function (e) {
+            if (e.keyCode === 13) {
+                searchByClassName();
+            }
+        });
+
+		function searchByClassName(){
+            table.reload("classesList",{
+                page: {
+                    curr: 1 //重新从第 1 页开始
+                },
+                where: {
+                    className: $(".className").val()
+                }
+            })
+        }
+
 		$(".edit_btn").click(function(){
 			var checkStatus = table.checkStatus('classesList'),
 					data = checkStatus.data;
@@ -168,6 +188,41 @@
 				layer.msg("请选择需要删除的班级");
 			}
 		})
+
+		table.on('tool(classesList)', function(obj){
+			var data = obj.data;
+			switch (obj.event) {
+				case "seeTest" :
+					seeTest(data);
+					break;
+				case "addTest" :
+					addTest(data);
+					break;
+			}
+
+		});
+
+		function seeTest() {
+			alert("查看考试")
+		}
+
+		function addTest(data) {
+			layui.layer.open({
+				title : title,
+				type : 2,
+				area : ["420px",h],
+				content : "addTest.html",
+				success : function(layero, index){
+					var body = layui.layer.getChildFrame('body', index);
+					body.find("#editId").val(data.id);
+					setTimeout(function(){
+						layui.layer.tips('点击此处返回班级列表', '.layui-layer-setwin .layui-layer-close', {
+							tips: 3
+						});
+					},500)
+				}
+			})
+		}
 
 
 

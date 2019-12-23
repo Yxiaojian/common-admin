@@ -75,8 +75,8 @@ public class ClassesController {
 
     @RequestMapping("/findPage")
     @ResponseBody
-    public ResultInfo findPage(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "limit", defaultValue = "20") Integer limit) {
-        HtPage<ClassesBo> htPage = classesDomain.findPage(page, limit);
+    public ResultInfo findPage(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "limit", defaultValue = "20") Integer limit, String className) {
+        HtPage<ClassesBo> htPage = classesDomain.findPage(page, limit, className == null ? null : className.trim());
         return new ResultInfo("","0",htPage.getRecords(),new Long (htPage.getTotal()).intValue());
     }
 

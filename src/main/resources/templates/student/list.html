@@ -61,7 +61,7 @@
 			cols : [[
 				//{type: "checkbox", fixed:"left", width:50},
 				{field: 'studentName', title: '学生姓名', minWidth:100, align:'center'},
-				{field: 'sex', title: '性别', minWidth:100, align:'center', templet:function (d) {
+				{field: 'sex', title: '性别', minWidth:70, align:'center', templet:function (d) {
 					return getSex(d.sex)
 					}},
 				{field: 'school', title: '学校', minWidth:100, align:'center'},
@@ -70,14 +70,14 @@
 					}},
 				{field: 'entranceYear', title: '入学年份', minWidth:100, align:'center'},
 				{field: 'remark', title: '备注', minWidth:100, align:'center'},
-				{field: 'createTime', title: '创建时间', align:'center',minWidth:100},
+				{field: 'createTime', title: '创建时间', align:'center',minWidth:150},
 				{field: 'address', title: '联系地址', align:'center',minWidth:100},
-				{field: 'phoneOne', title: '电话一', minWidth:100, align:'center'},
+				{field: 'phoneOne', title: '电话一', minWidth:120, align:'center'},
 				{field: 'phoneOneRemark', title: '电话一备注', minWidth:100, align:'center'},
-				{field: 'phoneTwo', title: '电话二', minWidth:100, align:'center'},
+				{field: 'phoneTwo', title: '电话二', minWidth:120, align:'center'},
 				{field: 'phoneTwoRemark', title: '电话二备注', minWidth:100, align:'center'}
 
-				,{fixed: 'right', title:'操作', toolbar: '#opbar', width:350}
+				,{fixed: 'right', title:'操作', toolbar: '#opbar', width:180}
 			]]
 		});
 

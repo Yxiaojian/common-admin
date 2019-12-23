@@ -1,4 +1,4 @@
-﻿package com.xieke.admin.domain;
+package com.xieke.admin.domain;
 
 import com.xieke.admin.bo.TestResultBo;
 import org.springframework.web.bind.annotation.RequestBody;

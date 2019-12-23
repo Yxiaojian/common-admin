@@ -26,7 +26,7 @@ public class TestController {
 
     @RequestMapping("/add")
     @ResponseBody
-    public ResultInfo add(Integer classId, String testName) {
+    public ResultInfo add(Integer classId, String testName, String remark) {
         if (classId == null) {
             return new ResultInfo<>("classId为空");
         }
@@ -38,6 +38,7 @@ public class TestController {
         testBo.setTestName(testName);
         testBo.setClassID(classId);
         testBo.setCreateTime(new Date());
+        testBo.setRemark(remark);
         if (testDomain.insert(testBo)) {
             return new ResultInfo(true);
         } else {

@@ -207,10 +207,11 @@
 		}
 
 		function addTest(data) {
+			var title = "添加考试";
 			layui.layer.open({
 				title : title,
 				type : 2,
-				area : ["420px",h],
+				area : ["420px","230px"],
 				content : "addTest.html",
 				success : function(layero, index){
 					var body = layui.layer.getChildFrame('body', index);

@@ -45,7 +45,8 @@
 
 </script>
 <script type="text/html" id="opbarTest">
-	<a class="layui-btn layui-btn-xs layui-btn-warm js_deleteTest" lay-event="deleteTest">删除</a>
+	<a class="layui-btn layui-btn-xs layui-btn-normal " lay-event="updateTest">编辑</a>
+	<a class="layui-btn layui-btn-xs layui-btn-warm " lay-event="deleteTest">删除</a>
 </script>
 <script type="text/javascript" src="/static/layui/layui.js"></script>
 <script type="text/javascript" src="/static/js/site.js"></script>
@@ -194,7 +195,7 @@
 				layer.msg("请选择需要删除的班级");
 			}
 		})
-
+		var title;
 		table.on('tool(classesList)', function(obj){
 			var data = obj.data;
 			switch (obj.event) {
@@ -202,7 +203,8 @@
 					seeTest(data);
 					break;
 				case "addTest" :
-					addTest(data);
+					title = "添加考试"
+					addOrUpdateTest(data);
 					break;
 			}
 
@@ -214,7 +216,7 @@
             layui.layer.open({
                 title : title,
                 type : 1,
-                area : ["420px","230px"],
+                area : ["420px","330px"],
                 content : $('#openTestList'),
                 success : function(layero, index){
                  	testTable = table.render({
@@ -222,7 +224,7 @@
 						url : '/test/findByClassId',
 						cellMinWidth : 115,
 						page : true,
-						height : "full-125",
+						height : 282,
 						limits : [5,10,15],
 						limit : 5,
 						id : "testList",
@@ -233,7 +235,7 @@
 							//{type: "checkbox", fixed:"left", width:50},
 							{field: 'testName', title: '考试名称', minWidth:100, align:'center'},
 							{field: 'remark', title: '备注', minWidth:100, align:'center'},
-							{fixed: 'right', title:'操作', toolbar: '#opbarTest', minWidth:25}
+							{fixed: 'right', title:'操作', toolbar: '#opbarTest', align:'center', minWidth:20}
 						]]
 					});
 
@@ -248,30 +250,42 @@
 
 		}
 
-		function addTest(data) {
-			var title = "添加考试";
+		function addOrUpdateTest(data) {
 			layui.layer.open({
 				title : title,
 				type : 2,
 				area : ["420px","230px"],
-				content : "addTest.html",
+				content : "addOrUpdateTest.html",
 				success : function(layero, index){
 					var body = layui.layer.getChildFrame('body', index);
 					body.find("#editId").val(data.id);
+					if (title == "编辑考试") {
+						body.find("#testId").val(data.id);
+						body.find("#testName").val(data.testName);
+						body.find("#remark").val(data.remark);
+					}
 					setTimeout(function(){
 						layui.layer.tips('点击此处返回班级列表', '.layui-layer-setwin .layui-layer-close', {
 							tips: 3
 						});
 					},500)
+				},
+				end : function () {
+					testTable.reload();
 				}
 			})
 		}
 
 		table.on('tool(testList)', function (obj) {
-			alert("del");
 			var data = obj.data;
-			if (obj.event === "deleteTest") {
-				deleteTest(data);
+			switch (obj.event) {
+				case "updateTest" :
+					title = "编辑考试";
+					addOrUpdateTest(data);
+					break;
+				case "deleteTest" :
+					deleteTest(data);
+					break;
 			}
 		});
 

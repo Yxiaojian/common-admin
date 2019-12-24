@@ -40,8 +40,8 @@ public class TestNativeDomain implements TestDomain {
     }
 
     @Override
-    public Boolean updateTestName(Integer testId, String testName) {
-        return testService.updateTestName(testId, testName);
+    public Boolean updateTestName(Integer testId, String testName, String remark) {
+        return testService.updateTestName(testId, testName, remark);
     }
 
     @Override

@@ -44,7 +44,7 @@ public interface TestDomain {
      */
     List<TestBo> findAll();
 
-    Boolean updateTestName(Integer testId,String testName);
+    Boolean updateTestName(Integer testId,String testName, String remark);
 
     List<TestBo> findByClassId(Integer classId);
 

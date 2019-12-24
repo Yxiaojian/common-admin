@@ -66,14 +66,14 @@ public class TestController {
 
     @RequestMapping("/mod")
     @ResponseBody
-    public ResultInfo mod(Integer testId, String testName) {
+    public ResultInfo mod(Integer testId, String testName, String remark) {
         if (testId == null) {
             return new ResultInfo<>("testId为空");
         }
         if (StringUtils.isEmpty(testName)) {
             return new ResultInfo<>("testName为空");
         }
-        if (testDomain.updateTestName(testId, testName)) {
+        if (testDomain.updateTestName(testId, testName, remark)) {
             return new ResultInfo(true);
         } else {
             return new ResultInfo<>("修改失败");

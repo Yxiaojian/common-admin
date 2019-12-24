@@ -15,6 +15,7 @@
 <body class="childrenBody">
 <form class="layui-form linksAdd">
 	<input type="hidden" value="" id="editId" name="classId">
+	<input type="hidden" value="" id="testId" name="testId">
 	<div class="layui-form-item">
 		<label class="layui-form-label">考试名称</label>
 		<div class="layui-input-block">
@@ -29,13 +30,13 @@
 	</div>
 
 	<div class="layui-form-item">
-		<button class="layui-btn layui-block" lay-filter="addTest" lay-submit>保存</button>
+		<button class="layui-btn layui-block" lay-filter="addOrUpdateTest" lay-submit>保存</button>
 	</div>
 </form>
 <script type="text/javascript" src="/static/layui/layui.js"></script>
 <script>
 	layui.use(['form','layer'],function(){
-		var form = layui.form
+		var form = layui.form;
 		layer = parent.layer === undefined ? layui.layer : top.layer,
 				$ = layui.jquery;
 
@@ -53,15 +54,25 @@
 				}
 			}
 		});
-		form.on("submit(addTest)",function(data){
+		form.on("submit(addOrUpdateTest)",function(data){
 			var index = top.layer.msg('数据保存中，请稍候...',{icon: 16,time:false,shade:0.8});
-			$.post("/test/add",data.field,function(res){
+			var action = "add";
+			if (data.field.testId !== "") {
+				action = "mod";
+			}
+			$.post("/test/" + action,data.field,function(res){
 				layer.close(index);
 				if (res.data){
-					layer.msg("保存成功！");
-					layer.closeAll("iframe");
-					//刷新父页面
-					parent.location.reload();
+					if (action === "mod") {
+						layer.msg("修改成功！");
+						setTimeout('parent.layer.close(parent.layer.getFrameIndex(window.name))', 500);
+					} else {
+						layer.msg("保存成功！");
+						layer.closeAll("iframe");
+						//刷新父页面
+						setTimeout('parent.location.reload()', 500);
+					}
+
 				} else {
 					layer.msg(res.msg);
 				}

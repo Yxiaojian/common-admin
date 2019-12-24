@@ -59,7 +59,7 @@ public class TestService {
         return testMapper.selectList(wrapper);
     }
 
-    public Boolean updateTestName(Integer testId, String testName) {
+    public Boolean updateTestName(Integer testId, String testName, String remark) {
         if (testId == null) {
             return false;
         }
@@ -68,6 +68,7 @@ public class TestService {
             return false;
         }
         test.setTestName(testName);
+        test.setRemark(remark);
         return testMapper.updateById(test) > 0;
     }
 

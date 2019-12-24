@@ -35,11 +35,17 @@
 		</form>
 	</blockquote>
 	<table id="classesList" lay-filter="classesList"></table>
+	<div id="openTestList" style="display: none">
+		<table id="testList" lay-filter="testList"></table>
+	</div>
 </form>
 <script type="text/html" id="opbar">
 	<a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="seeTest">查看考试</a>
 	<a class="layui-btn layui-btn-xs layui-btn-warm " lay-event="addTest">添加考试</a>
 
+</script>
+<script type="text/html" id="opbarTest">
+	<a class="layui-btn layui-btn-xs layui-btn-warm js_deleteTest" lay-event="deleteTest">删除</a>
 </script>
 <script type="text/javascript" src="/static/layui/layui.js"></script>
 <script type="text/javascript" src="/static/js/site.js"></script>
@@ -202,8 +208,43 @@
 
 		});
 
-		function seeTest() {
-			alert("查看考试")
+		var testTable;
+		function seeTest(data) {
+		    var title = "查看考试";
+            layui.layer.open({
+                title : title,
+                type : 1,
+                area : ["420px","230px"],
+                content : $('#openTestList'),
+                success : function(layero, index){
+                 	testTable = table.render({
+						elem: '#testList',
+						url : '/test/findByClassId',
+						cellMinWidth : 115,
+						page : true,
+						height : "full-125",
+						limits : [5,10,15],
+						limit : 5,
+						id : "testList",
+						where: {
+							classId : data.id
+						},
+						cols : [[
+							//{type: "checkbox", fixed:"left", width:50},
+							{field: 'testName', title: '考试名称', minWidth:100, align:'center'},
+							{field: 'remark', title: '备注', minWidth:100, align:'center'},
+							{fixed: 'right', title:'操作', toolbar: '#opbarTest', minWidth:25}
+						]]
+					});
+
+
+                    setTimeout(function(){
+                        layui.layer.tips('点击此处返回班级列表', '.layui-layer-setwin .layui-layer-close', {
+                            tips: 3
+                        });
+                    },500)
+                }
+            })
 
 		}
 
@@ -223,6 +264,29 @@
 						});
 					},500)
 				}
+			})
+		}
+
+		table.on('tool(testList)', function (obj) {
+			alert("del");
+			var data = obj.data;
+			if (obj.event === "deleteTest") {
+				deleteTest(data);
+			}
+		});
+
+		function deleteTest(data) {
+			layer.confirm('确定删除考试？', {icon: 3, title: '提示信息'}, function (index) {
+				layer.close(index);
+				$.post("/test/delete",{testId : data.id}, function(res){
+					if (res.data) {
+						layer.msg("删除成功！");
+						testTable.reload();
+					} else {
+						layer.msg(data.msg);
+					}
+				})
+
 			})
 		}
 

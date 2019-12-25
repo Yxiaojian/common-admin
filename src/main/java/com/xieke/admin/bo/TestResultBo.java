@@ -22,6 +22,11 @@ public class TestResultBo implements Serializable {
     private Integer ID;
 
     /**
+     * 考试ID
+     */
+    private Integer studentID;
+
+    /**
      * 学生姓名
      */
     private String studentName;

@@ -138,27 +138,6 @@
 					cancelOrder(data);
 					break;
 			}
-			/*if(obj.event === 'addPayRecoed'){
-				payBackTab(data);
-			} else if(obj.event === 'edit'){
-				layer.prompt({
-					formType: 2
-					,value: data.email
-				}, function(value, index){
-					obj.update({
-						email: value
-					});
-					layer.close(index);
-				});
-			} else if (obj.event === 'changeClass') {
-				title = "转班";
-				changeClassAndContinue(data, title);
-			} else if (obj.event === 'continueBm') {
-				title = "续报";
-				changeClassAndContinue(data, title);
-			} else if (obj.event === 'cancelOrder') {
-				cancelOrder(data);
-			}*/
 		});
 		function payBackTab(eData) {
 			var h = "440px";
@@ -190,7 +169,7 @@
 				layui.layer.open({
 				title : title,
 				type : 2,
-				area: ['500px', '690px'],
+				area: ['460px', '570px'],
 				content : "changeClass.html",
 				maxmin: true,
 				success : function(layero, index){

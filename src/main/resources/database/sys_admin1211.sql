@@ -611,6 +611,7 @@ CREATE TABLE `t_test`  (
 DROP TABLE IF EXISTS `t_test_result`;
 CREATE TABLE `t_test_result`  (
   `FID` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `FStudentID` int(11) DEFAULT NULL COMMENT '学生ID',
   `FStudentName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '学生姓名',
   `FTestID` int(11) DEFAULT NULL COMMENT '考试ID',
   `FTestName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '考试名称',

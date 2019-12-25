@@ -28,6 +28,12 @@ public class TestResult implements Serializable {
     private Integer ID;
 
     /**
+     * 考试ID
+     */
+    @TableField("FStudentID")
+    private Integer studentID;
+
+    /**
      * 学生姓名
      */
     @TableField("FStudentName")

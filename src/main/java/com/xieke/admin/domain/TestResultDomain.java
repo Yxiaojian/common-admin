@@ -46,5 +46,7 @@ public interface TestResultDomain {
 
     List<TestResultBo> findByTestId(Integer testId);
 
+    TestResultBo getByTestIdAndStudentId(Integer testId,Integer studentId);
 
+    Boolean modScore(Integer testResultId,Integer score);
 }

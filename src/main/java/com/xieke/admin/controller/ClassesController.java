@@ -2,6 +2,7 @@ package com.xieke.admin.controller;
 
 import com.xieke.admin.bo.ClassesBo;
 import com.xieke.admin.domain.ClassesDomain;
+import com.xieke.admin.domain.OrderDomain;
 import com.xieke.admin.dto.ResultInfo;
 import com.xieke.admin.page.HtPage;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 @Controller
@@ -22,8 +24,11 @@ public class ClassesController {
     @Resource
     private ClassesDomain classesDomain;
 
+    @Resource
+    private OrderDomain orderDomain;
+
     @RequestMapping("/*")
-    public void toHtml(){
+    public void toHtml() {
 
     }
 
@@ -45,7 +50,7 @@ public class ClassesController {
             return new ResultInfo<>("班级ID不能为空");
         }
 
-        for (Integer classesId:idArr) {
+        for (Integer classesId : idArr) {
             if (!classesDomain.softDelete(classesId)) {
                 return new ResultInfo<>("删除失败");
             }
@@ -53,10 +58,25 @@ public class ClassesController {
 
         return new ResultInfo(true);
     }
+
     @RequestMapping("/selectListData")
     @ResponseBody
-    public ResultInfo<List<ClassesBo>> selectListData(){
+    public ResultInfo<List<ClassesBo>> selectListData() {
         List<ClassesBo> list = classesDomain.findAll();
+        return new ResultInfo<>(list);
+    }
+
+    @RequestMapping("/findNotUsedClass")
+    @ResponseBody
+    public ResultInfo findNotUsedClass(Integer studentId) {
+        List<ClassesBo> list = classesDomain.findAll();
+        Iterator<ClassesBo> it = list.iterator();
+        while (it.hasNext()) {
+            ClassesBo classesBo = it.next();
+            if (orderDomain.getByStudentIdAndClassId(studentId, classesBo.getID()) != null) {
+                it.remove();
+            }
+        }
         return new ResultInfo<>(list);
     }
 
@@ -77,7 +97,7 @@ public class ClassesController {
     @ResponseBody
     public ResultInfo findPage(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "limit", defaultValue = "20") Integer limit, String className) {
         HtPage<ClassesBo> htPage = classesDomain.findPage(page, limit, className == null ? null : className.trim());
-        return new ResultInfo("","0",htPage.getRecords(),new Long (htPage.getTotal()).intValue());
+        return new ResultInfo("", "0", htPage.getRecords(), new Long(htPage.getTotal()).intValue());
     }
 
 

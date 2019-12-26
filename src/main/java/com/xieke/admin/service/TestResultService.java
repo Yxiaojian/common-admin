@@ -69,4 +69,30 @@ public class TestResultService {
         return testResultMapper.selectList(lambdaQueryWrapper);
     }
 
+    public TestResult getByTestIdAndStudentId(Integer testId, Integer studentId) {
+        if (testId == null) {
+            return null;
+        }
+        if (studentId == null) {
+            return null;
+        }
+        QueryWrapper<TestResult> wrapper = new QueryWrapper<>();
+        LambdaQueryWrapper<TestResult> lambdaQueryWrapper = wrapper.lambda();
+        lambdaQueryWrapper.eq(TestResult::getTestID, testId);
+        lambdaQueryWrapper.eq(TestResult::getStudentID, studentId);
+        return testResultMapper.selectOne(lambdaQueryWrapper);
+    }
+
+    public Boolean modScore(Integer testResultId, Integer score) {
+        if (testResultId == null) {
+            return false;
+        }
+        if (score == null) {
+            return false;
+        }
+        TestResult testResult = this.get(testResultId);
+        testResult.setScore(score);
+        return testResultMapper.updateById(testResult) > 0;
+    }
+
 }

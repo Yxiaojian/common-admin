@@ -107,4 +107,16 @@ public class OrderService {
         return orderMapper.updateById(order) > 0;
     }
 
+    public Order getByStudentIdAndClassId(Integer studentId, Integer classId) {
+        QueryWrapper<Order> wrapper = new QueryWrapper<>();
+        LambdaQueryWrapper<Order> wrapperLamdba = wrapper.lambda();
+        if (studentId != null) {
+            wrapperLamdba.eq(Order::getStudentID, studentId);
+        }
+        if (classId != null) {
+            wrapperLamdba.eq(Order::getClassID, classId);
+        }
+        return orderMapper.selectOne(wrapperLamdba);
+    }
+
 }

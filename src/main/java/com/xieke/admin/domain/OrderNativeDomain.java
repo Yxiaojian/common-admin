@@ -103,4 +103,9 @@ public class OrderNativeDomain implements OrderDomain {
         }
     }
 
+    @Override
+    public OrderBo getByStudentIdAndClassId(Integer studentId, Integer classId) {
+        return BeanUtil.convert(orderService.getByStudentIdAndClassId(studentId, classId), OrderBo.class);
+    }
+
 }

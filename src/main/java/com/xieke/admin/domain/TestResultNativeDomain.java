@@ -44,4 +44,14 @@ public class TestResultNativeDomain implements TestResultDomain {
         return BeanUtil.convertList(testResultService.findByTestId(testId), TestResultBo.class);
     }
 
+    @Override
+    public TestResultBo getByTestIdAndStudentId(Integer testId, Integer studentId) {
+        return BeanUtil.convert(testResultService.getByTestIdAndStudentId(testId, studentId), TestResultBo.class);
+    }
+
+    @Override
+    public Boolean modScore(Integer testResultId, Integer score) {
+        return testResultService.modScore(testResultId, score);
+    }
+
 }

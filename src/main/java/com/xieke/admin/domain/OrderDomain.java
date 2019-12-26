@@ -7,7 +7,6 @@ import java.math.BigDecimal;
 import java.util.List;
 
 /**
- *
  * @author zhangyang
  * @date 2019/09/07
  */
@@ -48,7 +47,9 @@ public interface OrderDomain {
 
     HtPage<OrderBo> findPage(Integer pageIndex, Integer pageSize, String studentName, String phoneOne);
 
-    Boolean updateStatus(Integer orderId,Integer orderStatus);
+    Boolean updateStatus(Integer orderId, Integer orderStatus);
 
     Boolean cancel(Integer orderId);
+
+    OrderBo getByStudentIdAndClassId(Integer studentId, Integer classId);
 }

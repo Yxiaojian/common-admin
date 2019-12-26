@@ -26,11 +26,33 @@
 		</form>
 	</blockquote>
 	<table id="studentList" lay-filter="studentList"></table>
+
+	<div id="openScoreList" style="display: none">
+		<div class="layui-form-item">
+			<label class="layui-form-label">选择班级</label>
+			<div class="layui-input-block">
+				<select class="classes classesSselectId" id="classesSselectId" lay-filter="classesSselectId" name="stuClass"
+						lay-verify="required" lay-search="">
+				</select>
+			</div>
+		</div>
+		<table id="scoreList" lay-filter="scoreList"></table>
+	</div>
+
 </form>
 <script type="text/html" id="opbar">
 	<a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="infoEnter">信息补录</a>
 	<a class="layui-btn layui-btn-xs layui-btn-warm " lay-event="scoreEnter">成绩录入</a>
 
+</script>
+<script type="text/html" id="opbarScore">
+	{{#  if(d.score == null ){ }}
+		<a class="layui-btn layui-btn-xs layui-btn-normal " lay-event="scoreEdit">录入</a>
+	{{#  } else { }}
+		<a class="layui-btn layui-btn-xs layui-btn-normal " lay-event="scoreEdit">编辑</a>
+	{{#  } }}
+
+	<a class="layui-btn layui-btn-xs layui-btn-warm " lay-event="scoreDelete">删除</a>
 </script>
 <script type="text/javascript" src="/static/layui/layui.js"></script>
 <script type="text/javascript" src="/static/js/site.js"></script>
@@ -147,8 +169,57 @@
 			layui.layer.full(infoEnterNow);
 		}
 
+		var scoreTable;
+		//成绩录入
 		function scoreEnter(data) {
-			alert("成绩录入");
+			//先加载选择班级的下拉框
+			var title = "成绩录入";
+			layui.layer.open({
+				title : title,
+				type : 1,
+				area : ["420px","330px"],
+				content : $('#openScoreList'),
+				success : function(layero, index){
+					scoreTable = table.render({
+						elem: '#scoreList',
+						url : '/test/findByClassId',
+						cellMinWidth : 115,
+						page : true,
+						height : 282,
+						limits : [5,10,15],
+						limit : 5,
+						id : "scoreList",
+						where: {
+							studentId : data.id
+						},
+						cols : [[
+							//{type: "checkbox", fixed:"left", width:50},
+							{field: 'testName', title: '考试名称', minWidth:100, align:'center'},
+							{field: 'score', title: '分数', minWidth:100, align:'center'},
+							{fixed: 'right', title:'操作', toolbar: '#opbarScore', align:'center', minWidth:20}
+						]]
+					});
+
+
+					setTimeout(function(){
+						layui.layer.tips('点击此处返回学生列表', '.layui-layer-setwin .layui-layer-close', {
+							tips: 3
+						});
+					},500)
+				}
+			})
+
+		}
+
+		function searchScoreByClassId(){
+			table.reload("scoreList",{
+				page: {
+					curr: 1 //重新从第 1 页开始
+				},
+				where: {
+					classId: $(".studentName").val()
+				}
+			})
 		}
 
 

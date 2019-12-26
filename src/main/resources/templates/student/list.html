@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<html>
 <head>
 	<meta charset="utf-8">
 	<title>学生列表</title>
@@ -28,14 +28,16 @@
 	<table id="studentList" lay-filter="studentList"></table>
 
 	<div id="openScoreList" style="display: none">
-		<div class="layui-form-item">
-			<label class="layui-form-label">选择班级</label>
-			<div class="layui-input-block">
-				<select class="classes classesSselectId" id="classesSselectId" lay-filter="classesSselectId" name="stuClass"
-						lay-verify="required" lay-search="">
-				</select>
+		<form class="layui-form changeClassForm">
+			<div class="layui-form-item" style="margin-top: 10px; margin-bottom: 10px; margin-right: 20px;">
+				<label class="layui-form-label" style="padding-left: -10px;">选择班级</label>
+				<div class="layui-input-block">
+					<select class="classes classesSselectId" id="classesSselectId" lay-filter="classesSselectId" name="stuClass"
+							lay-verify="required" lay-search=""><i class="layui-edge"></i>
+					</select>
+				</div>
 			</div>
-		</div>
+		</form>
 		<table id="scoreList" lay-filter="scoreList"></table>
 	</div>
 
@@ -46,15 +48,17 @@
 
 </script>
 <script type="text/html" id="opbarScore">
-	{{#  if(d.score == null ){ }}
-		<a class="layui-btn layui-btn-xs layui-btn-normal " lay-event="scoreEdit">录入</a>
+	{{#  if(d.score == -1 ){ }}
+		<a class="layui-btn layui-btn-xs layui-btn-normal " lay-event="scoreIns">录入</a>
 	{{#  } else { }}
 		<a class="layui-btn layui-btn-xs layui-btn-normal " lay-event="scoreEdit">编辑</a>
 	{{#  } }}
 
-	<a class="layui-btn layui-btn-xs layui-btn-warm " lay-event="scoreDelete">删除</a>
+	<!--<a class="layui-btn layui-btn-xs layui-btn-warm " lay-event="scoreDelete">删除</a>-->
 </script>
 <script type="text/javascript" src="/static/layui/layui.js"></script>
+<script type="text/javascript" src="/static/js/jquery.js"></script>
+<script type="text/javascript" src="/static/js/jquery.validate.js"></script>
 <script type="text/javascript" src="/static/js/site.js"></script>
 <script>
 	layui.use(['form','layer','table'],function(){
@@ -158,31 +162,34 @@
 					body.find("#phoneTwo").val(eData.phoneTwo);
 					body.find("#phoneTwoRemark").val(eData.phoneTwoRemark);
 					body.find("#school").val(eData.school);
-					body.find("#grade").val(eData.grade);
+					body.find("#js_gradeSel").val(eData.grade);
 					body.find("#entranceYear").val(eData.entranceYear);
 					body.find("#address").val(eData.address);
 					body.find("#birthday").val(eData.birthday);
 					body.find("#remark").val(eData.remark);
-
 				}
 			});
 			layui.layer.full(infoEnterNow);
 		}
 
 		var scoreTable;
+		var studentId;
+		var classId;
 		//成绩录入
 		function scoreEnter(data) {
 			//先加载选择班级的下拉框
 			var title = "成绩录入";
+			studentId = data.id;
+			findClassByStudentId();
 			layui.layer.open({
 				title : title,
 				type : 1,
-				area : ["420px","330px"],
+				area : ["420px","385px"],
 				content : $('#openScoreList'),
 				success : function(layero, index){
 					scoreTable = table.render({
 						elem: '#scoreList',
-						url : '/test/findByClassId',
+						url : '/testResult/findStudentTestResult',
 						cellMinWidth : 115,
 						page : true,
 						height : 282,
@@ -190,12 +197,15 @@
 						limit : 5,
 						id : "scoreList",
 						where: {
-							studentId : data.id
+							studentId : data.id,
+							classId : classId,
 						},
 						cols : [[
 							//{type: "checkbox", fixed:"left", width:50},
 							{field: 'testName', title: '考试名称', minWidth:100, align:'center'},
-							{field: 'score', title: '分数', minWidth:100, align:'center'},
+							{field: 'score', title: '分数', minWidth:100, align:'center', templet: function (d) {
+									if (d.score === -1) return "未录入";
+							}},
 							{fixed: 'right', title:'操作', toolbar: '#opbarScore', align:'center', minWidth:20}
 						]]
 					});
@@ -211,13 +221,79 @@
 
 		}
 
-		function searchScoreByClassId(){
+		var title;
+		table.on('tool(scoreList)', function(obj){
+			var data = obj.data;
+			switch (obj.event) {
+				case "scoreIns" :
+					title = "录入";
+					scoreEdit(data);
+					break;
+				case "scoreEdit" :
+					title = "编辑";
+					scoreEdit(data);
+					break;
+				case "scoreDelete" :
+					scoreDelete(data);
+					break;
+			}
+
+		});
+
+		function scoreEdit(data) {
+			layui.layer.open({
+				title : title,
+				type : 2,
+				area : ["420px","230px"],
+				content : "scoreEdit.html",
+				success : function(layero, index){
+					var body = layui.layer.getChildFrame('body', index);
+					body.find("#ID").val(data.id);
+					body.find("#studentID").val(data.studentID);
+					body.find("#classID").val(data.classID);
+					body.find("#testID").val(data.testID);
+					body.find("#testID").val(data.testID);
+					body.find("#testName").val(data.testName);
+					body.find("#score").val(data.score);
+
+					setTimeout(function(){
+						layui.layer.tips('点击此处返回学生列表', '.layui-layer-setwin .layui-layer-close', {
+							tips: 3
+						});
+					},500)
+				},
+				end : function () {
+					//scoreTable.reload();
+					scoreListReload();
+				}
+			})
+		}
+		function scoreDelete(data) {
+			alert("scoreDelete");
+		}
+
+		var classId;
+		function findClassByStudentId() {
+			$("#classesSselectId").html('');
+			$.post("/classes/findUsedClass", {studentId: studentId}, function (res) {
+				res.data.forEach(function (e) {
+					$("#classesSselectId").append("<option value='" + e.id + "'>" + e.className + "</option>");
+				});
+				form.render('select');//重新渲染
+				classId =  res.data[0].id;
+				scoreListReload();
+			})
+
+		}
+
+		function scoreListReload() {
 			table.reload("scoreList",{
 				page: {
 					curr: 1 //重新从第 1 页开始
 				},
 				where: {
-					classId: $(".studentName").val()
+					studentId: studentId,
+					classId: classId
 				}
 			})
 		}

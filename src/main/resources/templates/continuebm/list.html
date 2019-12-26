@@ -163,7 +163,9 @@
 		}
 
 		//转班 Or 续报
+		var studentId;
 		function changeClassAndContinue(eData, title) {
+			studentId = eData.studentID;
 			//var title = "转班";
 			/*var indexNow = */
 				layui.layer.open({
@@ -245,6 +247,13 @@
 			})
 
 		}
+
+		var _getStudentId = {
+			getStudentId : function () {
+				return studentId;
+			}
+		}
+		window.getStudentId = _getStudentId;
 	})
 </script>
 </body>

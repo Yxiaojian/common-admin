@@ -135,7 +135,8 @@
             layer = parent.layer === undefined ? layui.layer : top.layer,
             $ = layui.jquery;
 
-        $.post("/classes/selectListData", function (data) {
+        var studentId = parent.getStudentId.getStudentId();
+        $.post("/classes/findNotUsedClass",{studentId : studentId}, function (data) {
             var t = 0;
             classList = data.data;
 

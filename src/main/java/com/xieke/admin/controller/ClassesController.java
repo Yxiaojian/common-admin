@@ -80,6 +80,20 @@ public class ClassesController {
         return new ResultInfo<>(list);
     }
 
+    @RequestMapping("/findUsedClass")
+    @ResponseBody
+    public ResultInfo findUsedClass(Integer studentId) {
+        List<ClassesBo> list = classesDomain.findAll();
+        Iterator<ClassesBo> it = list.iterator();
+        while (it.hasNext()) {
+            ClassesBo classesBo = it.next();
+            if (orderDomain.getByStudentIdAndClassId(studentId, classesBo.getID()) == null) {
+                it.remove();
+            }
+        }
+        return new ResultInfo<>(list);
+    }
+
     @RequestMapping("/update")
     @ResponseBody
     public ResultInfo update(Integer classesId, Integer curriculumID, String className, Integer teacherID, String teacherName, Integer assistantTeacherID, String assistantTeacherName, Integer classType, Integer classLevel) {

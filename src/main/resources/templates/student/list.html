@@ -143,7 +143,9 @@
 
 		});
 
+		var sex;
 		function infoEnter(eData) {
+			sex = eData.sex;
 			var title = "信息补录";
 			var infoEnterNow = layui.layer.open({
 				title : title,
@@ -204,7 +206,7 @@
 							//{type: "checkbox", fixed:"left", width:50},
 							{field: 'testName', title: '考试名称', minWidth:100, align:'center'},
 							{field: 'score', title: '分数', minWidth:100, align:'center', templet: function (d) {
-									if (d.score === -1) return "未录入";
+									return d.score === -1 ? "未录入" : d.score;
 							}},
 							{fixed: 'right', title:'操作', toolbar: '#opbarScore', align:'center', minWidth:20}
 						]]
@@ -248,13 +250,14 @@
 				content : "scoreEdit.html",
 				success : function(layero, index){
 					var body = layui.layer.getChildFrame('body', index);
-					body.find("#ID").val(data.id);
-					body.find("#studentID").val(data.studentID);
-					body.find("#classID").val(data.classID);
-					body.find("#testID").val(data.testID);
-					body.find("#testID").val(data.testID);
+					body.find("#testResultId").val(data.id);
+					body.find("#studentId").val(data.studentID);
+					body.find("#classId").val(data.classID);
+					body.find("#testId").val(data.testID);
 					body.find("#testName").val(data.testName);
-					body.find("#score").val(data.score);
+					if (data.score !== -1) {
+						body.find("#score").val(data.score);
+					}
 
 					setTimeout(function(){
 						layui.layer.tips('点击此处返回学生列表', '.layui-layer-setwin .layui-layer-close', {
@@ -296,6 +299,10 @@
 					classId: classId
 				}
 			})
+		}
+
+		window.getSex = function getSex() {
+			return sex;
 		}
 
 

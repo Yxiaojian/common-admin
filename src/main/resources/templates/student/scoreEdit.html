@@ -14,10 +14,10 @@
 </head>
 <body class="childrenBody">
 <form class="layui-form linksAdd">
-	<input type="hidden" value="" id="ID" name="ID">
-	<input type="hidden" value="" id="studentID" name="studentID">
-	<input type="hidden" value="" id="classID" name="classID">
-	<input type="hidden" value="" id="testID" name="testID">
+	<input type="hidden" value="" id="testResultId" name="testResultId">
+	<input type="hidden" value="" id="studentId" name="studentId">
+	<input type="hidden" value="" id="classId" name="classId">
+	<input type="hidden" value="" id="testId" name="testId">
 	<div class="layui-form-item">
 		<label class="layui-form-label">考试名称</label>
 		<div class="layui-input-block">
@@ -52,22 +52,19 @@
 		form.on("submit(scoreEdit)",function(data){
 			var index = top.layer.msg('数据保存中，请稍候...',{icon: 16,time:false,shade:0.8});
 			var action = "addTestResult";
-			if (data.field.testId !== "") {
+			if (data.field.testResultId !== "") {
 				action = "modTestResult";
 			}
+			console.log(data.field);
 			$.post("/testResult/" + action,data.field,function(res){
 				layer.close(index);
 				if (res.data){
 					if (action === "modTestResult") {
 						layer.msg("修改成功！");
-						setTimeout('parent.layer.close(parent.layer.getFrameIndex(window.name))', 500);
 					} else {
 						layer.msg("保存成功！");
-						layer.closeAll("iframe");
-						//刷新父页面
-						setTimeout('parent.location.reload()', 500);
 					}
-
+					setTimeout('parent.layer.close(parent.layer.getFrameIndex(window.name))', 500);
 				} else {
 					layer.msg(res.msg);
 				}

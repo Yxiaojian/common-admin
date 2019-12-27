@@ -143,9 +143,9 @@
 
 		});
 
-		var sex;
+		var sexInfo;
 		function infoEnter(eData) {
-			sex = eData.sex;
+			sexInfo = eData.sex;
 			var title = "信息补录";
 			var infoEnterNow = layui.layer.open({
 				title : title,
@@ -301,8 +301,8 @@
 			})
 		}
 
-		window.getSex = function getSex() {
-			return sex;
+		window.getSexInfo = function getSexInfo() {
+			return sexInfo;
 		}
 
 

@@ -55,7 +55,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">性别</label>
                         <div class="layui-input-block">
-                            <select class="state" name="sex" id="sex">
+                            <select class="state" name="sex" id="sexInfo">
                                 <option value="1">男</option>
                                 <option value="0">女</option>
                             </select>
@@ -160,6 +160,9 @@
             $ = layui.jquery,
             table = layui.table;
 
+        //重新渲染
+        form.render('select');
+
         form.verify({
             money: function (val, item) {
                 if (!/^\d+(\.\d{0,2})?$/.test(val)) {
@@ -188,6 +191,7 @@
 
         $(".js_infoEnterSubmit").on("click", function () {
             var frm = $("#studentForm");
+            console.log(document.getElementById("sexInfo").value);
             layer.confirm('确定修改学生信息？', {icon: 3, title: '提示信息'}, function (index) {
                 layer.close(index);
                 $.post("/student/update", frm.serialize(), function (res) {

@@ -143,9 +143,7 @@
 
 		});
 
-		var sexInfo;
 		function infoEnter(eData) {
-			sexInfo = eData.sex;
 			var title = "信息补录";
 			var infoEnterNow = layui.layer.open({
 				title : title,
@@ -160,11 +158,11 @@
 					body.find("#studentName").val(eData.studentName);
 					body.find("#phoneOne").val(eData.phoneOne);
 					body.find("#phoneOneRemark").val(eData.phoneOneRemark);
-					body.find("#sex").val(eData.sex);
+					body.find("#sexInfo").val(eData.sex);
 					body.find("#phoneTwo").val(eData.phoneTwo);
 					body.find("#phoneTwoRemark").val(eData.phoneTwoRemark);
 					body.find("#school").val(eData.school);
-					body.find("#js_gradeSel").val(eData.grade);
+					body.find("#js_gradeSel").val(eData.grade + 1);
 					body.find("#entranceYear").val(eData.entranceYear);
 					body.find("#address").val(eData.address);
 					body.find("#birthday").val(eData.birthday);
@@ -301,9 +299,6 @@
 			})
 		}
 
-		window.getSexInfo = function getSexInfo() {
-			return sexInfo;
-		}
 
 
 	})

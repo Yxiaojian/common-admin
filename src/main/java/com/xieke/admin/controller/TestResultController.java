@@ -37,6 +37,9 @@ public class TestResultController {
     @RequestMapping("/findStudentTestResult")
     @ResponseBody
     public ResultInfo findStudentTestResult(Integer studentId, Integer classId) {
+        if (-1 == classId) {
+            return new ResultInfo<>("该学生暂无班级");
+        }
         if (studentId == null) {
             return new ResultInfo<>("studentId为空");
         }

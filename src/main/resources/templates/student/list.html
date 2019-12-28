@@ -277,11 +277,16 @@
 		function findClassByStudentId() {
 			$("#classesSselectId").html('');
 			$.post("/classes/findUsedClass", {studentId: studentId}, function (res) {
-				res.data.forEach(function (e) {
+				classList = res.data;
+				classList.forEach(function (e) {
 					$("#classesSselectId").append("<option value='" + e.id + "'>" + e.className + "</option>");
 				});
 				form.render('select');//重新渲染
-				classId =  res.data[0].id;
+				if (res.data.length > 0){
+					classId =  res.data[0].id;
+				} else {
+					classId = -1;
+				}
 				scoreListReload();
 			})
 
@@ -298,6 +303,16 @@
 				}
 			})
 		}
+
+		form.on('select(classesSselectId)', function (data) {
+			classList.forEach(function (e) {
+				if (parseInt(data.value) === e.id) {
+					classId = data.value;
+					scoreListReload();
+				}
+			});
+
+		});
 
 
 

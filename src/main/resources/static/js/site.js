@@ -45,17 +45,17 @@ function  getSeType (d){
 }
 function getGradeType(d) {
     switch (d) {
-        case 0:
-            return "一年级";
         case 1:
-            return "二年级";
+            return "一年级";
         case 2:
-            return "三年级";
+            return "二年级";
         case 3:
-            return "四年级";
+            return "三年级";
         case 4:
-            return "五年级";
+            return "四年级";
         case 5:
+            return "五年级";
+        case 6:
             return "六年级";
         default:
             return "未定义";

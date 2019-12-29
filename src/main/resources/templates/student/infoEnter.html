@@ -190,6 +190,9 @@
         })
 
         $(".js_infoEnterSubmit").on("click", function () {
+            if (!validBasicForm()) {
+                return false;
+            }
             var frm = $("#studentForm");
             console.log(document.getElementById("sexInfo").value);
             layer.confirm('确定修改学生信息？', {icon: 3, title: '提示信息'}, function (index) {
@@ -208,6 +211,29 @@
 
 
         })
+
+        function validBasicForm() {
+            var $validator = $("#studentForm").validate();
+            if (!$validator.element($("#studentName"))) {
+                return false;
+            }
+            if (!$validator.element($("#phoneOne"))) {
+                return false;
+            }
+            if (!$validator.element($("#phoneOneRemark"))) {
+                return false;
+            }
+            if (!$validator.element($("#phoneTwo"))) {
+                return false;
+            }
+            if (!$validator.element($("#phoneTwoRemark"))) {
+                return false;
+            }
+            if (!$validator.element($("#school"))) {
+                return false;
+            }
+            return true;
+        }
 
 
 

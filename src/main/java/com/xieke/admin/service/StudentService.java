@@ -87,6 +87,7 @@ public class StudentService {
         if (name != null) {
             wrapperLamdba.like(Student::getStudentName, name);
         }
+        wrapperLamdba.orderByDesc(Student::getCreateTime);
         return studentMapper.selectPage(objectPage, wrapperLamdba);
     }
 

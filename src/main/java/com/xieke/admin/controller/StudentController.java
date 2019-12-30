@@ -21,11 +21,11 @@ public class StudentController {
 
     @RequestMapping("/add")
     @ResponseBody
-    public ResultInfo addStudent(String userName,  String mobilePhone1, String phone1Info, String mobilePhone2, String phone2Info, String school, Integer grade, Integer startYear,String homeAddress,String birthday,String remarks) {
-        StudentBo studentBo = new StudentBo(userName, 0, mobilePhone1, phone1Info, mobilePhone2, phone2Info, school, grade, startYear, 0, new Date(), remarks, homeAddress, birthday);
+    public ResultInfo addStudent(String userName,  String mobilePhone1, String phone1Info, String mobilePhone2, Integer sex,String phone2Info, String school, Integer grade, Integer startYear,String homeAddress,String birthday,String remarks) {
+        StudentBo studentBo = new StudentBo(userName, sex, mobilePhone1, phone1Info, mobilePhone2, phone2Info, school, grade, startYear, 0, new Date(), remarks, homeAddress, birthday);
         Integer  studentId = 0;
         StudentBo byNameAndPhone1 = studentDomain.getByNameAndPhone1(userName,mobilePhone1);
-        if (studentId != null) {
+        if (byNameAndPhone1 != null) {
             studentId = byNameAndPhone1.getID();
         }else {
             studentId = studentDomain.insert(studentBo);

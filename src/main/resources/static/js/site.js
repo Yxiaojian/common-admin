@@ -1,28 +1,28 @@
 function getDateType (d){
     switch (d) {
-        case 0:
-            return "一期";
         case 1:
-            return "二期";
+            return "一期";
         case 2:
-            return "三期";
+            return "二期";
         case 3:
-            return "四期";
+            return "三期";
         case 4:
-            return "特殊";
+            return "四期";
         case 5:
-            return "周一";
+            return "特殊";
         case 6:
-            return "周二";
+            return "周一";
         case 7:
-            return "周三";
+            return "周二";
         case 8:
-            return "周四";
+            return "周三";
         case 9:
-            return "周五";
+            return "周四";
         case 10:
-            return "周六";
+            return "周五";
         case 11:
+            return "周六";
+        case 12:
             return "周日";
         default:
             return "未定义";
@@ -31,14 +31,14 @@ function getDateType (d){
 
 function  getSeType (d){
     switch (d) {
-        case 0:
-            return "春季";
         case 1:
-            return "秋季";
+            return "春季";
         case 2:
-            return "寒假";
-        case 3:
             return "暑假";
+        case 3:
+            return "秋季";
+        case 4:
+            return "寒假";
         default:
             return "未定义";
     }
@@ -73,15 +73,15 @@ function getClassesType(d) {
 }
 function getClassesLevel(d) {
     switch (d) {
-        case 0:
-            return "一档";
         case 1:
-            return "二档";
+            return "一档";
         case 2:
-            return "三档";
+            return "二档";
         case 3:
-            return "四档";
+            return "三档";
         case 4:
+            return "四档";
+        case 5:
             return "五档";
         default:
             return "未定义";

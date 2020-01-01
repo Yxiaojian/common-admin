@@ -26,10 +26,10 @@
 		<label class="layui-form-label">学期</label>
 		<div class="layui-input-block">
 			<select name="semester" id="semesterSelect"  lay-filter="semesterSelect">
-				<option value="0">春季</option>
-				<option value="1">秋季</option>
-				<option value="2">暑假</option>
-				<option value="3">寒假</option>
+				<option value="1">春季</option>
+				<option value="2">秋季</option>
+				<option value="3">暑假</option>
+				<option value="4">寒假</option>
 			</select>
 		</div>
 	</div>
@@ -37,11 +37,11 @@
 		<label class="layui-form-label">日期</label>
 		<div class="layui-input-block">
 			<select id="dateSelect" name="date" lay-filter="dateSelect">
-				<option value="0">一期</option>
-				<option value="1">二期</option>
-				<option value="2">三期</option>
-				<option value="3">四期</option>
-				<option value="4">特殊</option>
+				<option value="1">一期</option>
+				<option value="2">二期</option>
+				<option value="3">三期</option>
+				<option value="4">四期</option>
+				<option value="5">特殊</option>
 			</select>
 		</div>
 	</div>
@@ -58,12 +58,12 @@
 		<label class="layui-form-label">年级</label>
 		<div class="layui-input-block">
 			<select name="grade" id="gradeSelect">
-				<option value="0">一年级</option>
-				<option value="1">二年级</option>
-				<option value="2">三年级</option>
-				<option value="3">四年级</option>
-				<option value="4">五年级</option>
-				<option value="5">六年级</option>
+				<option value="1">一年级</option>
+				<option value="2">二年级</option>
+				<option value="3">三年级</option>
+				<option value="4">四年级</option>
+				<option value="5">五年级</option>
+				<option value="6">六年级</option>
 			</select>
 		</div>
 	</div>
@@ -96,19 +96,19 @@
 		form.on('select(semesterSelect)', function(data){
 			var options = "";
 			if (data.value == 0 || data.value == 1) {
-				options += "<option value=\"0\">一期</option>\n" +
-						"\t\t\t\t<option value=\"1\">二期</option>\n" +
-						"\t\t\t\t<option value=\"2\">三期</option>\n" +
-						"\t\t\t\t<option value=\"3\">四期</option>\n" +
-						"\t\t\t\t<option value=\"4\">特殊</option>";
+				options += "<option value=\"1\">一期</option>\n" +
+						"\t\t\t\t<option value=\"2\">二期</option>\n" +
+						"\t\t\t\t<option value=\"3\">三期</option>\n" +
+						"\t\t\t\t<option value=\"4\">四期</option>\n" +
+						"\t\t\t\t<option value=\"5\">特殊</option>";
 			} else {
-				options += "<option value=\"5\">周一</option>\n" +
-						"\t\t\t\t<option value=\"6\">周二</option>\n" +
-						"\t\t\t\t<option value=\"7\">周三</option>\n" +
-						"\t\t\t\t<option value=\"8\">周四</option>\n" +
-						"\t\t\t\t<option value=\"9\">周五</option>\n" +
-						"\t\t\t\t<option value=\"10\">周六</option>\n" +
-						"\t\t\t\t<option value=\"11\">周日</option>";
+				options += "<option value=\"6\">周一</option>\n" +
+						"\t\t\t\t<option value=\"7\">周二</option>\n" +
+						"\t\t\t\t<option value=\"8\">周三</option>\n" +
+						"\t\t\t\t<option value=\"9\">周四</option>\n" +
+						"\t\t\t\t<option value=\"10\">周五</option>\n" +
+						"\t\t\t\t<option value=\"11\">周六</option>\n" +
+						"\t\t\t\t<option value=\"12\">周日</option>";
 			}
 			$("#dateSelect").html(options);
 			form.render("select")

@@ -95,7 +95,8 @@
 
 		form.on('select(semesterSelect)', function(data){
 			var options = "";
-			if (data.value == 0 || data.value == 1) {
+			//春季 和 秋季 按期
+			if (data.value == 1 || data.value == 3) {
 				options += "<option value=\"1\">一期</option>\n" +
 						"\t\t\t\t<option value=\"2\">二期</option>\n" +
 						"\t\t\t\t<option value=\"3\">三期</option>\n" +

@@ -2,6 +2,7 @@ package com.xieke.admin.controller;
 
 import com.xieke.admin.bo.CurriculumBo;
 import com.xieke.admin.domain.CurriculumDomain;
+import com.xieke.admin.domain.OrderDomain;
 import com.xieke.admin.dto.ResultInfo;
 import com.xieke.admin.page.HtPage;
 import com.xieke.admin.web.BaseController;
@@ -23,6 +24,9 @@ import java.util.List;
 public class CurriculumController  extends BaseController {
     @Resource
     private CurriculumDomain curriculumDomain;
+
+    @Resource
+    private OrderDomain orderDomain;
 
 
     @RequestMapping("/*")
@@ -67,6 +71,8 @@ public class CurriculumController  extends BaseController {
     @ResponseBody
     public ResultInfo<CurriculumBo> findById(Integer id){
         CurriculumBo curriculumBo = curriculumDomain.get(id);
+        Integer count = orderDomain.getCountByCurriculumId(id);
+        curriculumBo.setAppliedCount(count);
         return new ResultInfo<>(curriculumBo);
     }
 

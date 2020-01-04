@@ -52,4 +52,6 @@ public interface OrderDomain {
     Boolean cancel(Integer orderId);
 
     OrderBo getByStudentIdAndClassId(Integer studentId, Integer classId);
+
+    Integer getCountByCurriculumId(Integer curriculumId);
 }

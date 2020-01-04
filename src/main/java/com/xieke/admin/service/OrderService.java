@@ -119,4 +119,13 @@ public class OrderService {
         return orderMapper.selectOne(wrapperLamdba);
     }
 
+    public Integer getCountByCurriculumId(Integer curriculumId) {
+        QueryWrapper<Order> wrapper = new QueryWrapper<>();
+        LambdaQueryWrapper<Order> wrapperLamdba = wrapper.lambda();
+        if (curriculumId != null) {
+            wrapperLamdba.eq(Order::getCurriculumID, curriculumId);
+        }
+        return orderMapper.selectCount(wrapperLamdba);
+    }
+
 }

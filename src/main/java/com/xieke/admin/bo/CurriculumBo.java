@@ -79,6 +79,11 @@ public class CurriculumBo implements Serializable {
      */
     private String remark;
 
+    /**
+     * 已报名人数
+     */
+    private Integer appliedCount;
+
     private static final long serialVersionUID = 1L;
 
     public CurriculumBo(String curriculumName, Integer semester, Integer date, Integer year, Integer grade, Integer classTime, BigDecimal price, Integer deleteStatus, Date createTime, String remark) {

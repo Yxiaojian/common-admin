@@ -173,6 +173,11 @@ public class OrderBo implements Serializable {
     private Integer orderStatus;
 
     /**
+     * 订单类型 1为新报名 2 为续报
+     */
+    private Integer orderType;
+
+    /**
      * 创建人ID
      */
     private Integer creatorID;
@@ -191,6 +196,11 @@ public class OrderBo implements Serializable {
      * 备注
      */
     private String remark;
+
+    /**
+     * 订单号
+     */
+    private String orderNo;
 
     private static final long serialVersionUID = 1L;
 

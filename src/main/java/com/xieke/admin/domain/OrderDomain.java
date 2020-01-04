@@ -54,4 +54,8 @@ public interface OrderDomain {
     OrderBo getByStudentIdAndClassId(Integer studentId, Integer classId);
 
     Integer getCountByCurriculumId(Integer curriculumId);
+
+    List<OrderBo> findByYearAndSemester(Integer year, Integer semester);
+
+    List<OrderBo> findByStudentId(Integer studentId);
 }

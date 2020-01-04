@@ -71,5 +71,23 @@ public class PayRecord implements Serializable {
     @TableField("FRecordType")
     private Integer recordType;
 
+    /**
+     * 订单号
+     */
+    @TableField("FOrderNo")
+    private String orderNo;
+
+    /**
+     * 学生姓名
+     */
+    @TableField("FStudentName")
+    private String studentName;
+
+    /**
+     * 电话一
+     */
+    @TableField("FPhoneOne")
+    private String phoneOne;
+
     private static final long serialVersionUID = 1L;
 }

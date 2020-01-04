@@ -42,6 +42,8 @@ public interface StudentDomain {
      */
     List<StudentBo> findAll();
 
+    Integer getCount();
+
     Boolean softDelete(Integer id);
 
     HtPage<StudentBo> findPage(Integer pageIndex, Integer pageSize, Integer grade, String name);

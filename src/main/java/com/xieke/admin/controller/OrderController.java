@@ -5,11 +5,13 @@ import com.xieke.admin.domain.*;
 import com.xieke.admin.dto.ResultInfo;
 import com.xieke.admin.dto.UserInfo;
 import com.xieke.admin.enums.OrderStatus;
+import com.xieke.admin.enums.OrderType;
 import com.xieke.admin.page.HtPage;
 import com.xieke.admin.web.BaseController;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,6 +21,7 @@ import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/order")
@@ -143,6 +146,15 @@ public class OrderController extends BaseController {
 
         UserInfo userInfo = this.getUserInfo();
         OrderBo orderBo = new OrderBo(studentBo, classesBo, curriculumBo, discountAmountBig, discountRemark, curriculumBo.getPrice().subtract(discountAmountBig), BigDecimal.ZERO, OrderStatus.DEFAULT.getValue(), userInfo.getId(), userInfo.getName(), new Date(), "");
+        String orderNo = UUID.randomUUID().toString();
+        orderBo.setOrderNo(orderNo);
+        //判断是老生还是新生
+        List<OrderBo> orderBoList = orderDomain.findByStudentId(studentId);
+        if (CollectionUtils.isEmpty(orderBoList)) {
+            orderBo.setOrderType(OrderType.NEW.getValue());
+        } else {
+            orderBo.setOrderType(OrderType.OLD.getValue());
+        }
         Integer orderId = orderDomain.insert(orderBo);
         if (orderId == null) {
             return new ResultInfo("创建订单失败");
@@ -161,6 +173,9 @@ public class OrderController extends BaseController {
         }
         Date now = new Date();
         PayRecordBo payRecordBo = new PayRecordBo(orderId, payType, prePayBig, operateUser, now, opdesc, 0);
+        payRecordBo.setOrderNo(orderNo);
+        payRecordBo.setStudentName(studentBo.getStudentName());
+        payRecordBo.setPhoneOne(studentBo.getPhoneOne());
         boolean a = payRecordDomain.create(payRecordBo);
         if (a) {
             return new ResultInfo(orderId);

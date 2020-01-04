@@ -197,6 +197,12 @@ public class Order implements Serializable {
     private Integer orderStatus;
 
     /**
+     * 订单类型 1为新报名 2 为续报
+     */
+    @TableField("FOrderType")
+    private Integer orderType;
+
+    /**
      * 创建人ID
      */
     @TableField("FCreatorID")
@@ -219,6 +225,14 @@ public class Order implements Serializable {
      */
     @TableField("FRemark")
     private String remark;
+
+    /**
+     * 订单号
+     */
+    @TableField("FOrderNo")
+    private String orderNo;
+
+
 
     private static final long serialVersionUID = 1L;
 }

@@ -99,3 +99,47 @@ function getSex(d) {
     }
 
 }
+
+function getPayType(d) {
+    switch (d) {
+        case 0:
+            return "支付宝";
+        case 1:
+            return "微信支付";
+        case 2:
+            return "POS机刷卡";
+        case 3:
+            return "中国银联";
+        case 5:
+            return "现金";
+    }
+}
+
+function getRecordType(d) {
+    switch (d) {
+        case 0:
+            return "支付";
+        case 1:
+            return "退款";
+        default:
+            return "支付";
+    }
+}
+
+function getOrderStatus(d) {
+    switch (d) {
+        case 0:
+            return "初始状态";
+        case 1:
+            return "待付款";
+        case 2:
+            return "部分付款";
+        case 3:
+            return "已付款";
+        case 4:
+            return "已完成";
+        case 5:
+            return "已取消";
+
+    }
+}

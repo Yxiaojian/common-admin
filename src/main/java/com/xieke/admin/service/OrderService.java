@@ -89,13 +89,11 @@ public class OrderService {
         }
         if (orderStatus != null) {
             wrapperLamdba.eq(Order::getOrderStatus, orderStatus);
-        } else {
-            wrapperLamdba.notIn(Order::getOrderStatus, OrderStatus.CANCEL.getValue());
         }
         return orderMapper.selectPage(objectPage, wrapperLamdba);
     }
 
-    public Boolean updateStatus(Integer orderId, Integer orderStatus) {
+    public Boolean updateStatus(Integer orderId, Integer orderStatus, String remark) {
         if (orderId == null) {
             return false;
         }
@@ -104,6 +102,9 @@ public class OrderService {
             return false;
         }
         order.setOrderStatus(orderStatus);
+        if (!StringUtils.isEmpty(remark)) {
+            order.setRemark(remark);
+        }
         return orderMapper.updateById(order) > 0;
     }
 
@@ -116,6 +117,7 @@ public class OrderService {
         if (classId != null) {
             wrapperLamdba.eq(Order::getClassID, classId);
         }
+        wrapperLamdba.ne(Order::getOrderStatus, OrderStatus.CANCEL.getValue());
         return orderMapper.selectOne(wrapperLamdba);
     }
 

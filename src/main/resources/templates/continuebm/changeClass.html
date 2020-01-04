@@ -25,6 +25,10 @@
 <form class="layui-form changeClassForm" id="changeClassForm">
     <input type="hidden" value="" id="studentID" name="studentID"/>
     <input type="hidden" value="" id="orderId" name="orderId"/>
+
+    <!--课程Id 上一个页面传过来的课程Id 不是当前的课程Id-->
+    <input type="hidden" value="" id="curriculumID" name="curriculumID"/>
+
     <!--课程-->
     <input type="hidden" value="" id="curriculumName" name="curriculumName">
     <!--班级-->
@@ -136,7 +140,9 @@
             $ = layui.jquery;
 
         var studentId = parent.getStudentId.getStudentId();
-        $.post("/classes/findNotUsedClass",{studentId : studentId}, function (data) {
+        //查找未加入班级增加课程Id 参数
+        var curriculumID = $("#curriculumID").val();
+        $.post("/classes/findNotUsedClass",{studentId : studentId, curriculumId : curriculumID}, function (data) {
             var t = 0;
             classList = data.data;
 

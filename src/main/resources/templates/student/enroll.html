@@ -374,6 +374,10 @@
                 }
             }
         });
+
+        //默认当前年份
+        $("#startYear").val((new Date).getFullYear());
+
         var classList;
         $.post("/classes/selectListData", function (data) {
             var t = 0;
@@ -420,6 +424,8 @@
                 $(".js_orderAllNeedPay").html(curi.data.price);
                 $("#noPay").html(curi.data.price);
                 $(".js_orderGrade").html(curi.data.curriculumName);
+                //人数
+                $("#stuCount").html(curi.data.appliedCount);
 
             });
         }

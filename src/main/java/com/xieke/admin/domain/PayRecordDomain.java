@@ -1,6 +1,7 @@
 package com.xieke.admin.domain;
 
 import com.xieke.admin.bo.PayRecordBo;
+import com.xieke.admin.page.HtPage;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -49,7 +50,5 @@ public interface PayRecordDomain {
     @Transactional(rollbackFor = Exception.class)
     Boolean create(PayRecordBo payRecordBo) throws Exception;
 
-
-
-
+    HtPage<PayRecordBo> findPageByOrderId(Integer pageIndex, Integer pageSize, Integer orderId);
 }

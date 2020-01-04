@@ -88,5 +88,11 @@ public class StudentController {
 
     }
 
+    @RequestMapping("/studentStatistics")
+    public String toStudentStatistics(){
+
+        return "statistics/studentStatistics";
+    }
+
 
 }

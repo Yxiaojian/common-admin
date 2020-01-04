@@ -14,25 +14,22 @@
 </head>
 <body class="childrenBody">
 <form class="layui-form linksAdd">
-	<input type="hidden" value="" id="testResultId" name="testResultId">
-	<input type="hidden" value="" id="studentId" name="studentId">
-	<input type="hidden" value="" id="classId" name="classId">
-	<input type="hidden" value="" id="testId" name="testId">
-	<div class="layui-form-item">
-		<label class="layui-form-label">考试名称</label>
+	<input type="hidden" value="" id="orderId" name="orderId">
+	<!--<div class="layui-form-item">
+		<label class="layui-form-label">退款金额</label>
 		<div class="layui-input-block">
-			<input type="text" class="layui-input" readonly="readonly" style="border:0px;" name="testName" id="testName">
+			<input type="text" class="layui-input" name="refundMoney" id="refundMoney" lay-verify="required" placeholder="请输入退款金额">
 		</div>
-	</div>
+	</div>-->
 	<div class="layui-form-item">
-		<label class="layui-form-label">分数</label>
+		<label class="layui-form-label">备注</label>
 		<div class="layui-input-block">
-			<input type="text" class="layui-input remark" name="score" id="score" placeholder="请输入分数">
+			<input type="text" class="layui-input remark" name="remark" id="remark" placeholder="备注">
 		</div>
 	</div>
 
 	<div class="layui-form-item">
-		<button class="layui-btn layui-block" lay-filter="scoreEdit" lay-submit>保存</button>
+		<button class="layui-btn layui-block" lay-filter="refund" lay-submit>确定</button>
 	</div>
 </form>
 <script type="text/javascript" src="/static/layui/layui.js"></script>
@@ -42,6 +39,13 @@
 		layer = parent.layer === undefined ? layui.layer : top.layer,
 				$ = layui.jquery;
 
+		if ($("#classTypeSelectHid").val() != "") {
+			$("#classTypeSelect").val($("#classTypeSelectHid").val());
+		}
+		if ($("#classLevelSelectHid").val() != "") {
+			$("#classLevelSelect").val($("#classLevelSelectHid").val());
+		}
+
 		form.verify({
 			money: function(val, item) {
 				if(!/^\d+(\.\d{0,2})?$/.test(val)){
@@ -49,28 +53,25 @@
 				}
 			}
 		});
-		form.on("submit(scoreEdit)",function(data){
-			var index = top.layer.msg('数据保存中，请稍候...',{icon: 16,time:false,shade:0.8});
-			var action = "addTestResult";
-			if (data.field.testResultId !== "") {
-				action = "modTestResult";
-			}
-			console.log(data.field);
-			$.post("/testResult/" + action,data.field,function(res){
+		form.on("submit(refund)",function(data){
+			var orderId = $("#orderId").val();
+			var remark = $("#remark").val();
+			layer.confirm('确定退费？', {icon: 3, title: '提示信息'}, function (index) {
 				layer.close(index);
-				if (res.data){
-					if (action === "modTestResult") {
-						layer.msg("修改成功！");
+				//取消订单
+				$.post("/order/cancel",{orderId : orderId, remark : remark}, function(res){
+					if (res.data) {
+						layer.close(index);
+						layer.msg("退费成功！");
+						parent.location.reload();
 					} else {
-						layer.msg("保存成功！");
+						layer.msg(data.msg);
 					}
-					setTimeout('parent.layer.close(parent.layer.getFrameIndex(window.name))', 500);
-				} else {
-					layer.msg(res.msg);
-				}
-			});
-			return false;
+				})
+			})
+
 		});
+
 
 	})
 </script>

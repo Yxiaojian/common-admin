@@ -205,9 +205,9 @@ public class OrderController extends BaseController {
 
     @RequestMapping("/cancel")
     @ResponseBody
-    public ResultInfo cancel(Integer orderId) {
+    public ResultInfo cancel(Integer orderId, String remark) {
         OrderBo orderBo = orderDomain.get(orderId);
-        if (orderDomain.cancel(orderId)) {
+        if (orderDomain.cancel(orderId, remark)) {
             return new ResultInfo(orderBo.getPaidAmount());
         } else {
             return new ResultInfo("订单取消失败");

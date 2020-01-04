@@ -48,7 +48,7 @@ public class StudentNativeDomain implements StudentDomain {
 
     @Override
     public Integer getCount() {
-        return null;
+        return studentService.getCount();
     }
 
     @Override

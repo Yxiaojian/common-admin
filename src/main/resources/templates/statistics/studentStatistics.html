@@ -49,48 +49,32 @@
 		<div class="panel layui-col-xs12 layui-col-sm6 layui-col-md6 layui-col-lg6">
 			<a href="javascript:;">
 				<div class="panel_word w100p">
-					<span>在读学员总数</span>
-					<cite id="citeTest"></cite>
+					<span>本期在读学员</span>
+					<cite id="thisSemesterStudentCount"></cite>
 				</div>
 			</a>
 		</div>
 		<div class="panel layui-col-xs12 layui-col-sm6 layui-col-md6 layui-col-lg6">
 			<a href="javascript:;">
 				<div class="panel_word w100p">
-					<span>历史学员总数</span>
-					<cite>200</cite>
+					<span>学员库学员</span>
+					<cite id="allStudentCount"></cite>
 				</div>
 			</a>
 		</div>
-		<div class="panel layui-col-xs12 layui-col-sm4 layui-col-md4 layui-col-lg4">
+		<div class="panel layui-col-xs12 layui-col-sm6 layui-col-md6 layui-col-lg6">
 			<a href="javascript:;">
 				<div class="panel_word w100p">
-					<span>本周报名</span>
-					<em>300</em>
+					<span>下期已报名学员</span>
+					<em id="nextSemesterStudentCount"></em>
 				</div>
 			</a>
 		</div>
-		<div class="panel layui-col-xs12 layui-col-sm4 layui-col-md4 layui-col-lg4">
+		<div class="panel layui-col-xs12 layui-col-sm6 layui-col-md6 layui-col-lg6">
 			<a href="javascript:;">
 				<div class="panel_word w100p">
-					<span>个人学员库</span>
-					<em></em>
-				</div>
-			</a>
-		</div>
-		<div class="panel layui-col-xs12 layui-col-sm4 layui-col-md4 layui-col-lg4 layui-hide">
-			<a href="javascript:;" data-url="/icon/icons.html">
-				<div class="panel_word w100p">
-					<span>个人在读学员数</span>
-					<em>300</em>
-				</div>
-			</a>
-		</div>
-		<div class="panel layui-col-xs12 layui-col-sm4 layui-col-md4 layui-col-lg4">
-			<a href="javascript:;">
-				<div class="panel_word w100p">
-					<span>本期续报率</span>
-					<em>300</em>
+					<span>当前续报率</span>
+					<em id="continuePercent"></em>
 				</div>
 			</a>
 		</div>
@@ -128,9 +112,11 @@
 
 		function check(year, semester) {
 			if (year != "" && semester != "") {
-				alert("search");
-				$.post("/statistics/student", {year : year, semester : semester}, function (data) {
-
+				$.post("/statistics/student", {year : year, semester : semester}, function (res) {
+						$("#thisSemesterStudentCount").html(res.data.thisSemesterStudentCount);
+						$("#allStudentCount").html(res.data.allStudentCount);
+						$("#nextSemesterStudentCount").html(res.data.nextSemesterStudentCount);
+						$("#continuePercent").html(res.data.continuePercent);
 				})
 			}
 		}

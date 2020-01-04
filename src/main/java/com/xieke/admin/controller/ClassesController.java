@@ -1,9 +1,13 @@
 package com.xieke.admin.controller;
 
 import com.xieke.admin.bo.ClassesBo;
+import com.xieke.admin.bo.CurriculumBo;
+import com.xieke.admin.bo.OrderBo;
 import com.xieke.admin.domain.ClassesDomain;
+import com.xieke.admin.domain.CurriculumDomain;
 import com.xieke.admin.domain.OrderDomain;
 import com.xieke.admin.dto.ResultInfo;
+import com.xieke.admin.enums.OrderStatus;
 import com.xieke.admin.page.HtPage;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
@@ -26,6 +30,9 @@ public class ClassesController {
 
     @Resource
     private OrderDomain orderDomain;
+
+    @Resource
+    private CurriculumDomain curriculumDomain;
 
     @RequestMapping("/*")
     public void toHtml() {
@@ -68,13 +75,19 @@ public class ClassesController {
 
     @RequestMapping("/findNotUsedClass")
     @ResponseBody
-    public ResultInfo findNotUsedClass(Integer studentId) {
+    public ResultInfo findNotUsedClass(Integer studentId, Integer curriculumId) {
         List<ClassesBo> list = classesDomain.findAll();
         Iterator<ClassesBo> it = list.iterator();
         while (it.hasNext()) {
             ClassesBo classesBo = it.next();
-            if (orderDomain.getByStudentIdAndClassId(studentId, classesBo.getID()) != null) {
+            OrderBo orderBo = orderDomain.getByStudentIdAndClassId(studentId, classesBo.getID());
+            if (orderBo != null && !orderBo.getOrderStatus().equals(OrderStatus.CANCEL.getValue())) {
                 it.remove();
+            }
+            if (curriculumId != null) {
+                if (classesBo.getCurriculumID() != curriculumId) {
+                    it.remove();
+                }
             }
         }
         return new ResultInfo<>(list);

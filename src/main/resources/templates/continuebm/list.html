@@ -252,22 +252,6 @@
 		window.payback = _payback;
 
 		//退费
-		function cancelOrder1(eData) {
-			layer.confirm('确定退费？', {icon: 3, title: '提示信息'}, function (index) {
-				//取消订单
-				$.post("/order/cancel",{orderId : eData.id}, function(res){
-					if (res.data) {
-						layer.close(index);
-						layer.msg("退费成功！");
-						setTimeout('location.reload();', 1000);
-					} else {
-						layer.msg(data.msg);
-					}
-				})
-			})
-
-		}
-
 		function cancelOrder(eData) {
 			var title = "退费";
 			layui.layer.open({

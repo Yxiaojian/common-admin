@@ -62,6 +62,21 @@ public class PayRecordBo implements Serializable {
      */
     private Integer recordType;
 
+    /**
+     * 订单号
+     */
+    private String orderNo;
+
+    /**
+     * 学生姓名
+     */
+    private String studentName;
+
+    /**
+     * 电话一
+     */
+    private String phoneOne;
+
     private static final long serialVersionUID = 1L;
 
     public PayRecordBo(Integer orderID, Integer payType, BigDecimal payAmount, String toller, Date createTime, String remark,Integer recordType) {

@@ -47,6 +47,11 @@ public class StudentNativeDomain implements StudentDomain {
     }
 
     @Override
+    public Integer getCount() {
+        return null;
+    }
+
+    @Override
     public Boolean softDelete(Integer id) {
         return studentService.softDelete(id);
     }

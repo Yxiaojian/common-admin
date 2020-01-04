@@ -63,6 +63,11 @@ public class StudentService {
         return studentMapper.selectList(wrapper);
     }
 
+    public Integer getCount() {
+        QueryWrapper<Student> wrapper = new QueryWrapper<>();
+        return studentMapper.selectCount(wrapper);
+    }
+
 
     public Boolean softDelete(Integer id) {
         Student student = this.get(id);
@@ -135,18 +140,18 @@ public class StudentService {
     }
 
     public int insertReturnId(Student student) {
-         studentMapper.insert(student);
-         return  student.getID();
+        studentMapper.insert(student);
+        return student.getID();
     }
 
     public Student getByNameAndPhone1(String studentName, String phone1) {
         QueryWrapper<Student> queryWrapper = new QueryWrapper<>();
         LambdaQueryWrapper<Student> wrapper = queryWrapper.lambda();
         if (studentName != null) {
-            wrapper.eq(Student::getStudentName,studentName);
+            wrapper.eq(Student::getStudentName, studentName);
         }
         if (phone1 != null) {
-            wrapper.eq(Student::getPhoneOne,phone1);
+            wrapper.eq(Student::getPhoneOne, phone1);
         }
         return studentMapper.selectOne(wrapper);
     }

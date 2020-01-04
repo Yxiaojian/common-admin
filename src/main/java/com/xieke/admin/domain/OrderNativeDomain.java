@@ -97,6 +97,9 @@ public class OrderNativeDomain implements OrderDomain {
             payRecordBo.setPayAmount(orderBo.getPaidAmount());
             payRecordBo.setToller("取消订单退款");
             payRecordBo.setRecordType(1);
+            payRecordBo.setOrderNo(orderBo.getOrderNo());
+            payRecordBo.setStudentName(orderBo.getStudentName());
+            payRecordBo.setPhoneOne(orderBo.getPhoneOne());
             return payRecordDomain.insert(payRecordBo);
         } else {
             return false;
@@ -112,5 +115,16 @@ public class OrderNativeDomain implements OrderDomain {
     public Integer getCountByCurriculumId(Integer curriculumId) {
         return orderService.getCountByCurriculumId(curriculumId);
     }
+
+    @Override
+    public List<OrderBo> findByYearAndSemester(Integer year, Integer semester) {
+        return BeanUtil.convertList(orderService.findByYearAndSemester(year, semester), OrderBo.class);
+    }
+
+    @Override
+    public List<OrderBo> findByStudentId(Integer studentId) {
+        return BeanUtil.convertList(orderService.findByStudentId(studentId), OrderBo.class);
+    }
+
 
 }

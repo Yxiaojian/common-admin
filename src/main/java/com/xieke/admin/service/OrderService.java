@@ -128,4 +128,25 @@ public class OrderService {
         return orderMapper.selectCount(wrapperLamdba);
     }
 
+    public List<Order> findByYearAndSemester(Integer year, Integer semester) {
+        QueryWrapper<Order> wrapper = new QueryWrapper<>();
+        LambdaQueryWrapper<Order> wrapperLamdba = wrapper.lambda();
+        if (year != null) {
+            wrapperLamdba.eq(Order::getYear, year);
+        }
+        if (semester != null) {
+            wrapperLamdba.eq(Order::getSemester, semester);
+        }
+        return orderMapper.selectList(wrapperLamdba);
+    }
+
+    public List<Order> findByStudentId(Integer studentId) {
+        QueryWrapper<Order> wrapper = new QueryWrapper<>();
+        LambdaQueryWrapper<Order> wrapperLamdba = wrapper.lambda();
+        if (studentId != null) {
+            wrapperLamdba.eq(Order::getStudentID, studentId);
+        }
+        return orderMapper.selectList(wrapperLamdba);
+    }
+
 }

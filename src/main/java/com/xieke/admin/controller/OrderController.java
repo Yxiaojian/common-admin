@@ -193,8 +193,8 @@ public class OrderController extends BaseController {
 
     @RequestMapping("/findPage")
     @ResponseBody
-    public ResultInfo findPage(@RequestParam(value = "pageIndex", defaultValue = "1") Integer pageIndex, @RequestParam(value = "pageSize", defaultValue = "20") Integer pageSize, String studentName, String phoneOne) {
-        HtPage<OrderBo> htPage = orderDomain.findPage(pageIndex, pageSize, studentName, phoneOne);
+    public ResultInfo findPage(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "limit", defaultValue = "20") Integer limit, String studentName, String phoneOne) {
+        HtPage<OrderBo> htPage = orderDomain.findPage(page, limit, studentName, phoneOne);
         List<OrderBo> orderBoList = htPage.getRecords();
         for (OrderBo orderBo : orderBoList) {
             orderBo.setUnpaidAmount(orderBo.getPayableAmount().subtract(orderBo.getPaidAmount()));

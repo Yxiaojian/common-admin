@@ -91,7 +91,7 @@
             <label class="layui-form-label" style="padding-left: 14px;">优惠：</label>
             <div class="layui-input-inline" style="width: 110px;">
                 <input type="text" class="layui-input number" id="preferential" name="preferential"
-                       value="0" style="margin-left: 2px;" placeholder="">
+                       value="0" style="margin-left: 2px; padding-left: 13px" placeholder="">
             </div>
         </div>
     </div>
@@ -109,7 +109,7 @@
         <div class="layui-inline">
             <label class="layui-form-label" style="padding-left: 0;width: 95px;">欠费：</label>
             <div class="layui-input-inline" style="width: 80px;margin-right: 0;">
-                <label class="layui-form-label" id="noPay" style="text-align: left;"></label>
+                <label class="layui-form-label js_orderNeedPay" id="noPay" style="text-align: left;"></label>
             </div>
         </div>
     </div>
@@ -224,6 +224,8 @@
         var curriculumId;
         //合计金额
         var orderAllNeedPay;
+        //欠费
+        var unpaidAmount;
         form.on("submit(payBackTab)",function(data){
             classList.forEach(function (e) {
                 if (e.id + "" === data.field.stuClass) {
@@ -241,10 +243,26 @@
             layer.confirm(alertMsg, {icon: 3, title: '提示信息'}, function (index) {
                 layer.close(index);
                 //补缴费
-                parent.payback.payback(data.field, className, curriculumId, orderAllNeedPay);
+                parent.payback.payback(data.field, className, curriculumId, orderAllNeedPay, unpaidAmount);
                 //var orderId = data.field.orderId;
             })
 
+        });
+
+        $('#preferential').on('input propertychange', function(){
+            var allMoney = $("#kcfee").text();
+            var yhMoney = $(this).val();
+            //$(".js_orderYouhui").val(yhMoney);
+            //var preMoney = $("#prePay").val();
+            var noPay = allMoney - yhMoney;
+            if (noPay > 0 ) {
+                $("#noPay").text(noPay);
+                $(".js_orderNeedPay").html(noPay);
+            }else {
+                $("#noPay").text(0);
+                $(".js_orderNeedPay").html(0);
+            }
+            unpaidAmount = noPay;
         });
 
     })

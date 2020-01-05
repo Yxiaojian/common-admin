@@ -213,7 +213,7 @@
 		 * @private
 		 */
 		var _payback = {
-			payback : function(data, className, curriculumId, orderAllNeedPay){
+			payback : function(data, className, curriculumId, orderAllNeedPay, unpaidAmount){
 			    var eData = payBackData;
                 var h = "440px";
                 var title = "补缴费";
@@ -224,6 +224,7 @@
                     content : "payback.html",
                     maxmin: true,
                     success : function(layero, index){
+                    	console.log(unpaidAmount);
                         var body = layui.layer.getChildFrame('body', index);
                         //合计金额
                         body.find(".js_orderAllNeedPay").html(orderAllNeedPay);
@@ -236,7 +237,7 @@
                         //已缴
                         body.find(".js_orderPrePay").html(eData.prePay);
                         //总欠费
-                        body.find(".js_orderNeedPay").html(eData.unpaidAmount);
+                        body.find(".js_orderNeedPay").html(unpaidAmount);
                         //转班新建订单 转班取消原来的订单 传orderId
                         body.find("#orderId").val(data.orderId);
                         body.find("#studentId").val(data.studentID);
@@ -285,13 +286,13 @@
 			layui.layer.open({
 					title : "收费流水",
 					type : 1,
-					area : ["710px","330px"],
+					area : ["950px","330px"],
 					content : $('#openPayRedord'),
 					success : function(layero, index){
 						 table.render({
 							elem: '#payRedordList',
 							url : '/pay/payRecord',
-							cellMinWidth : 115,
+							cellMinWidth : 70,
 							page : true,
 							height : 282,
 							limits : [5,10,15],
@@ -302,17 +303,17 @@
 							},
 							cols : [[
 								//{type: "checkbox", fixed:"left", width:50},
-								{field: 'orderNo', title: '订单号', minWidth:100, align:'center'},
-								{field: 'payType', title: '支付方式', minWidth:100, align:'center', templet: function (d) {
+								{field: 'orderNo', title: '订单号', minWidth:80, align:'center'},
+								{field: 'payType', title: '支付方式', width:100, align:'center', templet: function (d) {
 										return getPayType(d.payType);
 									}},
-								{field: 'payAmount', title: '付款金额', minWidth:100, align:'center'},
-								{field: 'toller', title: '收费人', minWidth:100, align:'center'},
-								{field: 'recordType', title: '类型', minWidth:100, align:'center', templet: function (d) {
+								{field: 'payAmount', title: '付款金额', width:100, align:'center'},
+								{field: 'toller', title: '收费人', minWidth:80, align:'center'},
+								{field: 'recordType', title: '类型', width:70, align:'center', templet: function (d) {
 										return getRecordType(d.recordType);
 									}},
-								{field: 'createTime', title: '创建时间', minWidth:100, align:'center'},
-								{field: 'remark', title: '备注', minWidth:100, align:'center'}
+								{field: 'createTime', title: '创建时间', minWidth:170, align:'center'},
+								{field: 'remark', title: '备注', width:100, align:'center'}
 
 							]]
 						});

@@ -78,4 +78,10 @@ public class PayRecordNativeDomain implements PayRecordDomain {
         return BeanUtil.convertList(payRecordService.findByOrderIds(orderIds), PayRecordBo.class);
     }
 
+    @Override
+    public HtPage<PayRecordBo> findPageByOrderIds(Integer pageIndex, Integer pageSize, List<Integer> orderIds) {
+        HtPage<PayRecord> htPage = new HtPage<>(payRecordService.findPageByOrderIds(pageIndex, pageSize, orderIds));
+        return BeanUtil.convertPage(htPage, PayRecordBo.class);
+    }
+
 }

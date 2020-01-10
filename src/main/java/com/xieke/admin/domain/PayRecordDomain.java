@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- *
  * @author zhangyang
  * @date 2019/09/07
  */
@@ -52,6 +51,7 @@ public interface PayRecordDomain {
 
     List<PayRecordBo> findByOrderIds(List<Integer> orderIds);
 
+    HtPage<PayRecordBo> findPageByOrderIds(Integer pageIndex, Integer pageSize, List<Integer> orderIds);
 
     HtPage<PayRecordBo> findPageByOrderId(Integer pageIndex, Integer pageSize, Integer orderId);
 }

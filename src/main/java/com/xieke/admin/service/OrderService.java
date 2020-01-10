@@ -143,6 +143,19 @@ public class OrderService {
         return orderMapper.selectList(wrapperLamdba);
     }
 
+    public IPage<Order> findPageByYearAndSemester(Integer pageIndex, Integer pageSize, Integer year, Integer semester) {
+        Page<Order> objectPage = new Page<>(pageIndex, pageSize);
+        QueryWrapper<Order> wrapper = new QueryWrapper<>();
+        LambdaQueryWrapper<Order> wrapperLamdba = wrapper.lambda();
+        if (year != null) {
+            wrapperLamdba.eq(Order::getYear, year);
+        }
+        if (semester != null) {
+            wrapperLamdba.eq(Order::getSemester, semester);
+        }
+        return orderMapper.selectPage(objectPage, wrapperLamdba);
+    }
+
     public List<Order> findByStudentId(Integer studentId) {
         QueryWrapper<Order> wrapper = new QueryWrapper<>();
         LambdaQueryWrapper<Order> wrapperLamdba = wrapper.lambda();

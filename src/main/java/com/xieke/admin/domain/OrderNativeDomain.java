@@ -122,6 +122,12 @@ public class OrderNativeDomain implements OrderDomain {
     }
 
     @Override
+    public HtPage<OrderBo> findPageByYearAndSemester(Integer pageIndex, Integer pageSize, Integer year, Integer semester) {
+        HtPage<Order> htPage = new HtPage<>(orderService.findPageByYearAndSemester(pageIndex, pageSize, year, semester));
+        return BeanUtil.convertPage(htPage, OrderBo.class);
+    }
+
+    @Override
     public List<OrderBo> findByStudentId(Integer studentId) {
         return BeanUtil.convertList(orderService.findByStudentId(studentId), OrderBo.class);
     }

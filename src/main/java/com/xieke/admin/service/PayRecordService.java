@@ -92,9 +92,21 @@ public class PayRecordService {
         LambdaQueryWrapper<PayRecord> lambdaQueryWrapper = wrapper.lambda();
         if (orderId != null) {
             lambdaQueryWrapper.eq(PayRecord::getOrderID, orderId);
-        }else {
+        } else {
             return null;
         }
+        return payRecordMapper.selectPage(objectPage, lambdaQueryWrapper);
+    }
+
+    public IPage<PayRecord> findPageByOrderIds(Integer pageIndex, Integer pageSize, List<Integer> orderIds) {
+        Page<PayRecord> objectPage = new Page<>(pageIndex, pageSize);
+        QueryWrapper<PayRecord> wrapper = new QueryWrapper<>();
+        LambdaQueryWrapper<PayRecord> lambdaQueryWrapper = wrapper.lambda();
+        if (!CollectionUtils.isEmpty(orderIds)) {
+            lambdaQueryWrapper.in(PayRecord::getOrderID, orderIds);
+        }
+        lambdaQueryWrapper.orderByAsc(PayRecord::getOrderNo);
+        lambdaQueryWrapper.orderByDesc(PayRecord::getCreateTime);
         return payRecordMapper.selectPage(objectPage, lambdaQueryWrapper);
     }
 }

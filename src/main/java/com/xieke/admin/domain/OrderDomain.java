@@ -58,6 +58,8 @@ public interface OrderDomain {
 
     List<OrderBo> findByYearAndSemester(Integer year, Integer semester);
 
+    HtPage<OrderBo> findPageByYearAndSemester(Integer pageIndex, Integer pageSize, Integer year, Integer semester);
+
     List<OrderBo> findByStudentId(Integer studentId);
 
     List<OrderBo> findByDate(Date start, Date end);

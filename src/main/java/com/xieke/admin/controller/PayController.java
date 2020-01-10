@@ -67,7 +67,7 @@ public class PayController extends BaseController {
 
     @ResponseBody
     @RequestMapping("/list")
-    public ResultInfo list(Integer semester, Integer year, Integer orderType) {
+    public ResultInfo list(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "limit", defaultValue = "20") Integer limit, Integer semester, Integer year, Integer orderType) {
         List<OrderBo> orderBoList = orderDomain.findByYearAndSemester(year, semester);
         List<Integer> orderIds = new ArrayList<>();
         for (OrderBo orderBo : orderBoList) {
@@ -78,8 +78,8 @@ public class PayController extends BaseController {
                 orderIds.add(orderBo.getID());
             }
         }
-        List<PayRecordBo> recordBos = payRecordDomain.findByOrderIds(orderIds);
-        return new ResultInfo(recordBos);
+        HtPage<PayRecordBo> htPage = payRecordDomain.findPageByOrderIds(page, limit, orderIds);
+        return new ResultInfo(htPage);
     }
 
     @ResponseBody

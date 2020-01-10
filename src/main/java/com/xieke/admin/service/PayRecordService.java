@@ -2,8 +2,11 @@ package com.xieke.admin.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xieke.admin.model.PayRecord;
 import com.xieke.admin.mapper.PayRecordMapper;
+import com.xieke.admin.model.Student;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -83,4 +86,15 @@ public class PayRecordService {
     }
 
 
+    public IPage<PayRecord> findPageByOrderId(Integer pageIndex, Integer pageSize, Integer orderId) {
+        Page<PayRecord> objectPage = new Page<>(pageIndex, pageSize);
+        QueryWrapper<PayRecord> wrapper = new QueryWrapper<>();
+        LambdaQueryWrapper<PayRecord> lambdaQueryWrapper = wrapper.lambda();
+        if (orderId != null) {
+            lambdaQueryWrapper.eq(PayRecord::getOrderID, orderId);
+        }else {
+            return null;
+        }
+        return payRecordMapper.selectPage(objectPage, lambdaQueryWrapper);
+    }
 }

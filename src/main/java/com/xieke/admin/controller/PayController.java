@@ -1,5 +1,6 @@
 package com.xieke.admin.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.xieke.admin.bo.OrderBo;
 import com.xieke.admin.bo.PayRecordBo;
 import com.xieke.admin.domain.OrderDomain;
@@ -10,12 +11,14 @@ import com.xieke.admin.model.Order;
 import com.xieke.admin.util.BeanUtil;
 import com.xieke.admin.vo.PayRecordDetailVo;
 import com.xieke.admin.vo.PayStatisticsVo;
+import com.xieke.admin.page.HtPage;
 import com.xieke.admin.web.BaseController;
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -50,6 +53,16 @@ public class PayController extends BaseController {
         } else {
             return new ResultInfo("支付失败");
         }
+    }
+
+    /**
+     * 收费流水
+     */
+    @RequestMapping("/payRecord")
+    @ResponseBody
+    public ResultInfo payRecord(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "limit", defaultValue = "20") Integer limit, Integer orderId) {
+        HtPage<PayRecordBo> htPage = payRecordDomain.findPageByOrderId(page, limit, orderId);
+        return new ResultInfo("", "0", htPage.getRecords(), new Long(htPage.getTotal()).intValue());
     }
 
     @ResponseBody

@@ -1,6 +1,7 @@
 package com.xieke.admin.domain;
 
 import com.xieke.admin.bo.PayRecordBo;
+import com.xieke.admin.page.HtPage;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -52,4 +53,5 @@ public interface PayRecordDomain {
     List<PayRecordBo> findByOrderIds(List<Integer> orderIds);
 
 
+    HtPage<PayRecordBo> findPageByOrderId(Integer pageIndex, Integer pageSize, Integer orderId);
 }

@@ -1,7 +1,10 @@
 package com.xieke.admin.domain;
 
 import com.xieke.admin.bo.PayRecordBo;
+import com.xieke.admin.bo.StudentBo;
 import com.xieke.admin.model.PayRecord;
+import com.xieke.admin.model.Student;
+import com.xieke.admin.page.HtPage;
 import com.xieke.admin.service.PayRecordService;
 import com.xieke.admin.util.BeanUtil;
 import org.springframework.stereotype.Service;
@@ -62,6 +65,12 @@ public class PayRecordNativeDomain implements PayRecordDomain {
         } else {
             throw new Exception("支付出错");
         }
+    }
+
+    @Override
+    public HtPage<PayRecordBo> findPageByOrderId(Integer pageIndex, Integer pageSize, Integer orderId) {
+        HtPage<PayRecord> htPage = new HtPage<>(payRecordService.findPageByOrderId(pageIndex, pageSize, orderId));
+        return BeanUtil.convertPage(htPage, PayRecordBo.class);
     }
 
     @Override

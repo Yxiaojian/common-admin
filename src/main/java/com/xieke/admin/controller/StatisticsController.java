@@ -37,6 +37,11 @@ public class StatisticsController {
 
     }
 
+    @RequestMapping("/studentStatistics")
+    public String toStudentStatistics(){
+        return "statistics/studentStatistics";
+    }
+
     @RequestMapping("/student")
     @ResponseBody
     public ResultInfo studentCount(Integer year, Integer semester) {
@@ -67,8 +72,10 @@ public class StatisticsController {
         NumberFormat numberFormat = NumberFormat.getInstance();
         // 设置精确到小数点后2位
         numberFormat.setMaximumFractionDigits(2);
-        String result = numberFormat.format((float) xubaoStudentCount / (float) thisSemesterStudentCount * 100);
-
+        String result = "0";
+        if (xubaoStudentCount != 0 || thisSemesterStudentCount != 0) {
+            result = numberFormat.format((float) xubaoStudentCount / (float) thisSemesterStudentCount * 100);;
+        }
         StudentCountBo studentCountBo = new StudentCountBo();
         studentCountBo.setAllStudentCount(allStudentCount);
         studentCountBo.setThisSemesterStudentCount(thisSemesterStudentCount);

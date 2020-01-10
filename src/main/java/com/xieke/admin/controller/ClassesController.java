@@ -79,16 +79,18 @@ public class ClassesController {
         List<ClassesBo> list = classesDomain.findAll();
         Iterator<ClassesBo> it = list.iterator();
         while (it.hasNext()) {
+            boolean remove = false;
             ClassesBo classesBo = it.next();
             OrderBo orderBo = orderDomain.getByStudentIdAndClassId(studentId, classesBo.getID());
             if (orderBo != null && !orderBo.getOrderStatus().equals(OrderStatus.CANCEL.getValue())) {
-                it.remove();
+                remove = true;
             }
             if (curriculumId != null) {
-                if (classesBo.getCurriculumID() != curriculumId) {
-                    it.remove();
+                if (!classesBo.getCurriculumID().equals(curriculumId)) {
+                    remove = true;
                 }
             }
+            if (remove) it.remove();
         }
         return new ResultInfo<>(list);
     }

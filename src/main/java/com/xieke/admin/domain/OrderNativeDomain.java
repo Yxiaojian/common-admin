@@ -78,17 +78,17 @@ public class OrderNativeDomain implements OrderDomain {
     }
 
     @Override
-    public Boolean updateStatus(Integer orderId, Integer orderStatus) {
-        return orderService.updateStatus(orderId, orderStatus);
+    public Boolean updateStatus(Integer orderId, Integer orderStatus, String remark) {
+        return orderService.updateStatus(orderId, orderStatus, remark);
     }
 
     @Override
-    public Boolean cancel(Integer orderId) {
+    public Boolean cancel(Integer orderId, String remark) {
         OrderBo orderBo = this.get(orderId);
         if (orderBo.getOrderStatus().equals(OrderStatus.CANCEL.getValue())) {
             return true;
         }
-        Boolean a = this.updateStatus(orderId, OrderStatus.CANCEL.getValue());
+        Boolean a = this.updateStatus(orderId, OrderStatus.CANCEL.getValue(), remark);
         if (a) {
             PayRecordBo payRecordBo = new PayRecordBo();
             payRecordBo.setCreateTime(new Date());

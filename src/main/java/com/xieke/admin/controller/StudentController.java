@@ -63,8 +63,8 @@ public class StudentController {
 
     @RequestMapping("/findPage")
     @ResponseBody
-    public ResultInfo findPage(@RequestParam(value = "pageIndex", defaultValue = "1") Integer pageIndex, @RequestParam(value = "pageSize", defaultValue = "20") Integer pageSize, Integer grade, String studentName) {
-        HtPage<StudentBo> htPage = studentDomain.findPage(pageIndex, pageSize, grade, studentName == null ? null : studentName.trim());
+    public ResultInfo findPage(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "limit", defaultValue = "20") Integer limit, Integer grade, String studentName) {
+        HtPage<StudentBo> htPage = studentDomain.findPage(page, limit, grade, studentName == null ? null : studentName.trim());
         return new ResultInfo("", "0", htPage.getRecords(), new Long(htPage.getTotal()).intValue());
     }
 
@@ -87,6 +87,7 @@ public class StudentController {
     public void toHtml(){
 
     }
+
 
 
 }

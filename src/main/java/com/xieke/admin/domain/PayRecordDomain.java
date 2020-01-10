@@ -49,7 +49,7 @@ public interface PayRecordDomain {
     @Transactional(rollbackFor = Exception.class)
     Boolean create(PayRecordBo payRecordBo) throws Exception;
 
-
+    List<PayRecordBo> findByOrderIds(List<Integer> orderIds);
 
 
 }

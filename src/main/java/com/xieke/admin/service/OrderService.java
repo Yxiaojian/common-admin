@@ -13,6 +13,7 @@ import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -146,6 +147,13 @@ public class OrderService {
         if (studentId != null) {
             wrapperLamdba.eq(Order::getStudentID, studentId);
         }
+        return orderMapper.selectList(wrapperLamdba);
+    }
+
+    public List<Order> findByDate(Date start, Date end) {
+        QueryWrapper<Order> wrapper = new QueryWrapper<>();
+        LambdaQueryWrapper<Order> wrapperLamdba = wrapper.lambda();
+        wrapperLamdba.between(Order::getCreateTime, start, end);
         return orderMapper.selectList(wrapperLamdba);
     }
 

@@ -4,6 +4,7 @@ import com.xieke.admin.bo.OrderBo;
 import com.xieke.admin.page.HtPage;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -58,4 +59,6 @@ public interface OrderDomain {
     List<OrderBo> findByYearAndSemester(Integer year, Integer semester);
 
     List<OrderBo> findByStudentId(Integer studentId);
+
+    List<OrderBo> findByDate(Date start, Date end);
 }

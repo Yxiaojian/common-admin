@@ -8,6 +8,7 @@ import com.xieke.admin.model.PayRecord;
 import com.xieke.admin.mapper.PayRecordMapper;
 import com.xieke.admin.model.Student;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -67,9 +68,20 @@ public class PayRecordService {
         LambdaQueryWrapper<PayRecord> lambdaQueryWrapper = wrapper.lambda();
         if (orderId != null) {
             lambdaQueryWrapper.eq(PayRecord::getOrderID, orderId);
-        }else {
+        } else {
             return null;
         }
+        return payRecordMapper.selectList(lambdaQueryWrapper);
+    }
+
+    public List<PayRecord> findByOrderIds(List<Integer> orderIds) {
+        QueryWrapper<PayRecord> wrapper = new QueryWrapper<>();
+        LambdaQueryWrapper<PayRecord> lambdaQueryWrapper = wrapper.lambda();
+        if (!CollectionUtils.isEmpty(orderIds)) {
+            lambdaQueryWrapper.in(PayRecord::getOrderID, orderIds);
+        }
+        lambdaQueryWrapper.orderByAsc(PayRecord::getOrderNo);
+        lambdaQueryWrapper.orderByDesc(PayRecord::getCreateTime);
         return payRecordMapper.selectList(lambdaQueryWrapper);
     }
 

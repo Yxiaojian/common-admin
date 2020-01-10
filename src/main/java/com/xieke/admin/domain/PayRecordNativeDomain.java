@@ -14,7 +14,6 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- *
  * @author zhangyang
  * @date 2019/09/07
  */
@@ -56,14 +55,14 @@ public class PayRecordNativeDomain implements PayRecordDomain {
     public Boolean create(PayRecordBo payRecordBo) throws Exception {
         boolean a = this.insert(payRecordBo);
         boolean b = false;
-        if (a){
+        if (a) {
             b = orderDomain.updatePaidAmountAfterPay(payRecordBo.getOrderID());
-        }else {
+        } else {
             throw new Exception("支付出错");
         }
-        if (b){
+        if (b) {
             return true;
-        }else {
+        } else {
             throw new Exception("支付出错");
         }
     }
@@ -72,6 +71,11 @@ public class PayRecordNativeDomain implements PayRecordDomain {
     public HtPage<PayRecordBo> findPageByOrderId(Integer pageIndex, Integer pageSize, Integer orderId) {
         HtPage<PayRecord> htPage = new HtPage<>(payRecordService.findPageByOrderId(pageIndex, pageSize, orderId));
         return BeanUtil.convertPage(htPage, PayRecordBo.class);
+    }
+
+    @Override
+    public List<PayRecordBo> findByOrderIds(List<Integer> orderIds) {
+        return BeanUtil.convertList(payRecordService.findByOrderIds(orderIds), PayRecordBo.class);
     }
 
 }

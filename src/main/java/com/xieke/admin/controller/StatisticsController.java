@@ -42,6 +42,14 @@ public class StatisticsController {
         return "statistics/studentStatistics";
     }
 
+    @RequestMapping("/chargeStatistics")
+    public String toChargeStatistics(){
+        return "statistics/chargeStatistics";
+    }
+
+    @RequestMapping("/payRecordList")
+    public String toPayRecord(){return "statistics/list";}
+
     @RequestMapping("/student")
     @ResponseBody
     public ResultInfo studentCount(Integer year, Integer semester) {

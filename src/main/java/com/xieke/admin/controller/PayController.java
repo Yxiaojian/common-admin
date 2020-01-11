@@ -70,12 +70,14 @@ public class PayController extends BaseController {
     public ResultInfo list(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "limit", defaultValue = "20") Integer limit, Integer semester, Integer year, Integer orderType) {
         List<OrderBo> orderBoList = orderDomain.findByYearAndSemester(year, semester);
         List<Integer> orderIds = new ArrayList<>();
-        for (OrderBo orderBo : orderBoList) {
-            if (orderType == 0 && orderBo.getOrderStatus() != OrderStatus.CANCEL.getValue()) {
-                orderIds.add(orderBo.getID());
-            }
-            if (orderType == 1 && orderBo.getOrderStatus() == OrderStatus.CANCEL.getValue()) {
-                orderIds.add(orderBo.getID());
+        if (null != orderType) {
+            for (OrderBo orderBo : orderBoList) {
+                if (orderType == 0 && orderBo.getOrderStatus() != OrderStatus.CANCEL.getValue()) {
+                    orderIds.add(orderBo.getID());
+                }
+                if (orderType == 1 && orderBo.getOrderStatus() == OrderStatus.CANCEL.getValue()) {
+                    orderIds.add(orderBo.getID());
+                }
             }
         }
         HtPage<PayRecordBo> htPage = payRecordDomain.findPageByOrderIds(page, limit, orderIds);

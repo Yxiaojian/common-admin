@@ -81,7 +81,7 @@ public class PayController extends BaseController {
             }
         }
         HtPage<PayRecordBo> htPage = payRecordDomain.findPageByOrderIds(page, limit, orderIds);
-        return new ResultInfo(htPage);
+        return new ResultInfo("","0",htPage.getRecords(),new Long (htPage.getTotal()).intValue());
     }
 
     @ResponseBody
@@ -94,11 +94,29 @@ public class PayController extends BaseController {
         if (recordBo == null) {
             return new ResultInfo("流水不存在");
         }
-        PayRecordDetailVo detailVo = BeanUtil.convert(orderDomain.get(recordBo.getOrderID()), PayRecordDetailVo.class);
+        PayRecordDetailVo detailVo = new PayRecordDetailVo();
+        OrderBo orderBo = orderDomain.get(recordBo.getOrderID());
+        if (orderBo != null) {
+            detailVo = BeanUtil.convert(orderBo, PayRecordDetailVo.class);
+        }
         detailVo.setCreateTime(recordBo.getCreateTime());
         detailVo.setPayAmount(recordBo.getPayAmount());
         detailVo.setToller(recordBo.getToller());
         return new ResultInfo(detailVo);
+    }
+
+    /**
+     * 废除
+     * @param recordId
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/delete")
+    public ResultInfo delete(Integer recordId) {
+        if (recordId == null) {
+            return new ResultInfo("recordId为空");
+        }
+        return payRecordDomain.delete(recordId) ? new ResultInfo(true) : new ResultInfo(false);
     }
 
 

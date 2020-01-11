@@ -54,24 +54,24 @@
 			id : "curCulumList",
 			cols : [[
 				{type: "checkbox", fixed:"left", width:50},
-				{field: 'curriculumName', title: '课程名称', minWidth:100, align:'center'},
-				{field: 'semester', title: '学期', minWidth:100, align:'center',templet:function(d){
+				{field: 'curriculumName', title: '课程名称', minWidth:100, align:'center', sort: true},
+				{field: 'semester', title: '学期', minWidth:100, align:'center', sort: true,templet:function(d){
 						return getSeType(d.semester)
 					}},
-				{field: 'date', title: '日期', minWidth:100, align:'center',templet:function(d){
+				{field: 'date', title: '日期', minWidth:100, align:'center', sort: true,templet:function(d){
 						return getDateType(d.date);
 					}},
-				{field: 'grade', title: '年级', minWidth:100, align:'center',templet:function(d){
+				{field: 'grade', title: '年级', minWidth:100, align:'center', sort: true,templet:function(d){
 						return getGradeType(d.grade);
 					}},
-				{field: 'year', title: '年份', minWidth:100, align:'center'},
-				{field: 'classTime', title: '课次', minWidth:100, align:'center',templet:function(d){
+				{field: 'year', title: '年份', minWidth:100, align:'center', sort: true},
+				{field: 'classTime', title: '课次', minWidth:100, align:'center', sort: true,templet:function(d){
 						return d.classTime + " 次";
 					}},
-				{field: 'price', title: '标价', minWidth:100, align:'center',templet:function(d){
+				{field: 'price', title: '标价', minWidth:100, align:'center', sort: true,templet:function(d){
 						return d.price + " 元";
 					}},
-				{field: 'createTime', title: '创建时间', align:'center',minWidth:100}
+				{field: 'createTime', title: '创建时间', align:'center', sort: true,minWidth:100}
 			]]
 		});
 

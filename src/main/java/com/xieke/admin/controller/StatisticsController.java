@@ -37,6 +37,11 @@ public class StatisticsController {
 
     }
 
+    @RequestMapping("/*")
+    public void toHtml() {
+
+    }
+
     @RequestMapping("/studentStatistics")
     public String toStudentStatistics(){
         return "statistics/studentStatistics";

@@ -75,8 +75,8 @@
 			id : "classesList",
 			cols : [[
 				{type: "checkbox", fixed:"left", width:50},
-				{field: 'className', title: '班级名称', minWidth:100, align:'center'},
-				{field: 'curriculumID', title: '课程名称', minWidth:100, align:'center',templet:function(d){
+				{field: 'className', title: '班级名称', minWidth:100, align:'center', sort: true},
+				{field: 'curriculumID', title: '课程名称', minWidth:100, align:'center', sort: true ,templet:function(d){
 						var name = "";
 						curList.forEach(function(e){
 							if (e.id === d.curriculumID){
@@ -85,15 +85,15 @@
 						});
 						return name;
 					}},
-				{field: 'teacherName', title: '主讲老师', minWidth:100, align:'center'},
-				{field: 'assistantTeacherName', title: '助教老师', minWidth:100, align:'center'},
-				{field: 'classType', title: '班型', minWidth:100, align:'center',templet:function(d){
+				{field: 'teacherName', title: '主讲老师', minWidth:100, align:'center', sort: true},
+				{field: 'assistantTeacherName', title: '助教老师', minWidth:100, align:'center', sort: true},
+				{field: 'classType', title: '班型', minWidth:100, align:'center', sort: true ,templet:function(d){
 						return getClassesType(d.classType)
 					}},
-				{field: 'classLevel', title: '时间', minWidth:100, align:'center',templet:function(d){
+				{field: 'classLevel', title: '时间', minWidth:100, align:'center', sort: true ,templet:function(d){
 						return getClassesLevel(d.classLevel)
 					}},
-				{field: 'createTime', title: '创建时间', align:'center',minWidth:100}
+				{field: 'createTime', title: '创建时间', align:'center',minWidth:100, sort: true}
 
 				,{fixed: 'right', title:'操作', toolbar: '#opbar', minWidth:180}
 			]]

@@ -1,5 +1,6 @@
 package com.xieke.admin.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -54,6 +55,7 @@ public class PayRecordDetailVo {
     /**
      * 创建时间
      */
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date createTime;
 
     /**

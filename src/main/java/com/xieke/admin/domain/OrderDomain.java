@@ -63,4 +63,6 @@ public interface OrderDomain {
     List<OrderBo> findByStudentId(Integer studentId);
 
     List<OrderBo> findByDate(Date start, Date end);
+
+    List<OrderBo> findByClassId(Integer classId);
 }

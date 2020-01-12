@@ -57,4 +57,9 @@ public class ClassesNativeDomain implements ClassesDomain {
         return classesService.update(classesId, curriculumID, className, teacherID, teacherName, assistantTeacherID, assistantTeacherName, classType, classLevel);
     }
 
+    @Override
+    public List<ClassesBo> findByTeacherId(Integer teacherId) {
+        return BeanUtil.convertList(classesService.findByTeacherId(teacherId), ClassesBo.class);
+    }
+
 }

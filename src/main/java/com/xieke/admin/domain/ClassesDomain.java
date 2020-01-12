@@ -48,4 +48,6 @@ public interface ClassesDomain {
     HtPage<ClassesBo> findPage(Integer pageIndex, Integer pageSize, String className);
 
     Boolean update(Integer classesId, Integer curriculumID, String className, Integer teacherID, String teacherName, Integer assistantTeacherID, String assistantTeacherName, Integer classType, Integer classLevel);
+
+    List<ClassesBo> findByTeacherId(Integer teacherId);
 }

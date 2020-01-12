@@ -129,5 +129,11 @@ public class ClassesController {
         return new ResultInfo("", "0", htPage.getRecords(), new Long(htPage.getTotal()).intValue());
     }
 
+    @RequestMapping("/findByTeacherId")
+    @ResponseBody
+    public ResultInfo findByTeacherId(Integer teacherId) {
+        List<ClassesBo> classesBoList = classesDomain.findByTeacherId(teacherId);
+        return new ResultInfo(classesBoList);
+    }
 
 }

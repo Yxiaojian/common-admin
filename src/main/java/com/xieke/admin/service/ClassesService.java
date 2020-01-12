@@ -121,5 +121,14 @@ public class ClassesService {
         return classesMapper.selectPage(objectPage, wrapperLamdba);
     }
 
+    public List<Classes> findByTeacherId(Integer teacherId) {
+        QueryWrapper<Classes> wrapper = new QueryWrapper<>();
+        LambdaQueryWrapper<Classes> wrapperLamdba = wrapper.lambda();
+        if (teacherId != null) {
+            wrapperLamdba.eq(Classes::getTeacherID, teacherId);
+        }
+        return classesMapper.selectList(wrapperLamdba);
+    }
+
 
 }

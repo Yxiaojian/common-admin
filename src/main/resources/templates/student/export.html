@@ -92,9 +92,8 @@
 					classId: classId
 				}
 			})
-		})
+		});
 
-		var curList;
 		//学生列表
 		var tableIns =
 				table.render({
@@ -117,8 +116,10 @@
 						return getGradeType(d.grade)
 					}},
 				{field: 'entranceYear', title: '入学年份', minWidth:110, align:'center', sort: true},
+				{field: 'recentCurriculum', title: '最近的一门课程', minWidth:150, align:'center', sort: true},
+				{field: 'historyCurriculums', title: '历史课程', minWidth:110, align:'center', sort: true},
 				{field: 'remark', title: '备注', minWidth:100, align:'center', sort: true},
-				{field: 'createTime', title: '创建时间', align:'center',minWidth:150, sort: true},
+				{field: 'createTime', title: '创建时间', align:'center',minWidth:170, sort: true},
 				{field: 'address', title: '联系地址', align:'center',minWidth:110, sort: true},
 				{field: 'phoneOne', title: '电话一', minWidth:120, align:'center', sort: true},
 				{field: 'phoneOneRemark', title: '电话一备注', minWidth:120, align:'center', sort: true},
@@ -128,40 +129,11 @@
 			]]
 		});
 
-		var scoreTable;
-		var studentId;
-		var classId;
-		function findClassByStudentId() {
-			$("#classesSselectId").html('');
-			$.post("/classes/findUsedClass", {studentId: studentId}, function (res) {
-				classList = res.data;
-				classList.forEach(function (e) {
-					$("#classesSselectId").append("<option value='" + e.id + "'>" + e.className + "</option>");
-				});
-				form.render('select');//重新渲染
-				if (res.data.length > 0){
-					classId =  res.data[0].id;
-				} else {
-					classId = -1;
-				}
-			})
-
-		}
-
-		form.on('select(classesSselectId)', function (data) {
-			classList.forEach(function (e) {
-				if (parseInt(data.value) === e.id) {
-					classId = data.value;
-				}
-			});
-
-		});
-
-		$(".js_export").click(function () {
+		$(".js_export").on("click", function () {
 			var classId = $("#selectClass").val();
 			//导出
 			window.location.href="/student/exportList?classId=" + classId;
-		})
+		});
 
 
 

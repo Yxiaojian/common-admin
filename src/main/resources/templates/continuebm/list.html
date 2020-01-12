@@ -18,7 +18,8 @@
 		<form class="layui-form">
 			<div class="layui-inline">
 				<div class="layui-input-inline">
-					<input type="text" class="layui-input stdName" placeholder="请输入学生姓名" />
+					<input type="text" class="layui-input stdName" id="searchByName" placeholder="请输入学生姓名" />
+					<input id="hiddenText" type="text" style="display:none" />
 				</div>
 				<a class="layui-btn search_btn" data-type="reload">搜索</a>
 			</div>
@@ -39,7 +40,7 @@
 	<a class="layui-btn layui-btn-xs" lay-event="continueBm">续报</a>
 	<a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="changeClass">转班</a>
 	<a class="layui-btn layui-btn-xs layui-btn-warm " lay-event="addPayRecoed">补缴费</a>
-	<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="payRedord">收费流水</a>
+	<a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="payRedord">收费流水</a>
 	<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="cancelOrder">退费</a>
 	{{#  } }}
 </script>
@@ -102,17 +103,30 @@
 			]]
 		});
 
+
+		//搜索绑定回车
+		$("#searchByName").bind("keypress", function (e) {
+			if (e.keyCode === 13) {
+				searchByName();
+			}
+		});
+
 		//搜索
 		$(".search_btn").on("click",function(){
+			searchByName()
+		});
+
+		function searchByName() {
 			table.reload("studentList",{
 				page: {
 					curr: 1 //重新从第 1 页开始
 				},
 				where: {
-                    studentName: $(".stdName").val()
+					studentName: $(".stdName").val()
 				}
 			})
-		});
+		}
+
 		$(".stdName").keypress(function (e) {
 			if (e.which == 13) {
 				$(".search_btn").click();

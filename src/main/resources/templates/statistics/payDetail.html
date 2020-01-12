@@ -35,7 +35,7 @@
                 <a type="button" class="layui-btn layui-btn-danger js_delete" >废除</a>
             </div>
             <div class="layui-inline" id="abolish">
-                <a type="button" class="layui-btn layui-btn-normal ">打印</a>
+                <a type="button" class="layui-btn layui-btn-normal js_print">打印</a>
             </div>
             <div class="layui-tab-item layui-show">
                 <div class="layui-col-md8 layui-col-xs12" style="margin: 35px;">
@@ -160,6 +160,10 @@
         $(".js_return").on("click", function () {
             parent.location.reload();
         })
+
+        $(".js_print").on("click", function () {
+           layer.msg("此功能暂未开放");
+        });
 
         $(".js_delete").on("click", function () {
             var recordId = $("#recordId").val()

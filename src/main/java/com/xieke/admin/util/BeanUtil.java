@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 
 import java.beans.PropertyDescriptor;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -23,7 +24,7 @@ public class BeanUtil {
             return null;
         } else {
             List<T> targetList = convertList(sourcePage.getRecords(), clazz);
-            HtPage<T> targetPage = new HtPage(sourcePage.getPageIndex(), sourcePage.getPageSize(), targetList, sourcePage.getTotal(),sourcePage.getTotalPage());
+            HtPage<T> targetPage = new HtPage(sourcePage.getPageIndex(), sourcePage.getPageSize(), targetList, sourcePage.getTotal(), sourcePage.getTotalPage());
             return targetPage;
         }
     }
@@ -85,6 +86,15 @@ public class BeanUtil {
 
     public interface ConversionCustomizble {
         void convertOthers(Object srcObj);
+    }
+
+    public static List<String> getAllFieldName(Object object) {
+        List<String> fieldNames = new ArrayList<>();
+        Field[] fields = object.getClass().getDeclaredFields();
+        for (int i = 0; i < fields.length; i++) {
+            fieldNames.add(fields[i].getName());
+        }
+        return fieldNames;
     }
 
 }

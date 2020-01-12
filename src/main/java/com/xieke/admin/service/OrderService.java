@@ -162,6 +162,7 @@ public class OrderService {
         if (studentId != null) {
             wrapperLamdba.eq(Order::getStudentID, studentId);
         }
+        wrapperLamdba.orderByDesc(Order::getCreateTime);
         return orderMapper.selectList(wrapperLamdba);
     }
 
@@ -169,6 +170,15 @@ public class OrderService {
         QueryWrapper<Order> wrapper = new QueryWrapper<>();
         LambdaQueryWrapper<Order> wrapperLamdba = wrapper.lambda();
         wrapperLamdba.between(Order::getCreateTime, start, end);
+        return orderMapper.selectList(wrapperLamdba);
+    }
+
+    public List<Order> findByClassId(Integer classId) {
+        QueryWrapper<Order> wrapper = new QueryWrapper<>();
+        LambdaQueryWrapper<Order> wrapperLamdba = wrapper.lambda();
+        if (classId != null) {
+            wrapperLamdba.eq(Order::getClassID, classId);
+        }
         return orderMapper.selectList(wrapperLamdba);
     }
 

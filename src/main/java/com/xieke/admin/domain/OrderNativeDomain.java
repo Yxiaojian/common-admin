@@ -137,5 +137,10 @@ public class OrderNativeDomain implements OrderDomain {
         return BeanUtil.convertList(orderService.findByDate(start, end), OrderBo.class);
     }
 
+    @Override
+    public List<OrderBo> findByClassId(Integer classId) {
+        return BeanUtil.convertList(orderService.findByClassId(classId), OrderBo.class);
+    }
+
 
 }

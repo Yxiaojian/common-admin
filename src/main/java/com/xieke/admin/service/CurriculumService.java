@@ -76,7 +76,7 @@ public class CurriculumService {
         return curriculumMapper.update(curriculum, wrapper) > 0;
     }
 
-    public IPage<Curriculum> findPage(Integer pageIndex, Integer pageSize, Integer semester, Integer date, Integer year, Integer grade,String curriculumName) {
+    public IPage<Curriculum> findPage(Integer pageIndex, Integer pageSize, Integer semester, Integer date, Integer year, Integer grade, String curriculumName) {
         Page<Curriculum> objectPage = new Page<>(pageIndex, pageSize);
         QueryWrapper<Curriculum> wrapper = new QueryWrapper<>();
         LambdaQueryWrapper<Curriculum> wrapperLamdba = wrapper.lambda();
@@ -93,10 +93,22 @@ public class CurriculumService {
             wrapperLamdba.eq(Curriculum::getGrade, grade);
         }
         if (curriculumName != null) {
-            wrapperLamdba.like(Curriculum::getCurriculumName,curriculumName);
+            wrapperLamdba.like(Curriculum::getCurriculumName, curriculumName);
         }
         wrapperLamdba.eq(Curriculum::getDeleteStatus, 0);
         return curriculumMapper.selectPage(objectPage, wrapperLamdba);
+    }
+
+    public List<Curriculum> findBySemesterAndYear(Integer semester, Integer year) {
+        QueryWrapper<Curriculum> queryWrapper = new QueryWrapper<>();
+        LambdaQueryWrapper<Curriculum> wrapper = queryWrapper.lambda();
+        if (semester != null) {
+            wrapper.eq(Curriculum::getSemester, semester);
+        }
+        if (year != null) {
+            wrapper.eq(Curriculum::getYear, year);
+        }
+        return curriculumMapper.selectList(wrapper);
     }
 
 }

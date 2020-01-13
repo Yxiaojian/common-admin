@@ -64,6 +64,7 @@
 					} else {
 						layer.msg("保存成功！");
 					}
+					parent.reloadScoreList();
 					setTimeout('parent.layer.close(parent.layer.getFrameIndex(window.name))', 500);
 				} else {
 					layer.msg(res.msg);

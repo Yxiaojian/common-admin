@@ -257,23 +257,18 @@
 						body.find("#score").val(data.score);
 					}
 
-					setTimeout(function(){
-						layui.layer.tips('点击此处返回学生列表', '.layui-layer-setwin .layui-layer-close', {
-							tips: 3
-						});
-					},500)
-				},
-				end : function () {
+				}
+				/*end : function () {
 					//scoreTable.reload();
 					scoreListReload();
-				}
+				}*/
 			})
 		}
 		function scoreDelete(data) {
 			alert("scoreDelete");
 		}
 
-		var classId;
+		var classId = -1;
 		function findClassByStudentId() {
 			$("#classesSselectId").html('');
 			$.post("/classes/findUsedClass", {studentId: studentId}, function (res) {
@@ -313,6 +308,10 @@
 			});
 
 		});
+
+		window.reloadScoreList = function () {
+			scoreListReload();
+		}
 
 
 

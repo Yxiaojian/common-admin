@@ -11,6 +11,10 @@ jQuery.validator.addMethod("decimalsValue",function(value, element) {
 	var decimalsValue =/^(?!0+(?:\.0+)?$)(?:[1-9]\d*|0)(?:\.\d{1,2})?$/ ;
 	return this.optional(element) || (decimalsValue.test(value));
 }, "金额必须大于0并且只能精确到分");
+jQuery.validator.addMethod("phone",function(value, element) {
+	var phone =/^[1]([3-9])[0-9]{9}$/ ;
+	return this.optional(element) || (phone.test(value));
+}, "*请输入正确的手机号");
 jQuery.extend(jQuery.validator.messages, {
 	  required: "*必填",
 	  remote: "*已存在",

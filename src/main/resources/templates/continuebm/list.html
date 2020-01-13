@@ -300,7 +300,7 @@
 			layui.layer.open({
 					title : "收费流水",
 					type : 1,
-					area : ["950px","330px"],
+					area : ["858px","330px"],
 					content : $('#openPayRedord'),
 					success : function(layero, index){
 						 table.render({
@@ -317,16 +317,16 @@
 							},
 							cols : [[
 								//{type: "checkbox", fixed:"left", width:50},
-								{field: 'orderNo', title: '订单号', minWidth:80, align:'center', sort: true},
-								{field: 'payType', title: '支付方式', width:100, align:'center', sort: true, templet: function (d) {
+								{field: 'orderNo', title: '订单号', width:120, align:'center', sort: true},
+								{field: 'payType', title: '支付方式', width:120, align:'center', sort: true, templet: function (d) {
 										return getPayType(d.payType);
 									}},
-								{field: 'payAmount', title: '付款金额', width:100, align:'center', sort: true},
-								{field: 'toller', title: '收费人', minWidth:80, align:'center', sort: true},
-								{field: 'recordType', title: '类型', width:70, align:'center', sort: true, templet: function (d) {
+								{field: 'payAmount', title: '付款金额', width:120, align:'center', sort: true},
+								{field: 'toller', title: '收费人', width:130, align:'center', sort: true},
+								{field: 'recordType', title: '类型', width:90, align:'center', sort: true, templet: function (d) {
 										return getRecordType(d.recordType);
 									}},
-								{field: 'createTime', title: '创建时间', minWidth:170, align:'center', sort: true},
+								{field: 'createTime', title: '创建时间', width:170, align:'center', sort: true},
 								{field: 'remark', title: '备注', width:100, align:'center', sort: true}
 
 							]]

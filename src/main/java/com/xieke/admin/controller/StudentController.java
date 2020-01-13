@@ -88,7 +88,7 @@ public class StudentController {
     @ResponseBody
     public ResultInfo findExportList(Integer classId) {
         List<StudentExportVo> studentExportVos = this.findStudentExportVos(classId);
-        return new ResultInfo(studentExportVos);
+        return new ResultInfo("", "0", studentExportVos, new Long(studentExportVos.size()).intValue());
     }
 
     @RequestMapping("/exportList")

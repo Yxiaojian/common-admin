@@ -159,13 +159,14 @@
 		function reloadTeacher() {
 			$("#selectTeacher").html("");
 			$("#selectTeacher").append("<option value=''>请选择老师</option>");
+			form.render('select');//重新渲染
 			if (year != "" && semester != "" && curriculumId != "") {
 				$.post("/classes/findByCurriculumId", {curriculumId :curriculumId},function(data){
 					var t = 0;
 					var resourceTypeList = data.data;
 					resourceTypeList.forEach(function(e){
 						t++;
-						$("#selectTeacher").append("<option value='"+e.teacherID+"'>"+e.teacherName+"</option>");
+						$("#selectTeacher").append("<option value='"+e.id+"'>"+e.teacherName+"</option>");
 					});
 
 					form.render('select');//重新渲染
@@ -209,7 +210,8 @@
 		});
 
 		$(".js_export").on("click", function () {
-			var classId = $("#selectClass").val();
+			//selectTeacher id为 classId
+			var classId = $("#selectTeacher").val();
 			//导出
 			window.location.href="/student/exportList?classId=" + classId;
 		});

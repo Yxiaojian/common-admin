@@ -18,15 +18,43 @@
 		<form class="layui-form">
 			<div class="layui-inline">
 				<div class="layui-input-inline">
-					<select class="available" id="teacherIDSelect" lay-filter="teacherIDSelect" name="teacher"
+					<select class="available" id="selectYear" lay-filter="selectYear" name="year"
 							lay-verify="required" lay-search=""><i class="layui-edge"></i>
-						<option value="">请选择老师</option>
+						<option value="">请选择学年</option>
+						<option value="2019">2019年</option>
+						<option value="2020">2020年</option>
+						<option value="2021">2021年</option>
+						<option value="2022">2022年</option>
+						<option value="2023">2023年</option>
+						<option value="2024">2024年</option>
+						<option value="2025">2025年</option>
+						<option value="2026">2026年</option>
+						<option value="2027">2027年</option>
+						<option value="2028">2028年</option>
+						<option value="2029">2029年</option>
+						<option value="2030">2030年</option>
 					</select>
 				</div>
 				<div class="layui-input-inline">
-					<select class="available" id="selectClass" lay-filter="selectClass" name="classId"
+					<select class="available" id="selectSemester" lay-filter="selectSemester" name="semester"
 							lay-verify="required" lay-search=""><i class="layui-edge"></i>
-						<option value="">请选择班级</option>
+						<option value="">请选择学期</option>
+						<option value="0">春季</option>
+						<option value="1">秋季</option>
+						<option value="2">暑假</option>
+						<option value="3">寒假</option>
+					</select>
+				</div>
+				<div class="layui-input-inline">
+					<select class="available" id="selectCurriculum" lay-filter="selectCurriculum" name="curriculum"
+							lay-verify="required" lay-search=""><i class="layui-edge"></i>
+						<option value="">请选择课程</option>
+					</select>
+				</div>
+				<div class="layui-input-inline">
+					<select class="available" id="selectTeacher" lay-filter="selectTeacher" name="teacher"
+							lay-verify="required" lay-search=""><i class="layui-edge"></i>
+						<option value="">请选择老师</option>
 					</select>
 				</div>
 				<div class="layui-inline">
@@ -63,26 +91,37 @@
 			});
 		});
 
-		form.on('select(teacherIDSelect)', function(data){
-		    console.log(data.value)
+		var year = "";
+		var semester = "";
+		var curriculumId = "";
+		form.on('select(selectYear)', function(data){
+			year = data.value;
 			if (data.value == "") {
 				tableIns.reload();
 			}
-			$("#selectClass").html("")
-			$("#selectClass").append("<option value=''>请选择班级</option>")
-			$.post("/classes/findByTeacherId", {teacherId : data.value},function(data){
-				var t = 0;
-				var resourceTypeList = data.data;
-				resourceTypeList.forEach(function(e){
-					t++;
-					$("#selectClass").append("<option value='"+e.id+"'>"+e.className+"</option>");
-				});
-
-				form.render('select');//重新渲染
-			});
+			reloadCurriculum();
+			reloadTeacher();
 		});
 
-		form.on('select(selectClass)', function (data) {
+
+		form.on('select(selectSemester)', function(data){
+			semester = data.value;
+			if (data.value == "") {
+				tableIns.reload();
+			}
+			reloadCurriculum();
+			reloadTeacher();
+		});
+
+		form.on('select(selectCurriculum)', function(data){
+			curriculumId = data.value;
+			if (data.value == "") {
+				tableIns.reload();
+			}
+			reloadTeacher();
+		});
+
+		form.on('select(selectTeacher)', function(data){
 			var classId = data.value;
 			table.reload("studentList",{
 				page: {
@@ -93,6 +132,46 @@
 				}
 			})
 		});
+
+		/**
+		 * 重新加载课程
+		 */
+		function reloadCurriculum() {
+			$("#selectCurriculum").html("");
+			$("#selectCurriculum").append("<option value=''>请选择课程</option>");
+			if (year != "" && semester != "") {
+				$.post("/curriculum/findBySemesterAndYear", {semester : semester, year : year},function(data){
+					var t = 0;
+					var resourceTypeList = data.data;
+					resourceTypeList.forEach(function(e){
+						t++;
+						$("#selectCurriculum").append("<option value='"+e.id+"'>"+e.curriculumName+"</option>");
+					});
+
+					form.render('select');//重新渲染
+				});
+			}
+		}
+
+		/**
+		 * 重新加载老师
+		 */
+		function reloadTeacher() {
+			$("#selectTeacher").html("");
+			$("#selectTeacher").append("<option value=''>请选择老师</option>");
+			if (year != "" && semester != "" && curriculumId != "") {
+				$.post("/classes/findByCurriculumId", {curriculumId :curriculumId},function(data){
+					var t = 0;
+					var resourceTypeList = data.data;
+					resourceTypeList.forEach(function(e){
+						t++;
+						$("#selectTeacher").append("<option value='"+e.teacherID+"'>"+e.teacherName+"</option>");
+					});
+
+					form.render('select');//重新渲染
+				});
+			}
+		}
 
 		//学生列表
 		var tableIns =

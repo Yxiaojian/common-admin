@@ -48,4 +48,5 @@ public interface CurriculumDomain {
 
     HtPage<CurriculumBo> findPage(Integer pageIndex, Integer pageSize, Integer semester, Integer date, Integer year, Integer grade, String curriculumName);
 
+    List<CurriculumBo> findBySemesterAndYear(Integer semester, Integer year);
 }

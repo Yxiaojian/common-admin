@@ -136,4 +136,11 @@ public class ClassesController {
         return new ResultInfo(classesBoList);
     }
 
+    @RequestMapping("/findByCurriculumId")
+    @ResponseBody
+    public ResultInfo findByCurriculumId(Integer curriculumId) {
+        List<ClassesBo> classesBoList = classesDomain.findByCurriculumId(curriculumId);
+        return new ResultInfo(classesBoList);
+    }
+
 }

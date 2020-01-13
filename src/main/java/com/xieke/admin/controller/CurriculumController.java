@@ -21,7 +21,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/curriculum")
 @RequiresPermissions("curriculum:list")
-public class CurriculumController  extends BaseController {
+public class CurriculumController extends BaseController {
     @Resource
     private CurriculumDomain curriculumDomain;
 
@@ -30,7 +30,7 @@ public class CurriculumController  extends BaseController {
 
 
     @RequestMapping("/*")
-    public void toHtml(){
+    public void toHtml() {
 
     }
 
@@ -50,7 +50,7 @@ public class CurriculumController  extends BaseController {
         if (idArr == null) {
             return new ResultInfo<>("课程ID不能为空");
         }
-        for (Integer curriculumId:idArr) {
+        for (Integer curriculumId : idArr) {
             if (!curriculumDomain.softDelete(curriculumId)) {
 
             }
@@ -61,7 +61,7 @@ public class CurriculumController  extends BaseController {
 
     @RequestMapping("/selectListData")
     @ResponseBody
-    public ResultInfo<List<CurriculumBo>> selectListData(){
+    public ResultInfo<List<CurriculumBo>> selectListData() {
         List<CurriculumBo> list = curriculumDomain.findAll();
         return new ResultInfo<>(list);
     }
@@ -69,7 +69,7 @@ public class CurriculumController  extends BaseController {
 
     @RequestMapping("/findById")
     @ResponseBody
-    public ResultInfo<CurriculumBo> findById(Integer id){
+    public ResultInfo<CurriculumBo> findById(Integer id) {
         CurriculumBo curriculumBo = curriculumDomain.get(id);
         Integer count = orderDomain.getCountByCurriculumId(id);
         curriculumBo.setAppliedCount(count);
@@ -80,11 +80,16 @@ public class CurriculumController  extends BaseController {
     @ResponseBody
     public ResultInfo findPage(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "limit", defaultValue = "20") Integer limit, Integer semester, Integer date, Integer year, Integer grade, String curriculumName) {
         HtPage<CurriculumBo> htPage = curriculumDomain.findPage(page, limit, semester, date, year, grade, curriculumName);
-        return new ResultInfo("","0",htPage.getRecords(),new Long (htPage.getTotal()).intValue());
+        return new ResultInfo("", "0", htPage.getRecords(), new Long(htPage.getTotal()).intValue());
 
     }
 
-
+    @RequestMapping("/findBySemesterAndYear")
+    @ResponseBody
+    public ResultInfo findBySemesterAndYear(Integer semester, Integer year) {
+        List<CurriculumBo> curriculumBos = curriculumDomain.findBySemesterAndYear(semester, year);
+        return new ResultInfo(curriculumBos);
+    }
 
 
 }

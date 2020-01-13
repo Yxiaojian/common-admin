@@ -130,5 +130,13 @@ public class ClassesService {
         return classesMapper.selectList(wrapperLamdba);
     }
 
+    public List<Classes> findByCurriculumId(Integer curriculumId) {
+        QueryWrapper<Classes> wrapper = new QueryWrapper<>();
+        LambdaQueryWrapper<Classes> wrapperLamdba = wrapper.lambda();
+        if (curriculumId != null) {
+            wrapperLamdba.eq(Classes::getCurriculumID, curriculumId);
+        }
+        return classesMapper.selectList(wrapperLamdba);
+    }
 
 }

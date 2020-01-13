@@ -50,4 +50,6 @@ public interface ClassesDomain {
     Boolean update(Integer classesId, Integer curriculumID, String className, Integer teacherID, String teacherName, Integer assistantTeacherID, String assistantTeacherName, Integer classType, Integer classLevel);
 
     List<ClassesBo> findByTeacherId(Integer teacherId);
+
+    List<ClassesBo> findByCurriculumId(Integer curriculumId);
 }

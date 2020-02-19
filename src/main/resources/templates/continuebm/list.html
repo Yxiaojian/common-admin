@@ -98,7 +98,8 @@
 					}},
 				{field: 'orderStatus', title: '订单状态', minWidth:100, align:'center', sort: true ,templet:function(d){
 						return getOrderStatus(d.orderStatus);
-					}}
+					}},
+				{field: 'createTime', title: '创建时间', width:170, align:'center', sort: true}
 				,{fixed: 'right', title:'操作', toolbar: '#opbar', width:350}
 			]]
 		});

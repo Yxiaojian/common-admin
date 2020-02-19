@@ -124,8 +124,8 @@ public class ClassesController {
 
     @RequestMapping("/findPage")
     @ResponseBody
-    public ResultInfo findPage(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "limit", defaultValue = "20") Integer limit, String className) {
-        HtPage<ClassesBo> htPage = classesDomain.findPage(page, limit, className == null ? null : className.trim());
+    public ResultInfo findPage(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "limit", defaultValue = "20") Integer limit, String className, String teacherName) {
+        HtPage<ClassesBo> htPage = classesDomain.findPage(page, limit, className == null ? null : className.trim(), teacherName);
         return new ResultInfo("", "0", htPage.getRecords(), new Long(htPage.getTotal()).intValue());
     }
 

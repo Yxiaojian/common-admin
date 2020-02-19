@@ -110,13 +110,16 @@ public class ClassesService {
         return classesMapper.updateById(classes) > 0;
     }
 
-    public IPage<Classes> findPage(Integer pageIndex, Integer pageSize, String className) {
+    public IPage<Classes> findPage(Integer pageIndex, Integer pageSize, String className, String teacherName) {
         Page<Classes> objectPage = new Page<>(pageIndex, pageSize);
         QueryWrapper<Classes> wrapper = new QueryWrapper<>();
         LambdaQueryWrapper<Classes> wrapperLamdba = wrapper.lambda();
         wrapperLamdba.eq(Classes::getDeleteStatus, 0);
         if (className != null) {
             wrapperLamdba.like(Classes::getClassName, className);
+        }
+        if (teacherName != null) {
+            wrapperLamdba.like(Classes::getTeacherName, teacherName);
         }
         return classesMapper.selectPage(objectPage, wrapperLamdba);
     }

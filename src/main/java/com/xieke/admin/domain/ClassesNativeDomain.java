@@ -47,8 +47,8 @@ public class ClassesNativeDomain implements ClassesDomain {
     }
 
     @Override
-    public HtPage<ClassesBo> findPage(Integer pageIndex, Integer pageSize, String className) {
-        HtPage<Classes> htPage = new HtPage<>(classesService.findPage(pageIndex, pageSize, className));
+    public HtPage<ClassesBo> findPage(Integer pageIndex, Integer pageSize, String className, String teacherName) {
+        HtPage<Classes> htPage = new HtPage<>(classesService.findPage(pageIndex, pageSize, className, teacherName));
         return BeanUtil.convertPage(htPage, ClassesBo.class);
     }
 

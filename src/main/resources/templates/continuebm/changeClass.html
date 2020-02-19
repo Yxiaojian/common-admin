@@ -157,26 +157,6 @@
         });
 
 
-        form.on('select(semesterSelect)', function (data) {
-            var options = "";
-            if (data.value == 0 || data.value == 1) {
-                options += "<option value=\"1\">一期</option>\n" +
-                    "\t\t\t\t<option value=\"2\">二期</option>\n" +
-                    "\t\t\t\t<option value=\"3\">三期</option>\n" +
-                    "\t\t\t\t<option value=\"4\">四期</option>\n" +
-                    "\t\t\t\t<option value=\"5\">特殊</option>";
-            } else {
-                options += "<option value=\"6\">周一</option>\n" +
-                    "\t\t\t\t<option value=\"7\">周二</option>\n" +
-                    "\t\t\t\t<option value=\"8\">周三</option>\n" +
-                    "\t\t\t\t<option value=\"9\">周四</option>\n" +
-                    "\t\t\t\t<option value=\"10\">周五</option>\n" +
-                    "\t\t\t\t<option value=\"11\">周六</option>\n" +
-                    "\t\t\t\t<option value=\"12\">周日</option>";
-            }
-            $("#dateSelect").html(options);
-            form.render("select")
-        });
         form.verify({
             money: function (val, item) {
                 if (!/^\d+(\.\d{0,2})?$/.test(val)) {
@@ -207,6 +187,8 @@
                 $(".js_orderGrade").html(curi.data.curriculumName);
                 //课程名
                 $("#curriculumName").val(curi.data.curriculumName);
+                //人数
+                $("#stuCount").html(curi.data.appliedCount);
             });
         }
 

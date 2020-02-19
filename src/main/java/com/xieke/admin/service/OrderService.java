@@ -91,6 +91,7 @@ public class OrderService {
         if (orderStatus != null) {
             wrapperLamdba.eq(Order::getOrderStatus, orderStatus);
         }
+        wrapperLamdba.orderByAsc(Order::getCreateTime);
         return orderMapper.selectPage(objectPage, wrapperLamdba);
     }
 

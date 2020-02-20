@@ -79,6 +79,11 @@ public class ClassesBo implements Serializable {
     private Date createTime;
 
     /**
+     * 已报名人数
+     */
+    private Integer appliedCount;
+
+    /**
      * 备注
      */
     private String remark;

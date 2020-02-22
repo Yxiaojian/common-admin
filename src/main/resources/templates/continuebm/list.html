@@ -200,15 +200,19 @@
 			studentId = eData.studentID;
 			//var title = "转班";
 			/*var indexNow = */
+			var h = "570px";
+			if (title == '续报') {
+				h = "610px"
+			}
 				layui.layer.open({
 				title : title,
 				type : 2,
-				area: ['460px', '570px'],
+				area: ['460px', h],
 				content : "changeClass.html",
 				maxmin: true,
 				success : function(layero, index){
 					var body = layui.layer.getChildFrame('body', index);
-					//续报不带orderId
+					//续报不带
 					if (title == '转班') {
 						body.find("#orderId").val(eData.id);
 						//课程Id

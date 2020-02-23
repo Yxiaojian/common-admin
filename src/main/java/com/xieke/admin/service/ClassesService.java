@@ -139,6 +139,7 @@ public class ClassesService {
         if (curriculumId != null) {
             wrapperLamdba.eq(Classes::getCurriculumID, curriculumId);
         }
+        wrapperLamdba.eq(Classes::getDeleteStatus, 0);
         return classesMapper.selectList(wrapperLamdba);
     }
 

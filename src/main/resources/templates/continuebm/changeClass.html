@@ -34,6 +34,14 @@
     <!--班级-->
     <!--合计-->
     <!--优惠-->
+    <div id="courseSelectDivId" class="layui-form-item hidden">
+        <label class="layui-form-label">选择课程</label>
+        <div class="layui-input-block">
+            <select class="classes" id="courseSelectId" lay-filter="courseSelectId" name="stuCourse" lay-verify="required" lay-search="">
+            </select>
+        </div>
+    </div>
+
     <div class="layui-form-item" style="margin-bottom: 0px;">
         <label class="layui-form-label">选择班级</label>
         <div class="layui-input-block">
@@ -140,21 +148,80 @@
             $ = layui.jquery;
 
         var studentId = parent.getStudentId.getStudentId();
+
+        var isChangeClass = false;
         //查找未加入班级增加课程Id 参数
         var curriculumID = $("#curriculumID").val();
-        $.post("/classes/findNotUsedClass",{studentId : studentId, curriculumId : curriculumID}, function (data) {
-            var t = 0;
-            classList = data.data;
+        if (curriculumID != null && curriculumID != undefined  && curriculumID !="") {
+            //是转班
+            isChangeClass = true;
+        }
 
-            classList.forEach(function (e) {
-                if (t == 0) {
-                    initClassInfo(e);
-                }
-                t++;
-                $("#classesSselectId").append("<option value='" + e.id + "'>" + e.className + "</option>");
+        var courseList;
+        var classList;
+
+        if (!isChangeClass) {
+            $("#courseSelectDivId").removeClass("hidden");
+            //查询课程
+            $.post("/curriculum/selectListData", function (data) {
+                courseList = data.data;
+                var initClass = 0;
+                courseList.forEach(function (e) {
+                    $("#courseSelectId").append("<option value='" + e.id + "'>" + e.curriculumName + "</option>");
+                    if (initClass == 0) {
+                        findByCurriculumId(e.id);
+                    }
+                });
+                form.render('select');//重新渲染
             });
-            form.render('select');//重新渲染
+        }
+
+        //查询班级
+        form.on('select(courseSelectId)', function (data) {
+            findByCurriculumId(data.value);
         });
+
+        //获取classList
+        function findByCurriculumId(curriculumId){
+            $.post("/classes/findByCurriculumId",{curriculumId: curriculumId}, function (data) {
+                //先清空
+                $("#classesSselectId").html("");
+                var t = 0;
+                classList = data.data;
+                classList.forEach(function (e) {
+                    if (t == 0) {
+                        findNotUsedClass(e);
+                    }
+                    t++;
+                    $("#classesSselectId").append("<option value='" + e.id + "'>" + e.className + "</option>");
+                });
+                if (t == 0) {
+                    clearClassInfo();
+                }
+                form.render('select');//重新渲染
+            });
+        }
+
+        if (isChangeClass) {
+            findNotUsedClass();
+        }
+
+        function findNotUsedClass() {
+            $.post("/classes/findNotUsedClass",{studentId : studentId, curriculumId : curriculumID}, function (data) {
+                var t = 0;
+                classList = data.data;
+
+                classList.forEach(function (e) {
+                    if (t == 0) {
+                        initClassInfo(e);
+                    }
+                    t++;
+                    $("#classesSselectId").append("<option value='" + e.id + "'>" + e.className + "</option>");
+                });
+                form.render('select');//重新渲染
+            });
+        }
+
 
 
         form.verify({
@@ -190,6 +257,24 @@
                 //人数
                 $("#stuCount").html(curi.data.appliedCount);
             });
+        }
+
+        function clearClassInfo() {
+            //班型
+            $("#gradeType").html("");
+            $(".js_orderClassName").html("");
+            $("#classesId").val(-1);
+            $("#grade").html("");
+            $("#curriculumId").val("");
+            //类型
+            $("#classType").html("");
+            $("#kcfee").html("");
+            $(".js_orderAllNeedPay").html("");
+            $("#noPay").html("");
+            $(".js_orderGrade").html("");
+            //人数
+            $("#stuCount").html("");
+
         }
 
         form.on('select(classesSselectId)', function (data) {

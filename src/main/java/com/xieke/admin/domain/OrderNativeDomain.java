@@ -1,5 +1,6 @@
 package com.xieke.admin.domain;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.xieke.admin.bo.OrderBo;
 import com.xieke.admin.bo.PayRecordBo;
 import com.xieke.admin.enums.OrderStatus;
@@ -117,6 +118,11 @@ public class OrderNativeDomain implements OrderDomain {
     }
 
     @Override
+    public Integer getCountByClassId(Integer classId) {
+        return orderService.getCountByClassId(classId);
+    }
+
+    @Override
     public List<OrderBo> findByYearAndSemester(Integer year, Integer semester) {
         return BeanUtil.convertList(orderService.findByYearAndSemester(year, semester), OrderBo.class);
     }
@@ -140,6 +146,12 @@ public class OrderNativeDomain implements OrderDomain {
     @Override
     public List<OrderBo> findByClassId(Integer classId) {
         return BeanUtil.convertList(orderService.findByClassId(classId), OrderBo.class);
+    }
+
+    @Override
+    public HtPage<OrderBo> findPageByClassId(Integer page, Integer limit, Integer classId) {
+        HtPage<Order> htPage = new HtPage<>(orderService.findPageByClassId(page, limit, classId));
+        return BeanUtil.convertPage(htPage, OrderBo.class);
     }
 
 

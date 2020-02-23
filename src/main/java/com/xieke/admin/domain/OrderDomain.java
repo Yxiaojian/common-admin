@@ -2,8 +2,6 @@ package com.xieke.admin.domain;
 
 import com.xieke.admin.bo.OrderBo;
 import com.xieke.admin.page.HtPage;
-
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -56,6 +54,8 @@ public interface OrderDomain {
 
     Integer getCountByCurriculumId(Integer curriculumId);
 
+    Integer getCountByClassId(Integer classId);
+
     List<OrderBo> findByYearAndSemester(Integer year, Integer semester);
 
     HtPage<OrderBo> findPageByYearAndSemester(Integer pageIndex, Integer pageSize, Integer year, Integer semester);
@@ -65,4 +65,6 @@ public interface OrderDomain {
     List<OrderBo> findByDate(Date start, Date end);
 
     List<OrderBo> findByClassId(Integer classId);
+
+    HtPage<OrderBo> findPageByClassId(Integer page, Integer limit, Integer classId);
 }

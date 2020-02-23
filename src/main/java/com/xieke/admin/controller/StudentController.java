@@ -151,6 +151,13 @@ public class StudentController {
         return studentExportVos;
     }
 
+    @RequestMapping("/findByClassId")
+    @ResponseBody
+    public ResultInfo findByClassId(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "limit", defaultValue = "20") Integer limit, Integer classId) {
+        HtPage<OrderBo> htPage = orderDomain.findPageByClassId(page, limit, classId);
+        return new ResultInfo("", "0", htPage.getRecords(), new Long(htPage.getTotal()).intValue());
+    }
+
 
     @RequestMapping("/home")
     public void toHome() {

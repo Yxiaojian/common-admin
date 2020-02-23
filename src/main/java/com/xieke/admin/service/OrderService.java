@@ -123,11 +123,30 @@ public class OrderService {
         return orderMapper.selectOne(wrapperLamdba);
     }
 
+    /**
+     * 课程已有人数
+     * @param curriculumId
+     * @return
+     */
     public Integer getCountByCurriculumId(Integer curriculumId) {
         QueryWrapper<Order> wrapper = new QueryWrapper<>();
         LambdaQueryWrapper<Order> wrapperLamdba = wrapper.lambda();
         if (curriculumId != null) {
             wrapperLamdba.eq(Order::getCurriculumID, curriculumId);
+        }
+        return orderMapper.selectCount(wrapperLamdba);
+    }
+
+    /**
+     * 班级已有人数
+     * @param classId
+     * @return
+     */
+    public Integer getCountByClassId(Integer classId) {
+        QueryWrapper<Order> wrapper = new QueryWrapper<>();
+        LambdaQueryWrapper<Order> wrapperLamdba = wrapper.lambda();
+        if (classId != null) {
+            wrapperLamdba.eq(Order::getClassID, classId);
         }
         return orderMapper.selectCount(wrapperLamdba);
     }
@@ -183,4 +202,13 @@ public class OrderService {
         return orderMapper.selectList(wrapperLamdba);
     }
 
+    public IPage<Order> findPageByClassId(Integer pageIndex, Integer pageSize, Integer classId) {
+        Page<Order> objectPage = new Page<>(pageIndex, pageSize);
+        QueryWrapper<Order> wrapper = new QueryWrapper<>();
+        LambdaQueryWrapper<Order> wrapperLamdba = wrapper.lambda();
+        if (classId != null) {
+            wrapperLamdba.eq(Order::getClassID, classId);
+        }
+        return orderMapper.selectPage(objectPage, wrapperLamdba);
+    }
 }

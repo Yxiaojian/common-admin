@@ -435,7 +435,6 @@
                     $("#preferential").val("0");
                 }
             });
-
         });
 
         form.on('select(js_gradeSel)', function (data) {
@@ -461,8 +460,16 @@
                 $("#noPay").html(curi.data.price);
                 $(".js_orderGrade").html(curi.data.curriculumName);
                 //人数
-                $("#stuCount").html(curi.data.appliedCount);
+                //$("#stuCount").html(curi.data.appliedCount);
+            });
+            //人数
+            getClassCount(data.id);
+        }
 
+        function getClassCount(classId) {
+            $.post("/classes/getCountByClassId",{classId : classId}, function (eData) {
+                //人数
+                $("#stuCount").html(eData.data);
             });
         }
 

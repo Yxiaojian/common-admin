@@ -127,7 +127,7 @@ public class ClassesController {
     public ResultInfo findPage(@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "limit", defaultValue = "20") Integer limit, String className, String teacherName) {
         HtPage<ClassesBo> htPage = classesDomain.findPage(page, limit, className == null ? null : className.trim(), teacherName);
         htPage.getRecords().forEach(c -> {
-            c.setAppliedCount(orderDomain.getCountByCurriculumId(c.getCurriculumID()));
+            c.setAppliedCount(orderDomain.getCountByClassId(c.getID()));
         });
         return new ResultInfo("", "0", htPage.getRecords(), new Long(htPage.getTotal()).intValue());
     }
@@ -144,6 +144,12 @@ public class ClassesController {
     public ResultInfo findByCurriculumId(Integer curriculumId) {
         List<ClassesBo> classesBoList = classesDomain.findByCurriculumId(curriculumId);
         return new ResultInfo(classesBoList);
+    }
+
+    @RequestMapping("/getCountByClassId")
+    @ResponseBody
+    public ResultInfo getCountByClassId(Integer classId) {
+        return new ResultInfo(orderDomain.getCountByClassId(classId));
     }
 
 }

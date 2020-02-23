@@ -45,6 +45,10 @@
 	<div id="openTestList" style="display: none">
 		<table id="testList" lay-filter="testList"></table>
 	</div>
+	<table id="stuTableList" lay-filter="stuTableList"></table>
+	<div id="openStuList" style="display: none">
+		<table id="stuList" lay-filter="stuList"></table>
+	</div>
 </form>
 <script type="text/html" id="opbar">
 	<a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="seeStudent">查看学员</a>
@@ -346,25 +350,24 @@
 				title : title,
 				type : 1,
 				area : ["420px","330px"],
-				content : $('#openTestList'),
+				content : $('#openStuList'),
 				success : function(layero, index){
 					testTable = table.render({
-						elem: '#testList',
-						url : '/test/findByClassId',
+						elem: '#stuList',
+						url : '/student/findByClassId',
 						cellMinWidth : 115,
 						page : true,
 						height : 282,
 						limits : [5,10,15],
 						limit : 5,
-						id : "testList",
+						id : "stuList",
 						where: {
 							classId : data.id
 						},
 						cols : [[
 							//{type: "checkbox", fixed:"left", width:50},
-							{field: 'testName', title: '考试名称', minWidth:100, align:'center'},
-							{field: 'remark', title: '备注', minWidth:100, align:'center'},
-							{fixed: 'right', title:'操作', toolbar: '#opbarTest', align:'center', minWidth:20}
+							{field: 'studentName', title: '姓名', minWidth:100, align:'center'},
+							{field: 'phoneOne', title: '联系方式', minWidth:100, align:'center'},
 						]]
 					});
 

@@ -113,11 +113,11 @@ public class ClassesController {
 
     @RequestMapping("/update")
     @ResponseBody
-    public ResultInfo update(Integer classesId, Integer curriculumID, String className, Integer teacherID, String teacherName, Integer assistantTeacherID, String assistantTeacherName, Integer classType, Integer classLevel) {
+    public ResultInfo update(Integer classesId, Integer curriculumID, String className, Integer teacherID, String teacherName, Integer assistantTeacherID, String assistantTeacherName, Integer classType, Integer classLevel, Integer semester, Integer date) {
         if (classesId == null) {
             return new ResultInfo<>("班级ID不能为空");
         }
-        if (!classesDomain.update(classesId, curriculumID, className, teacherID, teacherName, assistantTeacherID, assistantTeacherName, classType, classLevel)) {
+        if (!classesDomain.update(classesId, curriculumID, className, teacherID, teacherName, assistantTeacherID, assistantTeacherName, classType, classLevel, semester, date)) {
             return new ResultInfo<>("更新失败");
         }
         return new ResultInfo(true);

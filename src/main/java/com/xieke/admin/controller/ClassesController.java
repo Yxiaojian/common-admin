@@ -154,4 +154,10 @@ public class ClassesController {
         return new ResultInfo(orderDomain.getCountByClassId(classId));
     }
 
+    @RequestMapping("/getById")
+    @ResponseBody
+    public ResultInfo<ClassesBo> getById(Integer id) {
+        return new ResultInfo(classesDomain.get(id));
+    }
+
 }

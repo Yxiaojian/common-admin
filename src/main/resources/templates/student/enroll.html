@@ -476,8 +476,8 @@
             });
         }
 
-        function getClassInformation(classId) {
-            $.post("/classes/getById",{classId : classId}, function (eData) {
+        function getClassInformation(id) {
+            $.post("/classes/getById",{id : id}, function (eData) {
                 //类型 班级
                 $("#classType").html(getSeType(eData.data.semester));
             });

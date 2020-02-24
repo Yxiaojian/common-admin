@@ -259,12 +259,21 @@
             });
             //人数
             getClassCount(data.id);
+            //类型 班级
+            getClassInformation(data.id);
         }
 
         function getClassCount(classId) {
             $.post("/classes/getCountByClassId",{classId : classId}, function (eData) {
                 //人数
                 $("#stuCount").html(eData.data);
+            });
+        }
+
+        function getClassInformation(classId) {
+            $.post("/classes/getById",{classId : classId}, function (eData) {
+                //类型 班级
+                $("#classType").html(getSeType(eData.data.semester));
             });
         }
 

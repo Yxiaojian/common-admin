@@ -102,6 +102,12 @@
 				{field: 'classType', title: '班型', minWidth:100, align:'center', sort: true ,templet:function(d){
 						return getClassesType(d.classType)
 					}},
+				{field: 'semester', title: '学期', minWidth:100, align:'center', sort: true,templet:function(d){
+						return getSeType(d.semester)
+					}},
+				{field: 'date', title: '日期', minWidth:100, align:'center', sort: true,templet:function(d){
+						return getDateType(d.date);
+					}},
 				{field: 'classLevel', title: '时间', minWidth:100, align:'center', sort: true ,templet:function(d){
 						return getClassesLevel(d.classLevel)
 					}},

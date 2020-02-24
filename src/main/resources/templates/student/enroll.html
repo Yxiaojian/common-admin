@@ -454,7 +454,7 @@
                 $("#grade").html(getGradeType(curi.data.grade));
                 $("#curriculumId").val(data.curriculumID);
                 //类型
-                $("#classType").html(getSeType(curi.data.semester));
+                //
                 $("#kcfee").html(curi.data.price);
                 $(".js_orderAllNeedPay").html(curi.data.price);
                 $("#noPay").html(curi.data.price);
@@ -464,12 +464,22 @@
             });
             //人数
             getClassCount(data.id);
+            //类型 班级
+            getClassInformation(data.id);
+
         }
 
         function getClassCount(classId) {
             $.post("/classes/getCountByClassId",{classId : classId}, function (eData) {
                 //人数
                 $("#stuCount").html(eData.data);
+            });
+        }
+
+        function getClassInformation(classId) {
+            $.post("/classes/getById",{classId : classId}, function (eData) {
+                //类型 班级
+                $("#classType").html(getSeType(eData.data.semester));
             });
         }
 

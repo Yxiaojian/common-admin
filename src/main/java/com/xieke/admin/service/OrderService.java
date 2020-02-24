@@ -148,6 +148,7 @@ public class OrderService {
         if (classId != null) {
             wrapperLamdba.eq(Order::getClassID, classId);
         }
+        wrapperLamdba.ne(Order::getOrderStatus,OrderStatus.CANCEL.getValue());
         return orderMapper.selectCount(wrapperLamdba);
     }
 

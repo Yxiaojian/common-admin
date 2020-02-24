@@ -21,8 +21,8 @@
 			<input type="text" class="layui-input curriculumName" name="curriculumName" lay-verify="required" placeholder="请输入课程名称">
 		</div>
 	</div>
-
-	<div class="layui-form-item">
+<!--隐藏 学期 日期-->
+<!--	<div class="layui-form-item">
 		<label class="layui-form-label">学期</label>
 		<div class="layui-input-block">
 			<select name="semester" id="semesterSelect"  lay-filter="semesterSelect">
@@ -32,16 +32,16 @@
 				<option value="4">寒假</option>
 			</select>
 		</div>
-	</div>
-	<div class="layui-form-item ">
+	</div>-->
+<!--	<div class="layui-form-item ">
 		<label class="layui-form-label">日期</label>
 		<div class="layui-input-block">
 			<select id="dateSelect" name="date" lay-filter="dateSelect">
-				<!--<option value="1">一期</option>
+				&lt;!&ndash;<option value="1">一期</option>
 				<option value="2">二期</option>
 				<option value="3">三期</option>
 				<option value="4">四期</option>
-				<option value="5">特殊</option>-->
+				<option value="5">特殊</option>&ndash;&gt;
 				<option value="6">周一</option>
 				<option value="7">周二</option>
 				<option value="8">周三</option>
@@ -51,7 +51,7 @@
 				<option value="12">周日</option>
 			</select>
 		</div>
-	</div>
+	</div>-->
 	<div class="layui-form-item ">
 		<label class="layui-form-label">年份</label>
 		<div class="layui-input-block">
@@ -100,7 +100,7 @@
 				$ = layui.jquery;
 
 
-		form.on('select(semesterSelect)', function(data){
+/*		form.on('select(semesterSelect)', function(data){
 			var options = "";
 			//春季 和 秋季 按周
 			if (data.value == 2 || data.value == 4) {
@@ -120,7 +120,7 @@
 			}
 			$("#dateSelect").html(options);
 			form.render("select")
-		});
+		});*/
 		form.verify({
 			money: function(val, item) {
 				if(!/^\d+(\.\d{0,2})?$/.test(val)){

@@ -65,6 +65,38 @@
 			</select>
 		</div>
 	</div>
+
+	<div class="layui-form-item">
+		<label class="layui-form-label">学期</label>
+		<div class="layui-input-block">
+			<select name="semester" id="semesterSelect"  lay-filter="semesterSelect">
+				<option value="1">春季</option>
+				<option value="3">秋季</option>
+				<option value="2">暑假</option>
+				<option value="4">寒假</option>
+			</select>
+		</div>
+	</div>
+	<div class="layui-form-item ">
+		<label class="layui-form-label">日期</label>
+		<div class="layui-input-block">
+			<select id="dateSelect" name="date" lay-filter="dateSelect">
+				<!--<option value="1">一期</option>
+				<option value="2">二期</option>
+				<option value="3">三期</option>
+				<option value="4">四期</option>
+				<option value="5">特殊</option>-->
+				<option value="6">周一</option>
+				<option value="7">周二</option>
+				<option value="8">周三</option>
+				<option value="9">周四</option>
+				<option value="10">周五</option>
+				<option value="11">周六</option>
+				<option value="12">周日</option>
+			</select>
+		</div>
+	</div>
+
 	<div class="layui-form-item">
 		<label class="layui-form-label">时间档</label>
 		<div class="layui-input-block">
@@ -87,6 +119,30 @@
 		var form = layui.form
 		layer = parent.layer === undefined ? layui.layer : top.layer,
 				$ = layui.jquery;
+
+		//日期begin
+		form.on('select(semesterSelect)', function(data){
+			var options = "";
+			//春季 和 秋季 按周
+			if (data.value == 2 || data.value == 4) {
+				options += "<option value=\"1\">一期</option>\n" +
+						"\t\t\t\t<option value=\"2\">二期</option>\n" +
+						"\t\t\t\t<option value=\"3\">三期</option>\n" +
+						"\t\t\t\t<option value=\"4\">四期</option>\n" +
+						"\t\t\t\t<option value=\"5\">特殊</option>";
+			} else {
+				options += "<option value=\"6\">周一</option>\n" +
+						"\t\t\t\t<option value=\"7\">周二</option>\n" +
+						"\t\t\t\t<option value=\"8\">周三</option>\n" +
+						"\t\t\t\t<option value=\"9\">周四</option>\n" +
+						"\t\t\t\t<option value=\"10\">周五</option>\n" +
+						"\t\t\t\t<option value=\"11\">周六</option>\n" +
+						"\t\t\t\t<option value=\"12\">周日</option>";
+			}
+			$("#dateSelect").html(options);
+			form.render("select")
+		});
+		//日期end
 
 		if ($("#classTypeSelectHid").val() != "") {
 			$("#classTypeSelect").val($("#classTypeSelectHid").val());

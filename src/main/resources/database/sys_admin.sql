@@ -159,6 +159,8 @@ CREATE TABLE `t_classes`  (
   `FAssistantTeacherName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '助教老师姓名',
   `FClassType` int(11) DEFAULT NULL COMMENT '班型',
   `FClassLevel` int(11) DEFAULT NULL COMMENT '时间档',
+  `FSemester` int(11) DEFAULT NULL COMMENT '学期',
+  `FDate` int(11) DEFAULT NULL COMMENT '日期',
   `FDeleteStatus` int(1) DEFAULT NULL COMMENT '是否已删除',
   `FCreateTime` datetime(0) DEFAULT NULL COMMENT '创建时间',
   `FRemark` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '备注',

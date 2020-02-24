@@ -68,6 +68,16 @@ public class ClassesBo implements Serializable {
     private Integer classLevel;
 
     /**
+     * 学期
+     */
+    private Integer semester;
+
+    /**
+     * 日期
+     */
+    private Integer date;
+
+    /**
      * 是否已删除
      */
     private Integer deleteStatus;

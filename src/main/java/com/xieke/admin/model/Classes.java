@@ -76,6 +76,18 @@ public class Classes implements Serializable {
     private Integer classLevel;
 
     /**
+     * 学期
+     */
+    @TableField("FSemester")
+    private Integer semester;
+
+    /**
+     * 日期
+     */
+    @TableField("FDate")
+    private Integer date;
+
+    /**
      * 是否已删除
      */
     @TableField("FDeleteStatus")

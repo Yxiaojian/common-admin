@@ -190,10 +190,10 @@
                 classList = data.data;
                 classList.forEach(function (e) {
                     if (t == 0) {
-                        findNotUsedClass(e);
+                        initClassInfo(e);
                     }
-                    t++;
                     $("#classesSselectId").append("<option value='" + e.id + "'>" + e.className + "</option>");
+                    t++;
                 });
                 if (t == 0) {
                     clearClassInfo();
@@ -202,12 +202,15 @@
             });
         }
 
+        //转班
         if (isChangeClass) {
             findNotUsedClass();
         }
 
         function findNotUsedClass() {
             $.post("/classes/findNotUsedClass",{studentId : studentId, curriculumId : curriculumID}, function (data) {
+                //先清空
+                $("#classesSselectId").html("");
                 var t = 0;
                 classList = data.data;
 

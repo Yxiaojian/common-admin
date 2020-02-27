@@ -77,7 +77,7 @@ public class ClassesService {
         return classesMapper.update(classes, wrapper) > 0;
     }
 
-    public Boolean update(Integer classesId, Integer curriculumID, String className, Integer teacherID, String teacherName, Integer assistantTeacherID, String assistantTeacherName, Integer classType, Integer classLevel,Integer semester, Integer date) {
+    public Boolean update(Integer classesId, Integer curriculumID, String className, Integer teacherID, String teacherName, Integer assistantTeacherID, String assistantTeacherName, Integer classType, Integer classLevel, Integer semester, Integer date) {
         if (classesId == null) {
             return false;
         }

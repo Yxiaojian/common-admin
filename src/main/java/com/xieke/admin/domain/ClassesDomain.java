@@ -52,4 +52,5 @@ public interface ClassesDomain {
     List<ClassesBo> findByTeacherId(Integer teacherId);
 
     List<ClassesBo> findByCurriculumId(Integer curriculumId);
+
 }

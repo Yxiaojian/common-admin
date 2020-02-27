@@ -260,23 +260,17 @@
                 //人数
                 //$("#stuCount").html(curi.data.appliedCount);
             });
-            //人数
-            getClassCount(data.id);
+
             //类型 班级
             getClassInformation(data.id);
-        }
-
-        function getClassCount(classId) {
-            $.post("/classes/getCountByClassId",{classId : classId}, function (eData) {
-                //人数
-                $("#stuCount").html(eData.data);
-            });
         }
 
         function getClassInformation(id) {
             $.post("/classes/getById",{id : id}, function (eData) {
                 //类型 班级
                 $("#classType").html(getSeType(eData.data.semester));
+                //人数 appliedCount + "/" + fullCount  当前人数/总人数
+                $("#stuCount").html(eData.data.appliedCount + "/" + eData.data.fullCount);
             });
         }
 

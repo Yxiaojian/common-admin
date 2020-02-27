@@ -158,7 +158,9 @@ public class ClassesController {
     @RequestMapping("/getById")
     @ResponseBody
     public ResultInfo<ClassesBo> getById(Integer id) {
-        return new ResultInfo(classesDomain.get(id));
+        ClassesBo classesBo = classesDomain.get(id);
+        classesBo.setAppliedCount(orderDomain.getCountByClassId(id));
+        return new ResultInfo(classesBo);
     }
 
 }

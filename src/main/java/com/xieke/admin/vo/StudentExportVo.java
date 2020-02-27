@@ -95,4 +95,6 @@ public class StudentExportVo implements Serializable {
      * 历史课程
      */
     private String historyCurriculums;
+
+    private String className;
 }

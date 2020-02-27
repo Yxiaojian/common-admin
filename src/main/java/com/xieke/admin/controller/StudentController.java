@@ -1,8 +1,10 @@
 package com.xieke.admin.controller;
 
+import com.xieke.admin.bo.ClassesBo;
 import com.xieke.admin.bo.ExcelData;
 import com.xieke.admin.bo.OrderBo;
 import com.xieke.admin.bo.StudentBo;
+import com.xieke.admin.domain.ClassesDomain;
 import com.xieke.admin.domain.OrderDomain;
 import com.xieke.admin.domain.StudentDomain;
 import com.xieke.admin.dto.ResultInfo;
@@ -30,6 +32,9 @@ import java.util.List;
 public class StudentController {
     @Resource
     private StudentDomain studentDomain;
+
+    @Resource
+    private ClassesDomain classesDomain;
 
     @Resource
     private OrderDomain orderDomain;
@@ -112,6 +117,7 @@ public class StudentController {
             row.add(studentExportVo.getEntranceYear());
             row.add(studentExportVo.getRecentCurriculum());
             row.add(studentExportVo.getHistoryCurriculums());
+            row.add(studentExportVo.getClassName());
             rows.add(row);
         }
         ExcelData data = new ExcelData();
@@ -125,12 +131,14 @@ public class StudentController {
         titles.add("入学年份");
         titles.add("最近的一门课程");
         titles.add("历史课程");
+        titles.add("班级名称");
         data.setTitles(titles);
         data.setRows(rows);
         ExcelUtils.exportExcel(response, fileName, data);
     }
 
     public List<StudentExportVo> findStudentExportVos(Integer classId) {
+        ClassesBo classesBo=classesDomain.get(classId);
         List<StudentExportVo> studentExportVos = new ArrayList<>();
         List<OrderBo> orderBos = orderDomain.findByClassId(classId);
         for (OrderBo orderBo : orderBos) {
@@ -146,6 +154,7 @@ public class StudentController {
             String historyCurriculumsString = StringUtils.join(historyCurriculums, ",");
             studentExportVo.setHistoryCurriculums(historyCurriculumsString);
             studentExportVo.setRecentCurriculum(historyCurriculums.get(0));
+            studentExportVo.setClassName(classesBo.getClassName());
             studentExportVos.add(studentExportVo);
         }
         return studentExportVos;

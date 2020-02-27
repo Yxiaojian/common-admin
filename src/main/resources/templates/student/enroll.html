@@ -104,7 +104,7 @@
                         <div class="layui-inline">
                             <label class="layui-form-label" style="padding-left: 0;width: 60px;">入学年份</label>
                             <div class="layui-input-inline" style="width: 110px;">
-                                <input type="text" class="layui-input"  lay-filter="startYear" id="startYear" name="startYear"
+                                <input type="text" class="layui-input" required lay-filter="startYear" id="startYear" name="startYear"
                                        placeholder="">
                             </div>
                         </div>
@@ -655,6 +655,9 @@
                 return false;
             }
             if (!$validator.element($("#school"))) {
+                return false;
+            }
+            if (!$validator.element($("#startYear"))) {
                 return false;
             }
             return true;

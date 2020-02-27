@@ -67,4 +67,5 @@ public class ClassesNativeDomain implements ClassesDomain {
         return BeanUtil.convertList(classesService.findByCurriculumId(curriculumId), ClassesBo.class);
     }
 
+
 }

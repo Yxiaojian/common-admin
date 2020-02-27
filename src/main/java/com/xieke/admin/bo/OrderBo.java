@@ -258,10 +258,10 @@ public class OrderBo implements Serializable {
         this.assistantTeacherName = classesBo.getAssistantTeacherName();
         this.classType = classesBo.getClassType();
         this.classLevel = classesBo.getClassLevel();
+        this.date = classesBo.getDate();
         this.curriculumID = curriculumBo.getID();
         this.curriculumName = curriculumBo.getCurriculumName();
         this.semester = curriculumBo.getSemester();
-        this.date = curriculumBo.getDate();
         this.year = curriculumBo.getYear();
         this.grade = curriculumBo.getGrade();
         this.classTime = curriculumBo.getClassTime();

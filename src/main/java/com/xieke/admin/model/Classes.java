@@ -40,6 +40,13 @@ public class Classes implements Serializable {
     private String className;
 
     /**
+     * 班级总人数
+     */
+    @TableField("FFullCount")
+    private Integer fullCount;
+
+
+    /**
      * 主讲老师ID
      */
     @TableField("FTeacherID")

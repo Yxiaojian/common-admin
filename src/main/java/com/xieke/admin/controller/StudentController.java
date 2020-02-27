@@ -92,6 +92,9 @@ public class StudentController {
     @RequestMapping("/findExportList")
     @ResponseBody
     public ResultInfo findExportList(Integer classId) {
+        if (classId == null) {
+            return new ResultInfo("", "0", null, 0);
+        }
         List<StudentExportVo> studentExportVos = this.findStudentExportVos(classId);
         return new ResultInfo("", "0", studentExportVos, new Long(studentExportVos.size()).intValue());
     }

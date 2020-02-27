@@ -56,9 +56,10 @@
 			cols : [[
 				{type: "checkbox", fixed:"left", width:50},
 				{field: 'curriculumName', title: '课程名称', minWidth:100, align:'center', sort: true},
-		/*		{field: 'semester', title: '学期', minWidth:100, align:'center', sort: true,templet:function(d){
+				{field: 'semester', title: '学期', minWidth:100, align:'center', sort: true,templet:function(d){
 						return getSeType(d.semester)
 					}},
+				/*
 				{field: 'date', title: '日期', minWidth:100, align:'center', sort: true,templet:function(d){
 						return getDateType(d.date);
 					}},*/
@@ -101,7 +102,7 @@
 
 		//添加课程
 		function addCurri(edit){
-			var h = "382px";
+			var h = "435px";
 			var title = "添加课程";
 			if (edit){
 				h = "280px";

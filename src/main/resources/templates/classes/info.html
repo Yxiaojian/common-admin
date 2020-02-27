@@ -65,8 +65,8 @@
 			</select>
 		</div>
 	</div>
-
-	<div class="layui-form-item">
+	<!--学期隐藏掉了, 从课程中获取-->
+<!--	<div class="layui-form-item hidden">
 		<label class="layui-form-label">学期</label>
 		<div class="layui-input-block">
 			<select name="semester" id="semesterSelect"  lay-filter="semesterSelect">
@@ -76,7 +76,9 @@
 				<option value="4">寒假</option>
 			</select>
 		</div>
-	</div>
+	</div>-->
+	<input type="hidden" value="" id="semester" name="semester"/>
+
 	<div class="layui-form-item ">
 		<label class="layui-form-label">日期</label>
 		<div class="layui-input-block">
@@ -86,13 +88,13 @@
 				<option value="3">三期</option>
 				<option value="4">四期</option>
 				<option value="5">特殊</option>-->
-				<option value="6">周一</option>
+				<!--<option value="6">周一</option>
 				<option value="7">周二</option>
 				<option value="8">周三</option>
 				<option value="9">周四</option>
 				<option value="10">周五</option>
 				<option value="11">周六</option>
-				<option value="12">周日</option>
+				<option value="12">周日</option>-->
 			</select>
 		</div>
 	</div>
@@ -131,7 +133,8 @@
 				$ = layui.jquery;
 
 		//日期begin
-		form.on('select(semesterSelect)', function(data){
+		//原联动
+		/*form.on('select(semesterSelect)', function(data){
 			var options = "";
 			//春季 和 秋季 按周
 			if (data.value == 2 || data.value == 4) {
@@ -151,7 +154,28 @@
 			}
 			$("#dateSelect").html(options);
 			form.render("select")
-		});
+		});*/
+		function initDate(semester){
+			var options = "";
+			//春季 和 秋季 按周
+			if (semester == 2 || semester == 4) {
+				options += "<option value=\"1\">一期</option>\n" +
+						"\t\t\t\t<option value=\"2\">二期</option>\n" +
+						"\t\t\t\t<option value=\"3\">三期</option>\n" +
+						"\t\t\t\t<option value=\"4\">四期</option>\n" +
+						"\t\t\t\t<option value=\"5\">特殊</option>";
+			} else {
+				options += "<option value=\"6\">周一</option>\n" +
+						"\t\t\t\t<option value=\"7\">周二</option>\n" +
+						"\t\t\t\t<option value=\"8\">周三</option>\n" +
+						"\t\t\t\t<option value=\"9\">周四</option>\n" +
+						"\t\t\t\t<option value=\"10\">周五</option>\n" +
+						"\t\t\t\t<option value=\"11\">周六</option>\n" +
+						"\t\t\t\t<option value=\"12\">周日</option>";
+			}
+			$("#dateSelect").html(options);
+			form.render('select');
+		};
 		//日期end
 
 		if ($("#editId").val() != "") {
@@ -166,7 +190,13 @@
 		}
 		$.post("/curriculum/selectListData",function(data){
 			var resourceTypeList = data.data;
+			var index = 0;
 			resourceTypeList.forEach(function(e){
+				if (index == 0) {
+					//设置日期
+					initDate(e.semester);
+				}
+				index++;
 				$("#curriculumIDSelect").append("<option value='"+e.id+"'>"+e.curriculumName+"</option>");
 			});
 			if ($("#curriculumIDSelectHid").val() != "") {
@@ -174,6 +204,16 @@
 			}
 			form.render('select');//重新渲染
 		});
+
+		//课程下拉框
+		form.on('select(curriculumIDSelect)', function(data){
+			$.post("/curriculum/findById?id=" + data.value, function (curi) {
+				//类型
+				initDate(curi.data.semester);
+			});
+			form.render('select');
+		});
+
 		$.post("/user/selectListData?roleId=2",function(data){
 			var t = 0;
 			var resourceTypeList = data.data;

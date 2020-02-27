@@ -171,6 +171,7 @@
                     if (initClass == 0) {
                         findByCurriculumId(e.id);
                     }
+                    initClass++;
                 });
                 form.render('select');//重新渲染
             });
@@ -265,12 +266,21 @@
             getClassInformation(data.id);
         }
 
+        //是否可以下一步
+        var canNext = true;
+
         function getClassInformation(id) {
             $.post("/classes/getById",{id : id}, function (eData) {
-                //类型 班级
-                $("#classType").html(getSeType(eData.data.semester));
+                //类型 班级 20200227 类型(季节,  学期) 移动到了课程
+                //$("#classType").html(getSeType(eData.data.semester));
                 //人数 appliedCount + "/" + fullCount  当前人数/总人数
                 $("#stuCount").html(eData.data.appliedCount + "/" + eData.data.fullCount);
+                //是否可以下一步
+                if (eData.data.appliedCount >= eData.data.fullCount) {
+                    canNext = false;
+                } else {
+                    canNext = true;
+                }
             });
         }
 
@@ -309,6 +319,10 @@
         //欠费
         var unpaidAmount;
         form.on("submit(payBackTab)",function(data){
+            if (!canNext) {
+                layer.msg("该班级人数已满, 请选择其他班级");
+                return false;
+            }
             classList.forEach(function (e) {
                 if (e.id + "" === data.field.stuClass) {
                     className = e.className;

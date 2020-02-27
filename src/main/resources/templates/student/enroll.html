@@ -455,7 +455,7 @@
                 $("#grade").html(getGradeType(curi.data.grade));
                 $("#curriculumId").val(data.curriculumID);
                 //类型
-                //
+                $("#classType").html(getSeType(curi.data.semester));
                 $("#kcfee").html(curi.data.price);
                 $(".js_orderAllNeedPay").html(curi.data.price);
                 $("#noPay").html(curi.data.price);
@@ -469,12 +469,21 @@
 
         }
 
+        //是否可以下一步
+        var canNext = true;
+
         function getClassInformation(id) {
             $.post("/classes/getById",{id : id}, function (eData) {
-                //类型 班级
-                $("#classType").html(getSeType(eData.data.semester));
+                //类型 班级 20200227 类型(季节,  学期) 移动到了课程
+                //$("#classType").html(getSeType(eData.data.semester));
                 //人数 appliedCount + "/" + fullCount  当前人数/总人数
                 $("#stuCount").html(eData.data.appliedCount + "/" + eData.data.fullCount);
+                //是否可以下一步
+                if (eData.data.appliedCount >= eData.data.fullCount) {
+                    canNext = false;
+                } else {
+                    canNext = true;
+                }
             });
         }
 
@@ -509,10 +518,15 @@
             }
         });
 
+        //确认缴费按钮 第二页跳第三页
         $(".js_nextToJf").on("click", function () {
             var classId = document.getElementById("classesId").value;
             if (classId == -1) {
                 layer.msg("请先选择班级");
+                return false;
+            }
+            if (!canNext) {
+                layer.msg("该班级人数已满, 请选择其他班级");
                 return false;
             }
             $(".js_orderAllNeedPay").html($("#kcfee").html());

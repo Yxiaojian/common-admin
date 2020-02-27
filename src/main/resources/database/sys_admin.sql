@@ -153,6 +153,7 @@ CREATE TABLE `t_classes`  (
   `FID` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `FCurriculumID` int(11) DEFAULT NULL COMMENT '课程ID',
   `FClassName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '班级名称',
+  `FFullCount` int(11) DEFAULT NULL COMMENT '班级总人数',
   `FTeacherID` int(11) DEFAULT NULL COMMENT '主讲老师ID',
   `FTeacherName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '主讲老师姓名',
   `FAssistantTeacherID` int(11) DEFAULT NULL COMMENT '助教老师ID',

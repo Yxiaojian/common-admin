@@ -38,6 +38,11 @@ public class ClassesBo implements Serializable {
     private String className;
 
     /**
+     * 班级总人数
+     */
+    private Integer fullCount;
+
+    /**
      * 主讲老师ID
      */
     private Integer teacherID;

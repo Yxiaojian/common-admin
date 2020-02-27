@@ -139,6 +139,12 @@ public class OrderController extends BaseController {
         if (curriculumBo == null) {
             return new ResultInfo("课程不存在");
         }
+
+        Integer studentCount = orderDomain.getCountByClassId(classesId);
+        if (studentCount>=classesBo.getFullCount()){
+            return new ResultInfo("该班级已满");
+        }
+
         BigDecimal discountAmountBig = BigDecimal.ZERO;
         if (!StringUtils.isEmpty(discountAmount)) {
             discountAmountBig = new BigDecimal(discountAmount);

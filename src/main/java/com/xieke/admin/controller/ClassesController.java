@@ -41,10 +41,11 @@ public class ClassesController {
 
     @RequestMapping("/add")
     @ResponseBody
-    public ResultInfo add(Integer curriculumID, String className, Integer teacherID, String teacherName, Integer assistantTeacherID, String assistantTeacherName, Integer classType, Integer classLevel, Integer semester, Integer date) {
+    public ResultInfo add(Integer curriculumID, String className, Integer fullCount, Integer teacherID, String teacherName, Integer assistantTeacherID, String assistantTeacherName, Integer classType, Integer classLevel, Integer semester, Integer date) {
         ClassesBo classesBo = new ClassesBo(curriculumID, className, teacherID, teacherName, assistantTeacherID, assistantTeacherName, classType, classLevel, 0, new Date(), "");
         classesBo.setSemester(semester);
         classesBo.setDate(date);
+        classesBo.setFullCount(fullCount);
         if (!classesDomain.insert(classesBo)) {
             return new ResultInfo<>("新增失败");
         }

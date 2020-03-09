@@ -163,7 +163,10 @@
 			}
 		})
 
+		var recordId;
+
 		function seeDetail(eData) {
+			recordId = eData.id;
 			var title = "收费详情";
 			var payDetail = layui.layer.open({
 				title : title,
@@ -180,6 +183,12 @@
 			layui.layer.full(payDetail);
 		}
 
+		var _getRecordId = {
+            getRecordId : function () {
+				return recordId;
+			}
+		}
+		window.getRecordId = _getRecordId;
 
 
 

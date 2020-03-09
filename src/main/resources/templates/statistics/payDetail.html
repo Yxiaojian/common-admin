@@ -36,6 +36,9 @@
             </div>
             <!--<div class="layui-inline" id="abolish">
                 <a type="button" class="layui-btn layui-btn-normal js_print">打印</a>
+            </div>
+            <div class="layui-inline" id="preview">
+                <a type="button" class="layui-btn layui-btn-normal js_print_preview">打印预览</a>
             </div>-->
             <div class="layui-tab-item layui-show">
                 <div class="layui-col-md8 layui-col-xs12" style="margin: 35px;">
@@ -106,6 +109,12 @@
 <script type="text/javascript" src="/static/js/jquery.js"></script>
 <script type="text/javascript" src="/static/js/jquery.validate.js"></script>
 <script type="text/javascript" src="/static/js/site.js"></script>
+<!--LODOP-->
+<script src="/static/js/lodopFuncs.js"></script>
+<object id="LODOP_OB" classid="clsid:2105C259-1E0C-4534-8141-A753534CB4CA" width=0 height=0>
+    <embed id="LODOP_EM" type="application/x-print-lodop" width=0 height=0></embed>
+</object>
+
 <script>
     layui.use(['form', 'layer'], function () {
         var form = layui.form,
@@ -114,7 +123,8 @@
             table = layui.table;
 
         layer.ready(function () {
-            var recordId = $("#recordId").val()
+            var recordId = parent.getRecordId.getRecordId();
+            //var recordId = $("#recordId").val();
             $.post("/pay/get", {recordId : recordId}, function (res) {
                 if (res.data) {
                     $("#orderNo").html(res.data.orderNo);
@@ -161,9 +171,30 @@
             parent.location.reload();
         })
 
+        var LODOP = getLodop(document.getElementById('LODOP_OB'),document.getElementById('LODOP_EM'));
         $(".js_print").on("click", function () {
-           layer.msg("此功能暂未开放");
+           //layer.msg("此功能暂未开放");
+
+            //直接打印
+            //LODOP.PRINT();
         });
+
+        $(".js_print_preview").on("click", function () {
+            CreateOneFormPage();
+            //打印预览
+            LODOP.PREVIEW();
+        });
+
+
+
+        function CreateOneFormPage(){
+            LODOP=getLodop();
+            LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_表单一");
+            LODOP.SET_PRINT_STYLE("FontSize",18);
+            LODOP.SET_PRINT_STYLE("Bold",1);
+            LODOP.ADD_PRINT_TEXT(50,231,260,39,"收据");
+            LODOP.ADD_PRINT_HTM(88,200,350,600,document.getElementById("studentForm").innerHTML);
+        };
 
         $(".js_delete").on("click", function () {
             var recordId = $("#recordId").val()
